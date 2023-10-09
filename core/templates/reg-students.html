@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block body %}
+{% load static %}
+
+<!-- login form -->
+<div class="container mt-2">
+    <h4 class="my-header">Registered Students</h4>
+    <div class="container">
+        <table class="table table-hover border-1">
+            <thead>
+              <tr>
+                <th scope="col">Sr No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Email</th>
+                <th scope="col">Library ID</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Issued Books</th>
+                <th scope="col">Not Returned</th>
+                <th scope="col">Fine</th>
+                {% if user.is_superuser %}
+    
+                <th scope="col">Action</th>
+
+                {% endif %}
+
+              </tr>
+            </thead>
+            <tbody>
+
+
+              <tr>
+                <th scope="row">1</th>
+                <td>{{name}}</td>
+                <td>{{department}}</td>
+                <td>{{email}}</td>
+                <td>{{libId}}</td>
+                <td>{{mobNo}}</td>
+                <td>{{issuedBooks}}</td>
+                <td>{{notReturned}}</td>
+                <td>{{Fine}}</td>
+                {% if user.is_superuser %}
+                <a id="edit-{{id}}" href="http://127.0.0.1:8000/editProfile/{{id}}" class="btn btn-primary me-2">Edit</a>
+                <a id="del-{{id}}" href="http://127.0.0.1:8000/deleteProfile/{{id}}" class="btn btn-danger me-2">Delete</a>
+                {% endif %}
+                
+              </tr>
+              
+            </tbody>
+          </table>
+    </div>
+
+</div>
+
+{% endblock body %}
