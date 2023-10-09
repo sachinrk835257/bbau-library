@@ -41,11 +41,11 @@
                 <td>{{issuedBooks}}</td>
                 <td>{{notReturned}}</td>
                 <td>{{Fine}}</td>
+                <td><a id="edit-{{id}}" href="http://127.0.0.1:8000/editProfile/{{id}}" class="btn btn-primary me-">Edit</a>
                 {% if user.is_superuser %}
-                <a id="edit-{{id}}" href="http://127.0.0.1:8000/editProfile/{{id}}" class="btn btn-primary me-2">Edit</a>
                 <a id="del-{{id}}" href="http://127.0.0.1:8000/deleteProfile/{{id}}" class="btn btn-danger me-2">Delete</a>
                 {% endif %}
-                
+                </td>
               </tr>
               
             </tbody>

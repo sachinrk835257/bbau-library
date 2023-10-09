@@ -26,20 +26,20 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="name" class="form-label">Enter Full Name</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name" required>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name" value="{{name}}" {% if not user.is_superuser %}readonly{% endif %} required>
               </div>
               <div class="mb-3">
                 <label for="depart" class="form-label">Department</label>
-                <input type="text" class="form-control" name="depart" id="depart" placeholder="Department Name" required>
+                <input type="text" class="form-control" name="depart" id="depart" value="{{department}}" placeholder="Department Name" required>
               </div>
               <div class="mb-3">
                 <label for="libId" class="form-label">Library Id</label>
-                <input type="text" class="form-control" name="libId" id="libId" placeholder="Enter Library Id" required>
+                <input type="text" class="form-control" name="libId" value="{{library-Id}}" id="libId" {% if not user.is_superuser %}readonly{% endif %} placeholder="Enter Library Id" required>
               </div>
   
               <div class="mb-3">
                 <label for="mobile" class="form-label">Mobile Number</label>
-                <input type="text" class="form-control" name="mobile" id="mobile" maxlength="10" autocomplete="off" required placeholder="10 digit mobile number">
+                <input type="text" class="form-control" name="mobile" value="{{mobile}}" id="mobile" maxlength="10" autocomplete="off" {% if not user.is_superuser %}readonly{% endif %} required placeholder="10 digit mobile number">
               </div>
               <!-- <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">@</span>
@@ -49,27 +49,10 @@
               <label for="email" class="form-label">Email Address</label>
               <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                <input type="email" class="form-control" name="email" id="email" autocomplete="off" placeholder="abc@example.com" required>
+                <input type="email" class="form-control" name="email" id="email" value="{{email}}" autocomplete="off" placeholder="abc@example.com" required>
               </div>
-              <label for="pass1" class="form-label">Password</label>
-              <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                <input type="password" id="pass1" class="form-control" name="
-                  pswrd" title="atleast 8 characters" required>
-              </div>
-  
-              <label for="pass2" class="form-label">Confirm Password</label>
-              <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                  <input type="password" id="pass2" class="form-control" name="pass2" required>
-                </div>
-            </div>
             <div class="modal-footer">
-              <button type="reset
-                " class="btn btn-secondary" data-bs-dismiss="modal">reset
-              </button>
-              <button type="submit
-                " class="btn btn-danger">Register</button>
+              <button type="submit" class="btn btn-danger">Edit</button>
             </div>
             </div>
         </form>
