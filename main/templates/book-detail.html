@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block body %} 
+
+
+<div class="container mt-2 mx-auto">
+    <h4 class="my-header">Book Details</h4>
+    
+    <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+    <div class="container card p-2" style="width: 65vw;">
+      
+      {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{message.tags}}" role="alert">
+              {{message}}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookName">Book Name</label>
+            <input type="text" class="form-control" name="bookName" id="bookName" value="{{book.bookName}}" placeholder="Enter Book Name" required>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="department">Department</label>
+            <select class="form-select" name="department" id="department" value="{{book.department}}" required aria-label="Default select example">
+              <option value="cs">cs</option>
+              <option value="IT">IT</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="cetegory">Category</label>
+            <select class="form-select" name="category" id="category" value="{{book.category}}" aria-label="Default select example">
+              <option selected value="{{book.category}}">{{book.category}}</option>
+              <option value="technology">Technology</option>
+              <option value="programming">Programming</option>
+              <option value="database learning">Database learning</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="ISBN">ISBN Nummber</label>
+            <input type="text" class="form-control" name="ISBN" id="ISBN" value="{{book.ISBN}}" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookPrice">Price</label>
+            <input type="text" class="form-control" name="bookPrice" id="bookPrice" value="{{book.bookPrice}}" placeholder="Enter Price in Rs.">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="autherName">Author Name</label>
+            <input type="text" class="form-control" name="authorName" id="autherName" value="{{book.authorName}}" placeholder="Author Nmae">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="coverImage">Cover Image</label><br>
+            <img src="{{ book.coverImage.url }}" alt="Image" style="width: 100px; height: 100px;">
+            <input type="file" name="coverImage" id="coverImage" value="{{book.coverImage.url}}" src="{{book.coverImage.url}}" accept="image/*">
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="register_by">Book Register By</label>
+              <input type="text" class="form-control" name="register_by" id="register_by" value="{{book.register_by}}" readonly>
+            </div>
+          </div>
+      </div>
+
+      
+      
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Update Book Details</button>
+      </div>
+    </div>
+  </form>
+</div>
+    
+
+{% endblock body %}

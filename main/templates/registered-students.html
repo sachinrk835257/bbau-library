@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block body %}
+{% load static %}
+
+<!-- login form -->
+<div class="container mt-2">
+    <h4 class="my-header">Registered Students</h4>
+    <div class="container">
+        <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Sr No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Email</th>
+                <th scope="col">Library ID</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Issued Books</th>
+                <th scope="col">Not Returned</th>
+                <th scope="col">Fine</th>    
+                <th scope="col">Action</th>
+
+               
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for student in students %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{student.name}}</td>
+                <td>{{student.department}}</td>
+                <td>{{student.user.email}}</td>
+                <td>{{student.library_id}}</td>
+                <td>{{student.mobile}}</td>
+                <td>{{student.issuedBooks}}</td>
+                <td>{{student.returnedBooks}}</td>
+                <td>{{student.fine}}</td>
+                <td><a id="edit-{{id}}" href="http://127.0.0.1:8000/edit-profile/{{student.library_id}}/" class="btn btn-primary me-2">Edit</a>
+                {% if user.is_superuser %}
+                
+                <a id="del-{{id}}" href="http://127.0.0.1:8000/delete-profile/{{student.library_id}}/" class="btn btn-danger me-2" onclick="confirm('are you sure delete student profile?')">Delete</a>
+                {% endif %}
+                </td>
+                
+              </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+    </div>
+
+</div>
+
+{% endblock body %}

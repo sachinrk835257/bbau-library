@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block body %}
+{% load static %}
+
+
+<!-- login form -->
+<div class="container mt-2">
+    <h4 class="my-header"> Profile</h4>
+    <div class="mt-3 mx-auto col-6">
+        <form method="post">{% csrf_token %}
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Welcome {{profile.name}}</h5>
+            </div>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+                {{message}}
+              </div>
+              {% endfor %}
+              {% endif %}
+  
+  
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="name" class="form-label">Enter Full Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name" value="{{profile.name}}" required>
+              </div>
+              <div class="mb-3">
+                <label for="depart" class="form-label">Department</label>
+                <input type="text" class="form-control" name="department" id="depart" value="{{profile.department}}" placeholder="Department Name" required>
+              </div>
+              <div class="mb-3">
+                <label for="libId" class="form-label">Library Id</label>
+                <input type="text" class="form-control" name="library_id" value="{{profile.library_id}}" id="libId" {% if user.is_authenticated %}readonly{% endif %} placeholder="Enter Library Id" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="joiningYear" class="form-label">Joining Year</label>
+                <input type="number" class="form-control" name="joiningYear" id="joiningYear" value="{{profile.joiningYear}}" {% if not user.is_superuser %}readonly{% endif %} placeholder="Enter admission year" required>
+              </div>
+              <div class="mb-3">
+                <label for="passingYear" class="form-label">Passing Year</label>
+                <input type="number" class="form-control" name="passingYear" id="passingYear" value="{{profile.passingYear}}" {% if not user.is_superuser %}readonly{% endif %} placeholder="Enter passing year" required>
+              </div>
+  
+              <div class="mb-3">
+                <label for="mobile" class="form-label">Mobile Number</label>
+                <input type="text" class="form-control" name="mobile" value="{{profile.mobile}}" id="mobile" maxlength="10" autocomplete="off" {% if not user.is_superuser %}readonly{% endif %} required placeholder="10 digit mobile number">
+              </div>
+              <!-- <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+              </div> -->
+  
+              <label for="email" class="form-label">Email Address</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                <input type="email" class="form-control" name="email" id="email" value="{{profile.user.username}}" {% if not user.is_superuser %}readonly{% endif %} autocomplete="off" placeholder="abc@example.com" required>
+              </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-danger">Save Changes</button>
+            </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+    {% endblock body %}

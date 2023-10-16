@@ -1,0 +1,84 @@
+body{
+    /* background-color: red; */
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.navbar .nav-link{
+    color: red;
+}
+.navbar .nav-link:hover{
+    background-color: mediumpurple;
+    color:white;
+}
+
+
+
+.my-header {
+    padding: 20px 25px;
+    background-color: mediumpurple;
+    border-radius: 10px;
+    color: white;
+}
+
+
+.my-footer{
+    height: 75px;
+    background-color: mediumpurple;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-left: 10px;
+}
+
+.social-links i{
+    color: black;
+    font-size: 1.3rem;
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+.social-links i:hover{
+    color: white;
+    font-size: 1.4rem;
+}
+
+#scrollToTopButton{
+    position: fixed;
+    right: 17px;
+    bottom: 4vh;
+    /* bottom: -213vh; */
+    border-radius: 50%;
+    background-color: cornflowerblue;
+    z-index: 2;
+    opacity: 0.8;
+}
+
+/* dashboard.html */
+
+.cards-box{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 1.3rem;
+    margin: 0px 20px;
+}
+.cards-box .card{
+
+    height: 230px;
+    margin-top: 2rem;
+    width: 275px;
+
+ }
+
+ /* registered-books.html */
+.registered-books .card:hover{
+    border: 2px solid rgb(103, 101, 101);
+    box-shadow: 1px 1px 5px rgb(75, 23, 180);
+}
+
+ /* dashboard */
+ .dashboard-boxes .card:hover{
+    border: 2px solid rgb(103, 101, 101);
+    box-shadow: 1px 1px 5px rgb(75, 23, 180);
+}

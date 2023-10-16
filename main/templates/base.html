@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <title>{% block title %}{% endblock title %}</title>
+  {% load static %}
+  {% load tz %}
+
+  <link
+        rel="stylesheet"
+        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css"
+      >
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+  <!-- jumbotron -->
+  <header class="mb-4 border-bottom d-flex align-items-center"
+    style="padding: 5px 21px;justify-content: space-between;">
+    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+      <img src="{% static 'images/logo.png' %}" alt="error"></a>
+      {% if user.is_authenticated %}
+    <div>
+        <a class="me-2">Last Login {{ user.last_login|timezone:"Asia/Kolkata" }}</a>
+        <a class="me-2"><i class="fa-solid fa-user text-dark"></i> {{user.username}}</a>
+        {% if user.is_superuser %}
+                
+                <a class="btn btn-success me-2" href="http://127.0.0.1:8000/authenticate/create-admin/"><i class="fa-solid fa-plus text-dark"></i> Create Admin</a>
+                {% endif %}
+        <a href="http://127.0.0.1:8000/authenticate/logout/" class="btn btn-danger">Log Out</a>
+      </div>
+
+      {% endif %}
+    </a>
+  </header>
+
+  <!-- navbar -->
+
+  <nav class="navbar border-bottom navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03" style="padding-right: 2rem;">
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/">Dashboard</a>
+          </li>
+          {% if user.is_superuser %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="#">Add Category</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Manage Categories</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Author
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="#">Add Author</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Manage Author</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Books
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="http://127.0.0.1:8000/add-book/">Add Book</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="http://127.0.0.1:8000/manage-book/">Manage Books</a></li>
+          
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/issue-book/">Issue Book</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/return-book/">Return Book</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/registered-students/">Registered Students</a>
+          </li>
+          {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/return-book/">Issued Books</a>
+          </li>
+         
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/authenticate/change-password/{{user.id}}">Change Password</a>
+          </li>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link me-3 text-dark" aria-current="page" href="/">User Login</a>
+          </li>
+          <li class="nav-item">
+            <a href="http://127.0.0.1:8000/authenticate/register/" class="nav-link me-3 text-dark">User Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-3 text-dark" href="http://127.0.0.1:8000/authenticate/admin-login/">Admin Login</a>
+          </li>
+        </ul>
+        
+        {% endif %}
+
+      </div>
+    </div>
+  </nav>
+
+  {% block body %}
+  
+  {% endblock body %}
+
+  
+    
+  </div>
+  <button id="scrollToTopButton"><i class="fa-solid fa-arrow-up" style="color: #ffffff;"></i></button>
+  
+  
+  <footer class="my-footer mt-2">
+
+    <div class="social-links ml-3">
+      <span class="me-3 text-light" style="color:white;font-family: 1.2rem;">Get connect with us</span>
+      <a href="mailto:sachinrk835257@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+      <a href="/"><i class="fa-brands fa-facebook"></i></a>
+      <a href="/"><i class="fa-brands fa-twitter"></i></a>
+
+    </div>
+    <div class="row me-3">
+        <div class="col-md-12">
+           <a href="/" style="color: white;text-decoration: none;">&copy;  <span id="currYear">2023</span> Online Library Management System</a> 
+        </div>
+
+  </footer>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+
+    <script src="{% static 'js/main-js.js' %}"></script>
+</body>
+
+</html>
