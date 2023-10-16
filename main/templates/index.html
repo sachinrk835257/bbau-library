@@ -19,14 +19,34 @@
           </div>
         </div>
         <div class="col">
-          <div class="card align-items-center p-2 border-22 border-danger rounded">
+          <div class="card align-items-center p-2 border-22 border-danger rounded issued-books-box">
             <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
             <div class="card-body">
-                <p class="card-text text-center">2 {{notReturnedNumber}}</p>
-                <h5 class="card-title">Books Not Returned Yet</h5>
+                <p class="card-text text-center">{{issuedBooksNumber}}</p>
+                <h5 class="card-title">Issued Books</h5>
             </div>
           </div>
         </div>
+
+        <div class="col">
+            <div class="card align-items-center p-2 border-22 border-danger rounded returned-books-box">
+              <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
+              <div class="card-body">
+                  <p class="card-text text-center">{{returnedBooksNumber}}</p>
+                  <h5 class="card-title">Returned Books</h5>
+              </div>
+            </div>
+          </div>
+
+        <div class="col">
+            <div class="card align-items-center p-2 border-22 border-danger rounded issued-books-box">
+              <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
+              <div class="card-body">
+                  <p class="card-text text-center">2 {{issuedBooksNumber}}</p>
+                  <h5 class="card-title">Issued Bookst</h5>
+              </div>
+            </div>
+          </div>
        
           <div class="col">
             <div class="card align-items-center p-2 border-2 border-success rounded">
@@ -38,15 +58,7 @@
             </div>
           </div>
 
-          <div class="col">
-            <div class="card align-items-center p-2 border-2 border-success rounded">
-              <i class="fa-duotone fa-feather" style="font-size: 5.4rem;"></i>
-              <div class="card-body">
-                  <p class="card-text text-center">30 {{authersListed}}</p>
-                  <h5 class="card-title">Authers Listed</h5>
-              </div>
-            </div>
-          </div>
+
           <div class="col">
             <div class="card align-items-center p-2 border-2 border-primary rounded">
               <i class="fa-duotone fa-grid-4" style="font-size: 5.4rem;"></i>
@@ -149,12 +161,21 @@
 {% endif %}
 
 <script>
-    console.log("index js")
     var bookListedCard = document.querySelector('.book-listed-box')
+    var issuedBooksCard = document.querySelector('.issued-books-box')
+    var returnedBooksCard = document.querySelector('.returned-books-box')
     console.log(bookListedCard)
     bookListedCard.addEventListener('click',()=>{
         console.log("clicked")
-        window.location = "http://127.0.0.1:8000/listed-books/";
+        document.location = "http://127.0.0.1:8000/listed-books/";
+    })
+    issuedBooksCard.addEventListener('click',()=>{
+        console.log("clicked")
+        document.location = "http://127.0.0.1:8000/issued-books/";
+    })
+    returnedBooksCard.addEventListener('click',()=>{
+        console.log("clicked")
+        document.location = "http://127.0.0.1:8000/returned-books/";
     })
     
 

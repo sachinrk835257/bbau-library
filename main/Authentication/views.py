@@ -1,6 +1,7 @@
 from django.shortcuts import render ,redirect ,HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from Dashboard.models import Profile,Registered_Books, Issued_Books, Returned_Books
 from Authentication.models import ChangePassword,SuperUser
@@ -86,7 +87,12 @@ def addStudent(request):
 
     return render(request,'register.html',{"title":title})
 
+# @user_passes_test(is_staff_member, login_url="http://127.0.0.1:8000/authenticate/admin-login/")
 def adminRegister(request):
+    if not request.user.is_superuser:
+        messages.add_message(request, messages.WARNING, "Admin Login First !!!")
+        return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
+
     title = '''Admin Registeration'''
     try:
         if request.method == 'POST':    
@@ -178,6 +184,8 @@ def forgotChangePassword(request,token):
         messages.add_message(request, messages.WARNING, "Some technical error . Try again after some time  !!")
         return redirect('http://127.0.0.1:8000/authenticate/change-password/{}'.format(token))
 
+
+@login_required(login_url='http://127.0.0.1:8000/')
 def changePassword(request,id):
     print("in change password",id)
     try:

@@ -97,17 +97,17 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:8000/issue-book/">Issue Book</a>
+            <a type="button" id="issue-book" class="nav-link" onclick="setAction(this.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Issue Book</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:8000/return-book/">Return Book</a>
+            <a class="nav-link" id="return-book" onclick="setAction(this.id)"  data-bs-toggle="modal" data-bs-target="#exampleModal">Return Book</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="http://127.0.0.1:8000/registered-students/">Registered Students</a>
           </li>
           {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:8000/return-book/">Issued Books</a>
+            <a class="nav-link" href="/">Issued Books</a>
           </li>
          
           {% endif %}
@@ -160,6 +160,42 @@
 
   </footer>
 
+  <!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Provide Details</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="forSetAction" method="post">{% csrf_token %}
+
+
+        <div class="modal-body">
+          <label for="ISBN" class="form-label">Book ISBN Number</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text"><i class="fa-solid fa-book fa-beat"></i></i></span>
+            <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter Unique ISBN Number">
+          </div>
+          
+          <label for="library_id" class="form-label">Student Library Id</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text"><i class="fa-regular fa-id-card fa-fade"></i></span>
+            <input type="text" class="form-control" name="library_id" id="library_id" placeholder="Enter Unique Student Library Id">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -174,6 +210,22 @@
     -->
 
     <script src="{% static 'js/main-js.js' %}"></script>
+    <script>
+      function setAction(id) {
+        var issueBookBtn = document.getElementById(id)
+        var forSetAction = document.getElementById('forSetAction')
+        forSetAction.setAttribute('action','http://127.0.0.1:8000/' + id + '/')
+
+      }
+
+      var myModal = document.getElementById('myModal')
+      var myInput = document.getElementById('myInput')
+
+      myModal.addEventListener('shown.bs.modal', function () {
+      myInput.focus()
+
+})
+    </script>
 </body>
 
 </html>

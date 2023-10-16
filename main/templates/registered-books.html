@@ -37,7 +37,7 @@
         <h5 class="card-title">{{book.bookName}}</h5>
         <p class="card-text">Department : {{book.department}}</p>
         <p class="card-text">Category : {{book.category}}</p>
-        <p class="card-text {% if book.status == 'Available' %}text-success {% else %} text-Danger   {% endif %}">status : {{book.status|default:"Not Available"}}</p>
+        <p class="card-text {% if book.status == 'Available' %}text-success {% else %} text-danger{% endif %}">status : {{book.status}}</p>
         <p class="card-text">Author Name : {{book.authorName}}</p>
         <p class="card-text">ISBN NUMBER : {{book.ISBN}}</p>
         <p class="card-text mb-1">Price : {{book.bookPrice}}</p>

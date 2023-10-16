@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block body %} 
+
+
+<div class="container mt-2 mx-auto">
+    <h4 class="my-header">Issue Book</h4>
+    
+    <form method="post" action="http://127.0.0.1:8000/issuing-book/"> {% csrf_token %}
+    <div class="container card p-2" style="width: 65vw;">        
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}" role="alert">
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="alert alert-primary" role="alert">
+            Book Details
+        </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="ISBN">ISBN Nummber <span class="text-danger"> *</span></label>
+              <input type="text" class="form-control" name="ISBN" id="ISBN" value="{{book.0.ISBN}}" readonly>
+            </div>
+          </div>
+
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookName">Book Name</label>
+            <input type="text" class="form-control" name="bookName" id="bookName" value="{{book.0.bookName}}" readonly>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="depart">Book Department</label>
+              <input type="text" class="form-control" name="bookDepartment" id="depart" value="{{book.0.department}}" readonly>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" class="form-control" name="catefory" id="category" value="{{book.0.category}}" readonly>
+            </div>
+          </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="autherName">Author Name</label>
+            <input type="text" class="form-control" name="authorName" id="autherName" value="{{book.0.authorName}}" readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="status">Book Status</label>
+              <input type="text" class="form-control" name="status" id="status" value="{{book.0.status}}" readonly>
+            </div>
+          </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="coverImage">Cover Image</label><br>
+            <img src="{{ book.0.coverImage.url }}" alt="Image" style="width: 100px; height: 100px;">
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div class="container card p-2 mt-2" style="width: 65vw;">        
+        <div class="alert alert-primary" role="alert">
+            Student Details
+        </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="library_id">Library Id <span class="text-danger"> *</span></label>
+              <input type="text" class="form-control" name="library_id" id="library_id" value="{{student.0.library_id}}" readonly>
+            </div>
+          </div>
+
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="name">Student Name</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{student.0.name}}" readonly>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="studentDepartment">Student Department</label>
+              <input type="text" class="form-control" name="studentDepartment" id="studentDepartment" value="{{student.0.department}}" readonly>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="mobile">Mobile Number</label>
+              <input type="text" class="form-control" name="mobile" id="mobile" value="{{student.0.mobile}}" readonly>
+            </div>
+          </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="issuedBooks">Issued Books</label>
+              <input type="text" class="form-control" name="issuedBooks" id="issuedBooks" value="{{student.0.issuedBooks}}" readonly>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="returnedBooks">Returned Books</label>
+              <input type="text" class="form-control" name="returnedBooks" id="returnedBooks" value="{{student.0.returnedBooks}}" readonly>
+            </div>
+          </div>
+        </div>
+
+        <a type="button" href="http://127.0.0.1:8000/" class="btn btn-danger mb-1">Cancel</a>
+          <button type="submit" class="btn btn-success" {% if book.0.status == 'Available' %}onclick="confirm('Sure {{book.0.bookName}} is issuing to {{student.0.name}} ?')"{% else %}onclick="alert('{{book.0.bookName}} status is {{book.0.status}} !!!')"{% endif %}>Issue Book</button>
+
+  </form>
+</div>
+
+    
+
+{% endblock body %}

@@ -14,9 +14,15 @@ urlpatterns = [
     path('delete-book/<str:isbn>/',views.deleteBook, name="go to specific book detail"),
     path('delete-profile/<int:myid>/',views.deleteProfile, name="see profile of student"),
     path('add-book/',views.addBook, name="add book"),
+    path('issue-book/',views.issueBook, name="issue book"),
+    path('issuing-book/',views.issuingBook, name="issue book"),
+    path('return-book/',views.returnBook, name="return book"),
+    path('returning-book/',views.returningBook, name="issue book"),
     path('manage-book/',views.manageBook, name="manage book"),
     path('search-by/',views.searchBy, name="search book"),
     path('sort-by/',views.applyFilter, name="sorting of books"),
+    path('issued-books/',views.issuedBooks, name="issued books"),
+    path('returned-books/',views.returnedBooks, name="returned books"),
     path('forgot-password/',views.forgotPassword, name="forgot passwordt"),
     path('authenticate/',include('Authentication.urls'),name="go to authentication")    
 
