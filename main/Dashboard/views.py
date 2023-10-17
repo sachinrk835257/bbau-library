@@ -380,7 +380,7 @@ def issuedBooks(request):
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     title = '''BBAU-LIBRARY | Issued Books'''
-    issued_book_obj = Returned_Books.objects.all().count()
+    issued_book_obj = Issued_Books.objects.all().count()
 
     return render(request,'issued-books.html',{"title":title,"issuedBooksNumbers":issued_book_obj})
     
