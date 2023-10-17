@@ -224,6 +224,7 @@ def bookDetails(request,isbn):
 def searchBy(request):
     title = '''Registered Books'''
     if request.method == 'POST':
+        print(request)
         search = request.POST.get('search-by')
         print(search)
         book_obj1 = Registered_Books.objects.filter(bookName__contains = search)

@@ -32,7 +32,7 @@
     <div class="card"
       style="min-width: none;max-width: 23%;border: 2px solid rgb(195, 190, 190);padding-top: 0.3rem;border-radius: 10px;">
       <img src="/media/{{book.coverImage}}" class="card-img-top" style=" width: 150px;
-    height: 150px; margin: auto;" alt="...">
+    height: 150px; margin: auto;" alt="">
       <div class="card-body" style="padding: 0.5rem 0.5rem 0rem 0.5rem;">
         <h5 class="card-title">{{book.bookName}}</h5>
         <p class="card-text">Department : {{book.department}}</p>
@@ -47,6 +47,8 @@
     
   </div><div class="card-group justify-content-between p-3">
     {% endif %}
+    {% empty %}
+    <h3 class="text-danger">Record is not found !!!</h3>
 
     {% endfor %}
 
