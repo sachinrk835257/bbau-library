@@ -11,15 +11,20 @@ from django.utils import timezone
 
 # Create your views here.
 def index(request):
+    print("home")
     title = '''Home -'''
     if request.user.is_authenticated :
         title = '''Dashboard-'''
         staff_status = "User"       #DEfault
         book_obj = Registered_Books.objects.all().count()
+        returned_books_obj = Returned_Books.objects.all().count()
+        issued_books_obj = Returned_Books.objects.all().count()
+        print(issued_books_obj,returned_books_obj)
+        
         if (request.user.is_superuser) :
             staff_status = "Admin"
             profile_count = Profile.objects.all().count()
-            return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj})
+            return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBookNumbers":returned_books_obj,"issuedBooksNumbers":issued_books_obj})
 
         return render(request,"index.html",{"title":title,"staff_status":staff_status,"bookListedNumbers":book_obj})
     
@@ -270,7 +275,7 @@ def issueBook(request):
 
             if not profile_obj.exists():
                 found = False
-                messages.add_message(request, messages.WARNING, "Both Book and Student Not Found !!!")
+                messages.add_message(request, messages.WARNING, "Student Not Found !!!")
 
             return render(request,'issue-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
 
@@ -280,6 +285,7 @@ def issueBook(request):
     
 
 def issuingBook(request):
+    print(" in issuing book funtion")
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
@@ -345,6 +351,7 @@ def returnBook(request):
     
 
 def returningBook(request):
+    print(" in returning book funtion")
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
@@ -359,9 +366,11 @@ def returningBook(request):
 
             profile_obj.returnedBooks = profile_obj.returnedBooks + 1
             print(book_obj.status)
-            Registered_Books.objects.update(last_issued_by = profile_obj.name, status = 'Available')
+            # Registered_Books.objects.update(last_issued_by = profile_obj.name, status = 'Available')
+            book_obj.status = "Available"
+            book_obj.last_returned_by = profile_obj.name
             print(book_obj.status)
-
+            print(book_obj.last_returned_by)
             returned_books_obj = Returned_Books.objects.create(returned_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, return_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN, category = book_obj.category )
 
             book_obj.save()
@@ -377,19 +386,21 @@ def returningBook(request):
         return redirect('http://127.0.0.1:8000/')
     
 def issuedBooks(request):
+    print(" in issued book funtion")
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     title = '''BBAU-LIBRARY | Issued Books'''
-    issued_book_obj = Issued_Books.objects.all().count()
+    issued_book_obj = Issued_Books.objects.all()
 
-    return render(request,'issued-books.html',{"title":title,"issuedBooksNumbers":issued_book_obj})
+    return render(request,'issued-books.html',{"title":title,"issued_books":issued_book_obj})
     
 def returnedBooks(request):
+    print(" in returned book funtion")
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     title = '''BBAU-LIBRARY | Returned Books'''
-    returned_books_obj = Returned_Books.objects.all().count()
+    returned_books_obj = Returned_Books.objects.all()
 
-    return render(request,'returned-books.html',{"title":title,"returnedBooksNumbers":returned_books_obj})
+    return render(request,'returned-books.html',{"title":title,"returned_books":returned_books_obj})

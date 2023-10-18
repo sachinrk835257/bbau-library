@@ -4,12 +4,12 @@ from Dashboard.models import Profile,Registered_Books,Issued_Books,Returned_Book
 
 # admmin model
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'department','mobile')
+    list_display = ('library_id','name', 'department','mobile')
     list_filter = ('name','mobile')
     search_fields = ('name', 'department')
 
 class Registered_Books_Admin(admin.ModelAdmin):
-    list_display = ('register_by','bookName', 'ISBN', 'department','category','authorName','coverImage')
+    list_display = ('register_by','bookName', 'ISBN', 'department','status','authorName','coverImage')
     list_filter = ('bookName','authorName','ISBN','department')
     search_fields = ('bookName', 'department','ISBN','authorName')
     

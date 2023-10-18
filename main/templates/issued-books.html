@@ -4,8 +4,8 @@
 {% block body %} 
 
 <div class="container mt-2 mx-auto">
-    <h4 class="my-header">Issued Book Details</h4>
-    <!-- <div class="filer-tools d-flex justify-content-end">
+    <h4 class="my-header">Issued Books Details</h4>
+     <div class="filer-tools d-flex justify-content-end">
       <form action="http://127.0.0.1:8000/search-by/" class="d-flex me-2" method="post">{% csrf_token %}
         <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,and more" required aria-label="Search" style="display: inline;width: auto;">
         <button class="btn btn-success" type="submit">Search</button>
@@ -28,46 +28,46 @@
             <thead>
               <tr>
                 <th scope="col">Sr No.</th>
-                <th scope="col">Cover Image</th>
+                
+                <th scope="col">ISBN</th>
                 <th scope="col">Book Name</th>
-                <th scope="col">Department</th>
+                <th scope="col">Book Department</th>
                 <th scope="col">Category</th>
                 <th scope="col">Author Name</th>
-                <th scope="col">ISBN</th>
-                <th scope="col">Status</th>
-                <th scope="col">Last Issued By</th>
-                <th scope="col">Price</th>
-                <th scope="col">Action</th>
+                <th scope="col">Issued By</th>
+                <th scope="col">Student Library Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Issue Date</th>
+                <th scope="col">Return Date</th>
 
                
 
               </tr>
             </thead>
             <tbody>
-              {% for book in books %}
+              {% for issued_book in issued_books %}
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
-                <td><img src="/media/{{book.coverImage}}" alt="" style="width: 100px;height: 100px;"></td>
-                <td>{{book.bookName}}</td>
-                <td>{{book.department}}</td>
-                <td>{{book.category}}</td>
-                <td>{{book.authorName}}</td>
-                <td>{{book.ISBN}}</td>
-                <td class="{% if book.status == 'Available' %}text-success{% else %} text-Danger {% endif %}">status : {{book.status|default:"Not Available"}}</td>
-                <td>{{book.last_issued_by}}</td>
-                <td>{{book.bookPrice}}</td>
-                <td><a id="edit-{{book.ISBN}}" href="http://127.0.0.1:8000/edit-book/{{book.ISBN}}/" class="btn btn-primary me-2">Edit</a>
-            
-                <a id="del-{{book.ISBN}}" href="http://127.0.0.1:8000/delete-book/{{book.ISBN}}/" class="btn btn-danger" onclick="confirm('are you sure want delete book?')">Delete</a>
                 
-                </td>
+                <td>{{issued_book.ISBN}}</td>
+                <td>{{issued_book.bookName}}</td>
+                <td>{{issued_book.department}}</td>
+                <td>{{issued_book.category}}</td>
+                <td>{{issued_book.authorName}}</td>
+                <td>{{issued_book.issued_by}}</td>
+                <td>{{issued_book.library_id}}</td>
+                <td>{{issued_book.email}}</td>
+                <td>{{issued_book.mobile}}</td>
+                <td>{{issued_book.issue_date}}</td>
+                <td>{{issued_book.return_date}}</td>
                 
               </tr>
               {% endfor %}
               
             </tbody>
           </table>
-    </div> -->
+    </div>
     
 </div>
     
