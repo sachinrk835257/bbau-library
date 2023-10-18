@@ -17,14 +17,14 @@ def index(request):
         title = '''Dashboard-'''
         staff_status = "User"       #DEfault
         book_obj = Registered_Books.objects.all().count()
+        issued_books_obj = Issued_Books.objects.all().count()
         returned_books_obj = Returned_Books.objects.all().count()
-        issued_books_obj = Returned_Books.objects.all().count()
         print(issued_books_obj,returned_books_obj)
         
         if (request.user.is_superuser) :
             staff_status = "Admin"
             profile_count = Profile.objects.all().count()
-            return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBookNumbers":returned_books_obj,"issuedBooksNumbers":issued_books_obj})
+            return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBookNumbers":returned_books_obj,"issuedBookNumbers":issued_books_obj})
 
         return render(request,"index.html",{"title":title,"staff_status":staff_status,"bookListedNumbers":book_obj})
     
@@ -269,6 +269,7 @@ def issueBook(request):
             found = True
             book_obj = Registered_Books.objects.filter(ISBN = ISBN)
             profile_obj = Profile.objects.filter(library_id = library_id)
+            returned_obj = Returned_Books.objects.filter(ISBN =ISBN,library_id = library_id)
             if not book_obj.exists():
                 found = False
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
@@ -277,9 +278,15 @@ def issueBook(request):
                 found = False
                 messages.add_message(request, messages.WARNING, "Student Not Found !!!")
 
+            if not returned_obj.exists():
+                found = False
+                messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
+                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
+
             return render(request,'issue-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
 
     except Exception as e:
+        print(e)
         return redirect('/')
 
     
@@ -300,6 +307,7 @@ def issuingBook(request):
             profile_obj = Profile.objects.get(library_id = library_id)   
 
             profile_obj.issuedBooks = profile_obj.issuedBooks + 1
+            profile_obj.save()
             book_obj.last_issued_by = profile_obj.name
             print(book_obj.status)
             book_obj.status = "Not Available"
@@ -310,7 +318,6 @@ def issuingBook(request):
 
             
             print(book_obj.status)
-            profile_obj.save()
             issued_book_obj.save()
 
             return redirect('http://127.0.0.1:8000/issued-books/')
@@ -337,17 +344,24 @@ def returnBook(request):
             found = True
             book_obj = Registered_Books.objects.filter(ISBN = ISBN)
             profile_obj = Profile.objects.filter(library_id = library_id)
+            issued_obj = Issued_Books.objects.filter(ISBN =ISBN,library_id = library_id)
             if not book_obj.exists():
                 found = False
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
 
             if not profile_obj.exists():
                 found = False
-                messages.add_message(request, messages.WARNING, "Both Book and Student Not Found !!!")
+                messages.add_message(request, messages.WARNING, "Student Not Found !!!")
+
+            if not issued_obj.exists():
+                found = False
+                messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
+                return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
 
             return render(request,'return-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
 
     except Exception as e:
+        print(e)
         return redirect('/')
     
 

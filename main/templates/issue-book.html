@@ -16,7 +16,8 @@
         </div>
         {% endfor %}
         {% endif %}
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-primary" role="alert" style="color: white;
+        background-color: #198754;">
             Book Details
         </div>
 
@@ -65,7 +66,7 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="status">Book Status</label>
-              <input type="text" class="form-control" name="status" id="status" value="{{book.0.status}}" readonly>
+              <input type="text" class="form-control text-danger" name="status" id="status" value="{{book.0.status}}" readonly>
             </div>
           </div>
 
@@ -124,14 +125,14 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="issuedBooks">Issued Books</label>
-              <input type="text" class="form-control" name="issuedBooks" id="issuedBooks" value="{{student.0.issuedBooks}}" readonly>
+              <input type="text" class="form-control text-danger" name="issuedBooks" id="issuedBooks" value="{{student.0.issuedBooks}}" readonly>
             </div>
           </div>
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="returnedBooks">Returned Books</label>
-              <input type="text" class="form-control" name="returnedBooks" id="returnedBooks" value="{{student.0.returnedBooks}}" readonly>
+              <input type="text" class="form-control text-danger" name="returnedBooks" id="returnedBooks" value="{{student.0.returnedBooks}}" readonly>
             </div>
           </div>
         </div>

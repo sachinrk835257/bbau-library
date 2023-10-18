@@ -5,9 +5,9 @@
 
 
 <div class="container mt-2 mx-auto">
-    <h4 class="my-header">Issue Book</h4>
+    <h4 class="my-header">Return Book</h4>
     
-    <form method="post" action="http://127.0.0.1:8000/issuing-book/"> {% csrf_token %}
+    <form method="post" action="http://127.0.0.1:8000/returning-book/"> {% csrf_token %}
     <div class="container card p-2" style="width: 65vw;">        
         {% if messages %}
         {% for message in messages %}
@@ -16,7 +16,7 @@
         </div>
         {% endfor %}
         {% endif %}
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-primary" role="alert" style="color: white; background-color: #198754;">
             Book Details
         </div>
 
@@ -48,7 +48,7 @@
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="category">Category</label>
-              <input type="text" class="form-control" name="catefory" id="category" value="{{book.0.category}}" readonly>
+              <input type="text" class="form-control" name="category" id="category" value="{{book.0.category}}" readonly>
             </div>
           </div>
 
@@ -65,7 +65,7 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="status">Book Status</label>
-              <input type="text" class="form-control" name="status" id="status" value="{{book.0.status}}" readonly>
+              <input type="text" class="form-control text-danger" name="status" id="status" value="{{book.0.status}}" readonly>
             </div>
           </div>
 
@@ -124,14 +124,14 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="issuedBooks">Issued Books</label>
-              <input type="text" class="form-control" name="issuedBooks" id="issuedBooks" value="{{student.0.issuedBooks}}" readonly>
+              <input type="text" class="form-control text-danger" name="issuedBooks" id="issuedBooks" value="{{student.0.issuedBooks}}" readonly>
             </div>
           </div>
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="returnedBooks">Returned Books</label>
-              <input type="text" class="form-control" name="returnedBooks" id="returnedBooks" value="{{student.0.returnedBooks}}" readonly>
+              <input type="text" class="form-control text-danger" name="returnedBooks" id="returnedBooks" value="{{student.0.returnedBooks}}" readonly>
             </div>
           </div>
         </div>
