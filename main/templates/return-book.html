@@ -70,14 +70,36 @@
           </div>
 
       <div class="row">
+
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="Fine">Any Fine (in RS.)</label>
+            <input type="text" class="form-control text-danger" name="fine" id="Fine" placeholder="Enter Fine in Rs." required>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="paid">Fine Paid</label>
+            <select class="form-select" name="isPaid" id="paid" aria-label="Default select example">
+              <option value="True">Fine Paid</option>
+              <option selected value="False">Fine Not Paid</option>
+            </select>
+          </div>
+        </div>
+
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="coverImage">Cover Image</label><br>
             <img src="{{ book.0.coverImage.url }}" alt="Image" style="width: 100px; height: 100px;">
           </div>
         </div>
-      </div>
 
+        
+      </div>
       
     </div>
 

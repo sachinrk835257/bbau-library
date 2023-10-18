@@ -375,9 +375,13 @@ def returningBook(request):
         if request.method == 'POST':
             ISBN = request.POST.get('ISBN')
             library_id = request.POST.get('library_id')
-
+            fine = request.POST.get('fine')
+            isPaid = request.POST.get('isPaid')
+            print(fine,isPaid)
             book_obj = Registered_Books.objects.get(ISBN = ISBN)
-            profile_obj = Profile.objects.get(library_id = library_id)   
+            issued_books_obj = Issued_Books.objects.get(ISBN = ISBN)
+            profile_obj = Profile.objects.get(library_id = library_id)
+            profile_obj.fine = profile_obj.fine + int(fine)
 
             profile_obj.returnedBooks = profile_obj.returnedBooks + 1
             print(book_obj.status)
@@ -386,7 +390,7 @@ def returningBook(request):
             book_obj.last_returned_by = profile_obj.name
             print(book_obj.status)
             print(book_obj.last_returned_by)
-            returned_books_obj = Returned_Books.objects.create(returned_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, return_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN, category = book_obj.category )
+            returned_books_obj = Returned_Books.objects.create(returned_by = profile_obj.name,issue_date = issued_books_obj.issue_date, email = profile_obj.user.email, fine = fine, isPaid = isPaid, mobile = profile_obj.mobile, return_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN, category = book_obj.category )
 
             book_obj.save()
             print(book_obj.status)

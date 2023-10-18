@@ -68,6 +68,7 @@ class Returned_Books(models.Model):
     library_id = models.CharField(default="", max_length=10,verbose_name="Library ID")
     bookName = models.CharField(default="",max_length=255, verbose_name="Book Name")
     fine = models.PositiveIntegerField(default=0,verbose_name="FINE (in RS.)")
+    isPaid = models.BooleanField(default=False,null=False)
     department = models.CharField(default="",max_length=50, verbose_name="Department")
     category = models.CharField(default="",max_length=50, verbose_name="Category")
     authorName = models.CharField(default="",max_length=50, verbose_name="Author Name")

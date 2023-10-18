@@ -39,7 +39,7 @@
              </div>
        
           <div class="col">
-            <div class="card align-items-center p-2 border-2 border-success rounded">
+            <div class="card align-items-center p-2 border-2 border-success rounded registred-users-box">
                 <i class="fa-solid fa-users" style="color: #51c1e6;font-size: 5.4rem;"></i>
               <div class="card-body">
                   <p class="card-text text-center">{{registeredUsers}}</p>
@@ -154,20 +154,20 @@
     var bookListedCard = document.querySelector('.book-listed-box')
     var issuedBooksCard = document.querySelector('.issued-books-box')
     var returnedBooksCard = document.querySelector('.returned-books-box')
+    var registredUsersBox = document.querySelector('.registred-users-box')
     console.log(bookListedCard)
     bookListedCard.addEventListener('click',()=>{
-        console.log("clicked")
         document.location = "http://127.0.0.1:8000/listed-books/";
     })
     issuedBooksCard.addEventListener('click',()=>{
-        console.log("clicked")
         document.location = "http://127.0.0.1:8000/issued-books/";
     })
     returnedBooksCard.addEventListener('click',()=>{
-        console.log("clicked")
         document.location = "http://127.0.0.1:8000/returned-books/";
     })
-    
+    registredUsersBox.addEventListener('click',()=>{
+        document.location = "http://127.0.0.1:8000/registered-students/";
+    })
 
 
 </script>
