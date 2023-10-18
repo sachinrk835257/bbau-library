@@ -303,11 +303,12 @@ def issuingBook(request):
             book_obj.last_issued_by = profile_obj.name
             print(book_obj.status)
             book_obj.status = "Not Available"
+            book_obj.save()
             print(book_obj.status)
 
             issued_book_obj = Issued_Books.objects.create(issued_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, issue_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN, category = book_obj.category )
 
-            book_obj.save()
+            
             print(book_obj.status)
             profile_obj.save()
             issued_book_obj.save()
