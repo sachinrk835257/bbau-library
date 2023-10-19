@@ -282,9 +282,9 @@ def sortByRegisteredBooks(request):
     if request.method == 'POST':
         sort_by = request.POST.get('sort-by')
         print(sort_by)
-        book_obj2 = Registered_Books.objects.filter(status = sort_by)
+        # book_obj2 = Registered_Books.objects.filter(status = sort_by)
         book_obj1 = Registered_Books.objects.all().order_by(sort_by)
-        union_queryset = book_obj1 | book_obj2
+        union_queryset = book_obj1 
         return render(request,'registered-books.html',{"title":title,"books":union_queryset})
 
     
@@ -295,9 +295,9 @@ def sortByManageBooks(request):
         sort_by = request.POST.get('sort-by')
         print(sort_by)
         
-        book_obj2 = Registered_Books.objects.filter(status = sort_by)
+        # book_obj2 = Registered_Books.objects.filter(status = sort_by)
         book_obj1 = Registered_Books.objects.all().order_by(sort_by)
-        union_queryset = book_obj1 | book_obj2
+        union_queryset = book_obj1 
         return render(request,'manage-book.html',{"title":title,"books":union_queryset})
 
 

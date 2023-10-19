@@ -14,13 +14,13 @@
     <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,and more" required aria-label="Search" style="display: inline;width: auto;">
     <button class="btn btn-success" type="submit">Search</button>
   </form>
-  <form action="http://127.0.0.1:8000/registered-books-search-by/" class="d-flex" method="post">{% csrf_token %}
+  <form action="http://127.0.0.1:8000/registered-books-sort-by/" class="d-flex" method="post">{% csrf_token %}
     
     <select class="form-select me-2" id="sort" name="sort-by" aria-label="Default select example" style="width: auto;">
       <option selected value="bookName" >Book Name</option>
       <option value="department">Department</option>
       <option value="category">Category</option>
-      <option value="Available">Available Books</option>
+      <option value="status">Available Books</option>
       <option value="registered_at">New Book First</option>
     </select>
     <button class="btn btn-success" type="submit">Apply filter</button>
