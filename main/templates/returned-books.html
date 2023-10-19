@@ -46,7 +46,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for returned_book in returned_books %}
+              {% for returned_book in returned_books reversed %}
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 

@@ -44,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for student in students %}
+              {% for student in students reversed %}
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{student.name}}</td>

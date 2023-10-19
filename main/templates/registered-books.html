@@ -28,7 +28,7 @@
 
 </div>
   <div class="card-group justify-content-between p-3">
-    {% for book in books %}
+    {% for book in books reversed %}
     <div class="card"
       style="min-width: none;max-width: 23%;border: 2px solid rgb(195, 190, 190);padding-top: 0.3rem;border-radius: 10px;box-shadow: 2px 2px 2px darkgrey;">
       <img src="/media/{{book.coverImage}}" class="card-img-top" style=" width: 150px;

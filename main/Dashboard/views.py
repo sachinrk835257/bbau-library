@@ -16,6 +16,7 @@ def index(request):
     if request.user.is_authenticated :
         title = '''Dashboard-'''
         staff_status = "User"       #DEfault
+        user_obj = User.objects.get(email = request.user.email)
         book_obj = Registered_Books.objects.all().count()
         issued_books_obj = Issued_Books.objects.all().count()
         returned_books_obj = Returned_Books.objects.all().count()
@@ -24,9 +25,12 @@ def index(request):
         if (request.user.is_superuser) :
             staff_status = "Admin"
             profile_count = Profile.objects.all().count()
-            return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBookNumbers":returned_books_obj,"issuedBookNumbers":issued_books_obj})
+            return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBooks":returned_books_obj,"issuedBooks":issued_books_obj})
+        
 
-        return render(request,"index.html",{"title":title,"staff_status":staff_status,"bookListedNumbers":book_obj})
+        issuedBooks = user_obj.profile.issuedBooks
+        returnedBooks = user_obj.profile.returnedBooks
+        return render(request,"index.html",{"title":title,"staff_status":staff_status,"bookListedNumbers":book_obj,"issuedBooks":issuedBooks,"returnedBooks":returnedBooks})
     
     else:
         messages.add_message(request, messages.WARNING, "Login First !!!")
@@ -328,7 +332,7 @@ def issueBook(request):
             found = True
             book_obj = Registered_Books.objects.filter(ISBN = ISBN)
             profile_obj = Profile.objects.filter(library_id = library_id)
-            returned_obj = Returned_Books.objects.filter(ISBN =ISBN,library_id = library_id)
+            # print(returned_obj.exists())
             if not book_obj.exists():
                 found = False
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
@@ -337,7 +341,9 @@ def issueBook(request):
                 found = False
                 messages.add_message(request, messages.WARNING, "Student Not Found !!!")
 
-            if not returned_obj.exists():
+
+            print("status --",book_obj[0].status == "Available")
+            if not book_obj[0].status == "Available":
                 found = False
                 messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
                 return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
@@ -423,6 +429,7 @@ def returnBook(request):
         print(e)
         return redirect('/')
     
+    
 
 def returningBook(request):
     print(" in returning book funtion")
@@ -432,16 +439,17 @@ def returningBook(request):
     
     try:
         if request.method == 'POST':
+            print("posted")
             ISBN = request.POST.get('ISBN')
             library_id = request.POST.get('library_id')
             fine = request.POST.get('fine')
             isPaid = request.POST.get('isPaid')
             print(fine,isPaid)
             book_obj = Registered_Books.objects.get(ISBN = ISBN)
-            issued_books_obj = Issued_Books.objects.get(ISBN = ISBN)
+            issued_books_obj = Issued_Books.objects.filter(ISBN = ISBN).last()
             profile_obj = Profile.objects.get(library_id = library_id)
             profile_obj.fine = profile_obj.fine + int(fine)
-
+            issued_books_obj.return_date = timezone.now().strftime('%Y-%m-%d')
             profile_obj.returnedBooks = profile_obj.returnedBooks + 1
             print(book_obj.status)
             # Registered_Books.objects.update(last_issued_by = profile_obj.name, status = 'Available')
@@ -454,13 +462,14 @@ def returningBook(request):
             book_obj.save()
             print(book_obj.status)
             profile_obj.save()
+            issued_books_obj.save()
             returned_books_obj.save()
 
             return redirect('http://127.0.0.1:8000/returned-books/')
 
     except Exception as e:
         print(e)
-        messages.add_message(request, messages.SUCCESS, "Some Error !!")
+        messages.add_message(request, messages.SUCCESS, "{}".format(e))
         return redirect('http://127.0.0.1:8000/')
     
 def issuedBooks(request):
