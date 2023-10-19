@@ -226,7 +226,7 @@ def bookDetails(request,isbn):
 
 
 @login_required(login_url='http://127.0.0.1:8000/')
-def searchBy(request):
+def searchByRegisteredBooks(request):
     title = '''Registered Books'''
     if request.method == 'POST':
         print(request)
@@ -237,20 +237,79 @@ def searchBy(request):
         book_obj3 = Registered_Books.objects.filter(authorName__contains = search)
         book_obj4 = Registered_Books.objects.filter(department__contains = search)
         book_obj5 = Registered_Books.objects.filter(category__contains = search)
+        book_obj5 = Registered_Books.objects.filter(status = search.lower())
+        union_queryset = book_obj1 | book_obj2 | book_obj3 | book_obj4 | book_obj5
+        print(union_queryset)
+
+        return render(request,'registered-books.html',{"title":title,"books":union_queryset})
+    
+@login_required(login_url='http://127.0.0.1:8000/')
+def searchByManageBooks(request):
+    title = '''Manage Books'''
+    if request.method == 'POST':
+        print(request)
+        search = request.POST.get('search-by')
+        print(search)
+        book_obj1 = Registered_Books.objects.filter(bookName__contains = search)
+        book_obj2 = Registered_Books.objects.filter(ISBN__contains = search)
+        book_obj3 = Registered_Books.objects.filter(authorName__contains = search)
+        book_obj4 = Registered_Books.objects.filter(department__contains = search)
+        book_obj5 = Registered_Books.objects.filter(status = search.lower())
         union_queryset = book_obj1 | book_obj2 | book_obj3 | book_obj4 | book_obj5
         print(union_queryset)
 
         return render(request,'registered-books.html',{"title":title,"books":union_queryset})
 
+@login_required(login_url='http://127.0.0.1:8000/')
+def searchByRegisteredStudents(request):
+    title = '''Registered Students'''
+    if request.method == 'POST':
+        print(request)
+        search = request.POST.get('search-by')
+        print(search)
+        book_obj1 = Profile.objects.filter(name__contains = search)
+        book_obj2 = Profile.objects.filter(library_id__contains = search)
+        book_obj4 = Profile.objects.filter(department__contains = search)
+        union_queryset = book_obj1 | book_obj2 | book_obj4 
+        print(union_queryset)
 
+        return render(request,'registered-students.html',{"title":title,"books":union_queryset})
+
+    
 @login_required(login_url='http://127.0.0.1:8000/')  
-def applyFilter(request):
+def sortByRegisteredBooks(request):
     title = '''Registered Books'''
     if request.method == 'POST':
         sort_by = request.POST.get('sort-by')
-        
+        print(sort_by)
+        book_obj2 = Registered_Books.objects.filter(status = sort_by)
         book_obj1 = Registered_Books.objects.all().order_by(sort_by)
-        return render(request,'registered-books.html',{"title":title,"books":book_obj1})
+        union_queryset = book_obj1 | book_obj2
+        return render(request,'registered-books.html',{"title":title,"books":union_queryset})
+
+    
+@login_required(login_url='http://127.0.0.1:8000/')  
+def sortByManageBooks(request):
+    title = '''Apply FIlter Manage books'''
+    if request.method == 'POST':
+        sort_by = request.POST.get('sort-by')
+        print(sort_by)
+        
+        book_obj2 = Registered_Books.objects.filter(status = sort_by)
+        book_obj1 = Registered_Books.objects.all().order_by(sort_by)
+        union_queryset = book_obj1 | book_obj2
+        return render(request,'manage-book.html',{"title":title,"books":union_queryset})
+
+
+@login_required(login_url='http://127.0.0.1:8000/')  
+def sortByRegisteredStudents(request):
+    title = '''Registered Students'''
+    if request.method == 'POST':
+        sort_by = request.POST.get('sort-by')
+        print(sort_by)
+        
+        book_obj1 = Profile.objects.all().order_by(sort_by)
+        return render(request,'registered-students.html',{"title":title,"books":book_obj1})
     
 
 def issueBook(request):

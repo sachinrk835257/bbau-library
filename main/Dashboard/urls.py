@@ -19,8 +19,14 @@ urlpatterns = [
     path('return-book/',views.returnBook, name="return book"),
     path('returning-book/',views.returningBook, name="issue book"),
     path('manage-book/',views.manageBook, name="manage book"),
-    path('search-by/',views.searchBy, name="search book"),
-    path('sort-by/',views.applyFilter, name="sorting of books"),
+    
+    path('registered-books-search-by/',views.searchByRegisteredBooks, name="search book"),
+    path('manage-books-search-by/',views.searchByManageBooks, name="search book"),
+    path('registered-students-search-by/',views.searchByRegisteredStudents, name="search book"),
+    path('registered-students-sort-by/',views.sortByRegisteredStudents, name="search book"),
+    path('manage-books-sort-by/',views.sortByManageBooks, name="sorting of books"),
+    path('registered-students-sort-by/',views.sortByRegisteredStudents, name="sorting of books"),
+    
     path('issued-books/',views.issuedBooks, name="issued books"),
     path('returned-books/',views.returnedBooks, name="returned books"),
     path('forgot-password/',views.forgotPassword, name="forgot passwordt"),
