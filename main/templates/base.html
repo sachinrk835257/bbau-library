@@ -53,8 +53,9 @@
         {% if user.is_authenticated %}
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/">Dashboard</a>
+            <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/">Dashboard</a>
           </li>
+          
           {% if user.is_superuser %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
@@ -109,6 +110,9 @@
         <li class="nav-item">
             <a class="nav-link" href="/">Issued Books</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
+          </li>
          
           {% endif %}
           <li class="nav-item">
@@ -121,10 +125,16 @@
             <a class="nav-link me-3 text-dark" aria-current="page" href="/">User Login</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link me-3 text-dark" aria-current="page" href="about/">About Us</a>
+          </li>
+          <li class="nav-item">
             <a href="http://127.0.0.1:8000/authenticate/register/" class="nav-link me-3 text-dark">User Sign Up</a>
           </li>
           <li class="nav-item">
             <a class="nav-link me-3 text-dark" href="http://127.0.0.1:8000/authenticate/admin-login/">Admin Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-3 text-dark" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
           </li>
         </ul>
         
@@ -155,7 +165,9 @@
     </div>
     <div class="row me-3">
         <div class="col-md-12">
-           <a href="/" style="color: white;text-decoration: none;">&copy;  <span id="currYear">2023</span> Online Library Management System</a> 
+          <a href="/" style="color: white;text-decoration: none;"><span>Creators </span>sachinsrk | Harsh DUbey</a><br>
+           <a href="/" style="color: white;text-decoration: none;">&copy;  <span id="currYear">2023</span> BBAU - SATELLITE CENTRE online library</a> 
+           
         </div>
 
   </footer>

@@ -10,6 +10,9 @@ from uuid import uuid4
 from django.utils import timezone
 
 # Create your views here.
+def about(request):
+    title = '''About Us'''
+    return render(request,'about-us.html',{"title":title})
 def index(request):
     print("home")
     title = '''Home -'''
