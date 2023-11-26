@@ -494,3 +494,8 @@ def returnedBooks(request):
     returned_books_obj = Returned_Books.objects.all()
 
     return render(request,'returned-books.html',{"title":title,"returned_books":returned_books_obj})
+
+
+def gallery(request):
+    title = '''Gallery'''
+    return render(request,'gallery.html',{"title":title})

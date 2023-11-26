@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block body %} 
+{% load static %}
+
+<div class="container mt-2 mx-auto">
+    <h4 class="my-header">Gallery</h4>
+    <div class="ph-gallery">
+        <div class="mb-1 pt-3 d-flex justify-content-center">
+            <div class="card align-items-center"><img src="{% static 'images/1.jpg' %}" class="" alt="...">
+                
+            </div>
+            <div class="card align-items-center"><img src="{% static 'images/2.jpg' %}" class="" alt="...">
+                
+            </div>
+            <div class="card align-items-center"><img src="{% static 'images/3.jpg' %}" class="" alt="...">
+                
+            </div>
+            <div class="card align-items-center"><img src="{% static 'images/4.jpg' %}" class="" alt="...">
+                
+            </div>
+        </div>
+        <div class="mb-1 d-flex justify-content-center">
+            <div class="card align-items-center"><img src="{% static 'images/5.jpg' %}" class="" alt="...">
+                
+            </div>
+            <div class="card align-items-center"><img src="{% static 'images/6.JPEG' %}" class="" alt="...">
+                
+            </div>
+           
+        </div>
+    
+</div>
+
+    
+
+{% endblock body %}

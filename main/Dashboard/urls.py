@@ -9,6 +9,7 @@ urlpatterns = [
     # path('dashboard/',views.dashboard, name="go to dashboard login"),
     path('registered-students/',views.regStudents, name="go to registered students"),
      path('about/',views.about, name="go to registered students"),
+     path('gallery/',views.gallery, name="gallery"),
     path('edit-profile/<int:myid>/',views.editProfile, name="go to edit student profile"),
     path('listed-books/',views.listedBooks, name="go to registered books"),
     path('edit-book/<str:isbn>/',views.bookDetails, name="go to specific book detail"),

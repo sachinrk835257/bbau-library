@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -21,18 +22,38 @@
 <body>
 
   <!-- jumbotron -->
+  <div id="atTop" class="d-flex align-items-center justify-content-evenly">
+    <div class="">
+      <img src="{% static 'images/bbau logo.png' %}" style="height: 120px!important; margin: 10px 0px!important;">
+    </div>
+    <div class="text-center" style="color: black; margin-top: 25px!important; line-height: 30px!important;">
+      <h3><b class="text-center" style="color:maroon;">बाबासाहेब भीमराव अम्बेडकर विश्वविद्यालय </b>
+      <br>
+      <b class="text-center" style="color:maroon;">Babasaheb Bhimrao Ambedkar University </b></h3>
+      <b class="text-center" style="color:maroon;">( A Central University )</b>
+
+      <h3> <b class="text-center" style="color:maroon;">Accredited 'A++' Grade by
+          NAAC (2023)</b> </h3>
+
+    </div>
+    <div class="">
+
+      <img src="{% static 'images/ambedkar-logo.png' %}"
+        style="height: 120px!important; margin-left: -20px !important;">
+    </div>
+  </div>
   <header class="mb-4 border-bottom d-flex align-items-center"
     style="padding: 5px 21px;justify-content: space-between;">
     <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-      <img src="{% static 'images/bbauFullLogo.png' %}" alt="error"></a>
       {% if user.is_authenticated %}
-    <div>
+      <div>
         <a class="me-2">Last Login {{ user.last_login|timezone:"Asia/Kolkata" }}</a>
         <a class="me-2"><i class="fa-solid fa-user text-dark"></i> {{user.username}}</a>
         {% if user.is_superuser %}
-                
-                <a class="btn btn-success me-2" href="http://127.0.0.1:8000/authenticate/create-admin/"><i class="fa-solid fa-plus text-dark"></i> Create Admin</a>
-                {% endif %}
+
+        <a class="btn btn-success me-2" href="http://127.0.0.1:8000/authenticate/create-admin/"><i
+            class="fa-solid fa-plus text-dark"></i> Create Admin</a>
+        {% endif %}
         <a href="http://127.0.0.1:8000/authenticate/logout/" class="btn btn-danger">Log Out</a>
       </div>
 
@@ -48,14 +69,14 @@
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="header-text ml-1" href="#">BBAU SATELLITE CENTRE </a>
+      <i class="fa-solid fa-book-open-reader fa-beat-fade" style="font-size: 2.5rem;margin: 5px 1.3rem;"></i><a class="header-text ml-1" href="#"> BBAU SATELLITE CENTRE </a>
       <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03" style="padding-right: 2rem;">
         {% if user.is_authenticated %}
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/">Dashboard</a>
           </li>
-          
+
           {% if user.is_superuser %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
@@ -94,20 +115,22 @@
                 <hr class="dropdown-divider">
               </li>
               <li><a class="dropdown-item" href="http://127.0.0.1:8000/manage-book/">Manage Books</a></li>
-          
+
             </ul>
           </li>
           <li class="nav-item">
-            <a type="button" id="issue-book" class="nav-link" onclick="setAction(this.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Issue Book</a>
+            <a type="button" id="issue-book" class="nav-link" onclick="setAction(this.id)" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">Issue Book</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="return-book" onclick="setAction(this.id)"  data-bs-toggle="modal" data-bs-target="#exampleModal">Return Book</a>
+            <a class="nav-link" id="return-book" onclick="setAction(this.id)" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">Return Book</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="http://127.0.0.1:8000/registered-students/">Registered Students</a>
           </li>
           {% else %}
-        <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="/">Issued Books</a>
           </li>
           <li class="nav-item">
@@ -116,16 +139,17 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/contact/">Contact US</a>
           </li>
-         
+
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:8000/authenticate/change-password/{{user.id}}">Change Password</a>
+            <a class="nav-link" href="http://127.0.0.1:8000/authenticate/change-password/{{user.id}}">Change
+              Password</a>
           </li>
         </ul>
         {% else %}
         <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
           <li class="nav-item">
-            <a class="nav-link me-3 text-dark" aria-current="page" href="#UserLogin">User Login</a>
+            <a class="nav-link me-3 text-dark" aria-current="page" href="/">User Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link me-3 text-dark" aria-current="page" href="about/">About Us</a>
@@ -137,10 +161,38 @@
             <a class="nav-link me-3 text-dark" href="http://127.0.0.1:8000/authenticate/admin-login/">Admin Login</a>
           </li>
           <li class="nav-item">
+
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="mainDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Library Executors
+              </button>
+              <div class="dropdown-menu" aria-labelledby="mainDropdown">
+                <div class="dropend">
+                  <button class="btn dropdown-toggle" type="button" id="nestedDropdown1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Library Incharge
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="nestedDropdown">
+                    <a class="dropdown-item bg-secondary" href="#">Poonam Sharma</a>
+                  </div>
+                </div>
+                <a class="dropdown-item" href="#"></a>
+                <div class="dropend">
+                  <button class="btn dropdown-toggle" type="button" id="nestedDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Library Coordinator
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="nestedDropdown">
+                    <a class="dropdown-item bg-secondary" href="#">Aditya Khamparia</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </li>
+          <li class="nav-item">
             <a class="nav-link me-3 text-dark" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
           </li>
         </ul>
-        
+
         {% endif %}
 
       </div>
@@ -148,15 +200,16 @@
   </nav>
 
   {% block body %}
-  
+
   {% endblock body %}
 
-  
-    
+
+
   </div>
-  <button id="scrollToTopButton"><i class="fa-solid fa-arrow-up" style="color: #ffffff;"></i></button>
-  
-  
+  <a href="#atTop" class="scrollButton" style="color: #ffffff;text-align: center;
+  padding: 10px;"><i class="fa-solid fa-arrow-up" style="color: #ffffff;"></i></a>
+
+
   <footer class="my-footer mt-2">
 
     <div class="social-links ml-3">
@@ -167,80 +220,83 @@
 
     </div>
     <div class="row me-3">
-        <div class="col-md-12">
-          <a href="/" style="color: white;text-decoration: none;"><span>Creators </span>sachinsrk | Harsh DUbey</a><br>
-           <a href="/" style="color: white;text-decoration: none;">&copy;  <span id="currYear">2023</span> BBAU - SATELLITE CENTRE online library</a> 
-           
-        </div>
+      <div class="col-md-12">
+        <a href="/" style="color: white;text-decoration: none;"><span>Creators </span>sachinsrk | Harsh DUbey</a><br>
+        <a href="/" style="color: white;text-decoration: none;">&copy; <span id="currYear">2023</span> BBAU - SATELLITE
+          CENTRE online library</a>
+
+      </div>
 
   </footer>
 
   <!-- Button trigger modal -->
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Provide Details</h5>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Provide Details</h5>
 
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="forSetAction" method="post">{% csrf_token %}
+
+
+          <div class="modal-body">
+            <label for="ISBN" class="form-label">Book ISBN Number</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text"><i class="fa-solid fa-book fa-beat"></i></i></span>
+              <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter Unique ISBN Number">
+            </div>
+
+            <label for="library_id" class="form-label">Student Library Id</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text"><i class="fa-regular fa-id-card fa-fade"></i></span>
+              <input type="text" class="form-control" name="library_id" id="library_id"
+                placeholder="Enter Unique Student Library Id">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
       </div>
-      <form id="forSetAction" method="post">{% csrf_token %}
-
-
-        <div class="modal-body">
-          <label for="ISBN" class="form-label">Book ISBN Number</label>
-          <div class="input-group mb-3">
-            <span class="input-group-text"><i class="fa-solid fa-book fa-beat"></i></i></span>
-            <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter Unique ISBN Number">
-          </div>
-          
-          <label for="library_id" class="form-label">Student Library Id</label>
-          <div class="input-group mb-3">
-            <span class="input-group-text"><i class="fa-regular fa-id-card fa-fade"></i></span>
-            <input type="text" class="form-control" name="library_id" id="library_id" placeholder="Enter Unique Student Library Id">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
     </div>
   </div>
-</div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
 
-    <script src="{% static 'js/main-js.js' %}"></script>
-    <script>
-      function setAction(id) {
-        var issueBookBtn = document.getElementById(id)
-        var forSetAction = document.getElementById('forSetAction')
-        forSetAction.setAttribute('action','http://127.0.0.1:8000/' + id + '/')
+  <script src="{% static 'js/main-js.js' %}"></script>
+  <script>
+    function setAction(id) {
+      var issueBookBtn = document.getElementById(id)
+      var forSetAction = document.getElementById('forSetAction')
+      forSetAction.setAttribute('action', 'http://127.0.0.1:8000/' + id + '/')
 
-      }
+    }
 
-      var myModal = document.getElementById('myModal')
-      var myInput = document.getElementById('myInput')
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
 
-      myModal.addEventListener('shown.bs.modal', function () {
+    myModal.addEventListener('shown.bs.modal', function () {
       myInput.focus()
 
-})
-    </script>
+    })
+
+  </script>
 </body>
 
 </html>

@@ -9,15 +9,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentYear = currentDate.getFullYear();
     spanYear.innerText = currentYear
 
-    // Get the button element
-    var scrollToTopButton = document.getElementById("scrollToTopButton");
+    let nestedDropdown1 = document.getElementById('nestedDropdown1');
+    nestedDropdown1.addEventListener('mouseover',()=>{
+      console.log("mouse over")
+      nestedDropdown1.nextElementSibling.classList.add('show')
 
-    // Add a click event listener to the button
-    scrollToTopButton.addEventListener("click", function () {
-        // Scroll to the top of the page smoothly
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth" // This provides a smooth scrolling effect
-        });
-    });
+    })
+    nestedDropdown1.addEventListener('mouseleave',()=>{
+      console.log("mouseleave")
+      nestedDropdown1.nextElementSibling.classList.remove('show')
+    })
+    let nestedDropdown2 = document.getElementById('nestedDropdown2');
+    nestedDropdown2.addEventListener('mouseover',()=>{
+      console.log("mouse over")
+      nestedDropdown2.nextElementSibling.classList.add('show')
+
+    })
+    nestedDropdown2.addEventListener('mouseleave',()=>{
+      console.log("mouseleave")
+      nestedDropdown2.nextElementSibling.classList.remove('show')
+    })
+
 });
