@@ -24,7 +24,7 @@
   <header class="mb-4 border-bottom d-flex align-items-center"
     style="padding: 5px 21px;justify-content: space-between;">
     <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-      <img src="{% static 'images/logo.png' %}" alt="error"></a>
+      <img src="{% static 'images/bbauFullLogo.png' %}" alt="error"></a>
       {% if user.is_authenticated %}
     <div>
         <a class="me-2">Last Login {{ user.last_login|timezone:"Asia/Kolkata" }}</a>
@@ -122,7 +122,7 @@
         {% else %}
         <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
           <li class="nav-item">
-            <a class="nav-link me-3 text-dark" aria-current="page" href="/">User Login</a>
+            <a class="nav-link me-3 text-dark" aria-current="page" href="#UserLogin">User Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link me-3 text-dark" aria-current="page" href="about/">About Us</a>
