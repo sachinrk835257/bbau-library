@@ -22,7 +22,7 @@
 <body>
 
   <!-- jumbotron -->
-  <div id="atTop" class="d-flex align-items-center justify-content-evenly">
+  <div id="atTop" class="d-flex align-items-center justify-content-evenly" style="background: linear-gradient(45deg, #61a961, transparent);">
     <div class="">
       <img src="{% static 'images/bbau logo.png' %}" style="height: 120px!important; margin: 10px 0px!important;">
     </div>
@@ -42,28 +42,10 @@
         style="height: 120px!important; margin-left: -20px !important;">
     </div>
   </div>
-  <header class="mb-4 border-bottom d-flex align-items-center"
-    style="padding: 5px 21px;justify-content: space-between;">
-    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-      {% if user.is_authenticated %}
-      <div>
-        <a class="me-2">Last Login {{ user.last_login|timezone:"Asia/Kolkata" }}</a>
-        <a class="me-2"><i class="fa-solid fa-user text-dark"></i> {{user.username}}</a>
-        {% if user.is_superuser %}
-
-        <a class="btn btn-success me-2" href="http://127.0.0.1:8000/authenticate/create-admin/"><i
-            class="fa-solid fa-plus text-dark"></i> Create Admin</a>
-        {% endif %}
-        <a href="http://127.0.0.1:8000/authenticate/logout/" class="btn btn-danger">Log Out</a>
-      </div>
-
-      {% endif %}
-    </a>
-  </header>
 
   <!-- navbar -->
 
-  <nav class="navbar border-bottom navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar border-bottom navbar-expand-lg navbar-light position-sticky" style="position: sticky;background: #e9ecef;box-shadow: 0px 2px 5px blue;top: 0px;z-index: 100;">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +56,7 @@
         {% if user.is_authenticated %}
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/">Dashboard</a>
+            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/">Dashboard</a>
           </li>
 
           {% if user.is_superuser %}
@@ -119,31 +101,33 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a type="button" id="issue-book" class="nav-link" onclick="setAction(this.id)" data-bs-toggle="modal"
+            <a type="button" id="issue-book" class="nav-link text-dark" onclick="setAction(this.id)" data-bs-toggle="modal"
               data-bs-target="#exampleModal">Issue Book</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="return-book" onclick="setAction(this.id)" data-bs-toggle="modal"
+            <a class="nav-link text-dark" id="return-book" onclick="setAction(this.id)" data-bs-toggle="modal"
               data-bs-target="#exampleModal">Return Book</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:8000/registered-students/">Registered Students</a>
+            <a class="nav-link text-dark" href="http://127.0.0.1:8000/registered-students/">Registered Students</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="/">Issued Books</a>
+            <a class="nav-link text-dark" href="/">Issued Books</a>
           </li>
+          
+          {% endif %}
+
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/contact/">Contact US</a>
+            <a class="nav-link text-dark" href="http://127.0.0.1:8000/authenticate/change-password/{{user.id}}">Change
+              Password</a>
           </li>
 
-          {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:8000/authenticate/change-password/{{user.id}}">Change
-              Password</a>
+            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/contact/">Contact US</a>
           </li>
         </ul>
         {% else %}
@@ -152,7 +136,7 @@
             <a class="nav-link me-3 text-dark" aria-current="page" href="/">User Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-3 text-dark" aria-current="page" href="about/">About Us</a>
+            <a class="nav-link me-3 text-dark" aria-current="page" href="http://127.0.0.1:8000/about/">About Us</a>
           </li>
           <li class="nav-item">
             <a href="http://127.0.0.1:8000/authenticate/register/" class="nav-link me-3 text-dark">User Sign Up</a>
@@ -163,16 +147,16 @@
           <li class="nav-item">
 
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="mainDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <a href="#" class="nav-link text-dark dropdown-toggle" id="mainDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             Library Executors
-              </button>
+              </a>
               <div class="dropdown-menu" aria-labelledby="mainDropdown">
                 <div class="dropend">
                   <button class="btn dropdown-toggle" type="button" id="nestedDropdown1" data-bs-toggle="dropdown" aria-expanded="false">
                     Library Incharge
                   </button>
                   <div class="dropdown-menu" aria-labelledby="nestedDropdown">
-                    <a class="dropdown-item bg-secondary" href="#">Poonam Sharma</a>
+                    <a class="dropdown-item bg-primary" href="#">Poonam Sharma</a>
                   </div>
                 </div>
                 <a class="dropdown-item" href="#"></a>
@@ -181,7 +165,7 @@
                     Library Coordinator
                   </button>
                   <div class="dropdown-menu" aria-labelledby="nestedDropdown">
-                    <a class="dropdown-item bg-secondary" href="#">Aditya Khamparia</a>
+                    <a class="dropdown-item bg-primary" href="#">Aditya Khamparia</a>
                   </div>
                 </div>
               </div>
@@ -189,7 +173,10 @@
             
           </li>
           <li class="nav-item">
-            <a class="nav-link me-3 text-dark" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
+            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/contact/">Contact US</a>
           </li>
         </ul>
 
@@ -198,6 +185,23 @@
       </div>
     </div>
   </nav>
+
+  {% if user.is_authenticated %}
+  <header class="mb-1 border-bottom d-flex justify-content-end"
+    style="padding: 5px 21px">
+      <div>
+        <a class="me-2">Last Login {{ user.last_login|timezone:"Asia/Kolkata" }}</a>
+        <a class="me-2"><i class="fa-solid fa-user text-dark"></i> {{user.username}}</a>
+        {% if user.is_superuser %}
+
+        <a class="btn btn-success me-2" href="http://127.0.0.1:8000/authenticate/create-admin/"><i
+            class="fa-solid fa-plus text-dark"></i> Create Admin</a>
+        {% endif %}
+        <a href="http://127.0.0.1:8000/authenticate/logout/" class="btn btn-danger">Log Out</a>
+      </div>
+
+  </header>
+      {% endif %}
 
   {% block body %}
 

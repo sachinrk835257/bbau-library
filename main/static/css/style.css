@@ -3,13 +3,11 @@ body{
     min-height: 100vh;
     overflow-x: hidden;
 }
-
-.navbar .nav-link{
-    color: red;
-}
 .navbar .nav-link:hover{
     background-color: mediumpurple;
-    color:white;
+    color: white;
+    border-radius: 7px;
+    transition: background-color 0.2s;
 }
 
 
