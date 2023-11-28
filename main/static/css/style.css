@@ -19,6 +19,11 @@ body{
     color: white;
 }
 
+.home-para{
+    padding: 0.5vw 1vw;
+    text-align: justify;
+}
+
 .header-text{
     font-size: 1.5rem;
     color: #0f5132;
