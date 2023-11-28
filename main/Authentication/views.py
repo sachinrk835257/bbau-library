@@ -17,7 +17,8 @@ indian_time = current_time.astimezone(pytz.timezone('Asia/Kolkata'))
 
 # Create your views here.
 def user_login(request):
-    title = '''Dashboard -'''
+    title = '''BBAU SATELLITE | Login into Account'''
+    print("yes found")
     try:
         if request.method == "POST":
             email = request.POST.get('email')
@@ -26,7 +27,7 @@ def user_login(request):
             print(User.objects.filter(username = email).exists())
             if not User.objects.filter(username = email).exists():
                 messages.add_message(request, messages.WARNING, "User Not Found !!!")
-                return redirect('/')
+                return redirect('http://127.0.0.1:8000/user-login/')
             user = authenticate(request,username = email,password = pswrd, is_staff = False)
             if user is not None:
                 user.last_login = indian_time #convert utc timzone into INDIAN timezone
@@ -37,16 +38,16 @@ def user_login(request):
             else:
                 print(user)
                 messages.add_message(request, messages.WARNING, "INVALID CREDENTIALS !!!")
-                return redirect('/')
+                return redirect('http://127.0.0.1:8000/user-login')
 
     except Exception as e:
         print(e)
         messages.add_message(request, messages.WARNING, "Invalid Credentials !!!")
-        return render(request,'index.html',{{"title":title}})
+        return render(request,'user-login.html',{{"title":title}})
 
 
 def addStudent(request):
-    title = '''Register'''
+    title = '''BBAU SATELLITE | Register'''
     if request.method == 'POST':
         try:
             name = request.POST.get('name').upper()
@@ -93,7 +94,7 @@ def adminRegister(request):
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
 
-    title = '''Admin Registeration'''
+    title = '''BBAU SATELLITE | Admin Registeration'''
     try:
         if request.method == 'POST':    
             reference_by = request.POST.get('reference_by')     
@@ -129,7 +130,7 @@ def adminRegister(request):
 
 
 def admin_login(request):
-    title = '''Admin Dashboard -'''
+    title = '''BBAU SATELLITE | Admin Dashboard -'''
     try:
         if request.method == "POST":
             email = request.POST.get('email')
@@ -166,7 +167,7 @@ def admin_login(request):
 def forgotChangePassword(request,token):
     print("email change password")
     try:
-        title = '''change password'''
+        title = '''BBAU SATELLITE | change password'''
         user_obj = ChangePassword.objects.get(token = token)
         if request.method == 'POST':
             pass1 = request.POST.get('pass1')
@@ -189,7 +190,7 @@ def forgotChangePassword(request,token):
 def changePassword(request,id):
     print("in change password",id)
     try:
-        title = '''change password'''
+        title = '''BBAU SATELLITE | change password'''
         user_obj = User.objects.get(id = id)
         print(user_obj)
         if request.method == 'POST':

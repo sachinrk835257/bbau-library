@@ -11,14 +11,19 @@ from django.utils import timezone
 
 # Create your views here.
 def about(request):
-    title = '''About Us'''
+    title = '''BBAU SATELLITE | About Us'''
     return render(request,'about-us.html',{"title":title})
+
+def userLogin(request):
+    title = '''BBAU SATELLITE | Login Page'''
+    return render(request,'user-login.html',{"title":title})
+
 def index(request):
     print("home")
-    title = '''Home -'''
+    title = '''BBAU SATELLITE | Home -'''
     if request.user.is_authenticated :
-        title = '''Dashboard-'''
-        staff_status = "User"       #DEfault
+        title = '''BBAU SATELLITE | Dashboard-'''
+        staff_status = "Student"       #DEfault
         user_obj = User.objects.get(email = request.user.email)
         book_obj = Registered_Books.objects.all().count()
         issued_books_obj = Issued_Books.objects.all().count()
@@ -40,7 +45,7 @@ def index(request):
         return render(request,'index.html',{"title":title})
 
 def regStudents(request):
-    title = '''Registered Students'''
+    title = '''BBAU SATELLITE | Registered Students'''
     students = Profile.objects.all()
     print(students)
 
@@ -49,7 +54,7 @@ def regStudents(request):
 
 @login_required(login_url="http://127.0.0.1:8000/")
 def editProfile(request,myid):
-    title = '''Edit-Profile'''
+    title = '''BBAU SATELLITE | Edit-Profile'''
     profile = Profile.objects.get(library_id = myid)
     if request.method == 'POST':
         try:
@@ -89,14 +94,14 @@ def delprofile(request,myid):
     return redirect('http://127.0.0.1:8000/registered-students/')
 
 def forgotPassword(request):
-    title = '''forgot Password'''
+    title = '''BBAU SATELLITE | forgot Password'''
     try:
         if request.method == 'POST':
             email = request.POST.get('email')
             user = User.objects.filter(username = email).exists()
             if not user:
                 messages.add_message(request, messages.WARNING, "User not found. Please register first !")
-                return redirect('/')
+                return redirect('http://127.0.0.1:8000/user-login/')
         
             subject = "BBAU-LIBRARY Change Password"
             message = "Dear User"
@@ -119,7 +124,7 @@ def addBook(request):
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''adding book'''
+    title = '''BBAU SATELLITE | adding book'''
     try:
         if request.method == 'POST':
             bookName = request.POST.get('bookName')
@@ -171,7 +176,7 @@ def deleteProfile(request,myid):
 @login_required(login_url='http://127.0.0.1:8000/')
 def listedBooks(request):
     if request.user.is_authenticated:
-        title = '''Registered Books'''
+        title = '''BBAU SATELLITE | Registered Books'''
         book_obj = Registered_Books.objects.all()
         print(book_obj[0].status)
         
@@ -182,9 +187,9 @@ def manageBook(request):
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''Manage Book'''
+    title = '''BBAU SATELLITE | Manage Book'''
     if request.user.is_superuser:
-        title = '''Registered Books'''
+        title = '''BBAU SATELLITE | Registered Books'''
         book_obj = Registered_Books.objects.all()
         
         return render(request,'manage-book.html',{"title":title,"books":book_obj})
@@ -195,7 +200,7 @@ def bookDetails(request,isbn):
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     
-    title = '''Update Books Details'''
+    title = '''BBAU SATELLITE | Update Books Details'''
     print(isbn)
     book_obj1 = Registered_Books.objects.get(ISBN = isbn)
     print(book_obj1.category)
@@ -234,7 +239,7 @@ def bookDetails(request,isbn):
 
 @login_required(login_url='http://127.0.0.1:8000/')
 def searchByRegisteredBooks(request):
-    title = '''Registered Books'''
+    title = '''BBAU SATELLITE | Registered Books'''
     if request.method == 'POST':
         print(request)
         search = request.POST.get('search-by')
@@ -252,7 +257,7 @@ def searchByRegisteredBooks(request):
     
 @login_required(login_url='http://127.0.0.1:8000/')
 def searchByManageBooks(request):
-    title = '''Manage Books'''
+    title = '''BBAU SATELLITE | Manage Books'''
     if request.method == 'POST':
         print(request)
         search = request.POST.get('search-by')
@@ -269,7 +274,7 @@ def searchByManageBooks(request):
 
 @login_required(login_url='http://127.0.0.1:8000/')
 def searchByRegisteredStudents(request):
-    title = '''Registered Students'''
+    title = '''BBAU SATELLITE | Registered Students'''
     if request.method == 'POST':
         print(request)
         search = request.POST.get('search-by')
@@ -285,7 +290,7 @@ def searchByRegisteredStudents(request):
     
 @login_required(login_url='http://127.0.0.1:8000/')  
 def sortByRegisteredBooks(request):
-    title = '''Registered Books'''
+    title = '''BBAU SATELLITE | Registered Books'''
     if request.method == 'POST':
         sort_by = request.POST.get('sort-by')
         print(sort_by)
@@ -297,7 +302,7 @@ def sortByRegisteredBooks(request):
     
 @login_required(login_url='http://127.0.0.1:8000/')  
 def sortByManageBooks(request):
-    title = '''Apply FIlter Manage books'''
+    title = '''BBAU SATELLITE | Apply FIlter Manage books'''
     if request.method == 'POST':
         sort_by = request.POST.get('sort-by')
         print(sort_by)
@@ -310,7 +315,7 @@ def sortByManageBooks(request):
 
 @login_required(login_url='http://127.0.0.1:8000/')  
 def sortByRegisteredStudents(request):
-    title = '''Registered Students'''
+    title = '''BBAU SATELLITE | Registered Students'''
     if request.method == 'POST':
         sort_by = request.POST.get('sort-by')
         print(sort_by)
@@ -324,7 +329,7 @@ def issueBook(request):
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''Issue Book'''
+    title = '''BBAU SATELLITE | Issue Book'''
 
     try:
         if request.method == 'POST':
@@ -401,7 +406,7 @@ def returnBook(request):
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''Issue Book'''
+    title = '''BBAU SATELLITE | Issue Book'''
 
     try:
         if request.method == 'POST':
@@ -480,7 +485,7 @@ def issuedBooks(request):
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''BBAU-LIBRARY | Issued Books'''
+    title = '''BBAU SATELLITE | BBAU-LIBRARY | Issued Books'''
     issued_book_obj = Issued_Books.objects.all()
 
     return render(request,'issued-books.html',{"title":title,"issued_books":issued_book_obj})
@@ -490,16 +495,16 @@ def returnedBooks(request):
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''BBAU-LIBRARY | Returned Books'''
+    title = '''BBAU SATELLITE | BBAU-LIBRARY | Returned Books'''
     returned_books_obj = Returned_Books.objects.all()
 
     return render(request,'returned-books.html',{"title":title,"returned_books":returned_books_obj})
 
 
 def gallery(request):
-    title = '''Gallery'''
+    title = '''BBAU SATELLITE | Gallery'''
     return render(request,'gallery.html',{"title":title})
 
 def contact(request):
-    title = '''Contact Us'''
+    title = '''BBAU SATELLITE | Contact Us'''
     return render(request,'contact.html')
