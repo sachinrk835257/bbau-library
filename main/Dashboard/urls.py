@@ -28,6 +28,7 @@ urlpatterns = [
     path('registered-students-sort-by/',views.sortByRegisteredStudents, name="search book"),
     path('manage-books-sort-by/',views.sortByManageBooks, name="sorting of books"),
     path('registered-books-sort-by/',views.sortByRegisteredBooks, name="sorting of books"),
+    path('contact-us/',views.contact, name="go to contact"),
     
     path('issued-books/',views.issuedBooks, name="issued books"),
     path('returned-books/',views.returnedBooks, name="returned books"),

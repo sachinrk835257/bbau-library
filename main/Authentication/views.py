@@ -49,9 +49,9 @@ def addStudent(request):
     title = '''Register'''
     if request.method == 'POST':
         try:
-            name = request.POST.get('name')
-            gender = request.POST.get('gender')
-            depart = request.POST.get('depart')
+            name = request.POST.get('name').upper()
+            gender = request.POST.get('gender').upper()
+            depart = request.POST.get('depart').upper()
             library_id = request.POST.get('library_id')
             joiningYear = request.POST.get('joiningYear')
             passingYear = request.POST.get('passingYear')
@@ -59,7 +59,7 @@ def addStudent(request):
             email = request.POST.get('email')
             pass1 = request.POST.get('pass1')
             pass2 = request.POST.get('pass2')
-            print(pass1,pass2)
+            print(name,gender,depart)
             if pass1 != pass2:
                 messages.add_message(request, messages.WARNING, "Password Mismatch !!!")
                 return redirect('http://127.0.0.1:8000/authenticate/register/')
@@ -220,7 +220,7 @@ def changePassword(request,id):
 
             
                 messages.add_message(request, messages.WARNING, "INVALID CREDENTIALS !!!")
-                return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
+                return redirect('http://127.0.0.1:8000/authenticate/change-password/{}'.format(id))
 
         return render(request,'change-password.html',{"title":title,"username":user_obj.email})
     except Exception as e:

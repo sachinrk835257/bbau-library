@@ -159,7 +159,7 @@
         </div>
 
         <a type="button" href="http://127.0.0.1:8000/" class="btn btn-danger mb-1">Cancel</a>
-          <button type="submit" class="btn btn-success" {% if book.0.status == 'Not Available' %}onclick="confirm('Sure {{student.0.name}} is returning book -- {{book.0.bookName}}?')"{% else %}onclick="alert('{{book.0.bookName}} status is {{book.0.status.0.name}} !!!')"{% endif %}>Return Book</button>
+        {% if found == 'True' %}<button type="submit" class="btn btn-success" {% if book.0.status == 'Not Available' %}onclick="confirm('Sure {{student.0.name}} is returning book -- {{book.0.bookName}}?')"{% else %}onclick="alert('{{book.0.bookName}} status is {{book.0.status.0.name}} !!!')"{% endif %}>Return Book</button>{% endif %}
 
   </form>
   

@@ -24,39 +24,46 @@
 
           <div class="modal-body">
             <div class="mb-3">
-              <label for="name" class="form-label">Enter Full Name</label>
-              <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name" required>
+              <label for="name" class="form-label">Enter Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="name" id="name" title="Enter Your Full Name" placeholder="Enter Full Name" required>
             </div>
 
             
-            <label for="gender" class="form-label">Gender</label>
-            <select class="form-select" id="gender" name="gender" aria-label="Default select example">
+            <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+            <select class="form-select" id="gender" title="Enter Your Gender" name="gender" aria-label="Default select example">
               <option selected>select gender</option>
               <option value="MALE">Male</option>
               <option value="FEMALE">Female</option>
               <option value="OTHERS">Others</option>
             </select>
 
+            <label for="depart" class="form-label">Department <span class="text-danger">*</span></label>
+            <select class="form-select" id="depart" name="depart" placeholder="Department Name" required>
+              <option selected>----Select Department----</option>
+              <option value="MALE">Computer Science</option>
+              <option value="FEMALE">Information Technology</option>
+              <option value="B.A">B.A</option>
+              <option value="B.Com">B.Com</option>
+              <option value="D.Pharma">D.Pharma</option>
+              <option value="OTHERS">Others</option>
+            </select>
+
             <div class="mb-3">
-              <label for="depart" class="form-label">Department</label>
-              <input type="text" class="form-control" name="depart" id="depart" placeholder="Department Name" required>
-            </div>
-            <div class="mb-3">
-              <label for="libId" class="form-label">Library Id</label>
-              <input type="text" class="form-control" name="library_id" id="libId" placeholder="Enter Library Id" required>
+              <label for="libId" class="form-label">Library Id <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" title="enter six digit library id" name="library_id" id="libId" placeholder="Enter Library Id" required>
             </div>
 
             <div class="mb-3">
-              <label for="joiningYear" class="form-label">Admission Year</label>
-              <input type="number" class="form-control" name="joiningYear" id="joiningYear" placeholder="Enter admission year" required>
+              <label for="joiningYear" class="form-label">Admission Year <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" name="joiningYear" id="joiningYear" placeholder="Enter admission year" min="2016" max="2100" required>
             </div>
             <div class="mb-3">
-              <label for="passingYear" class="form-label">Passing Year</label>
-              <input type="number" class="form-control" name="passingYear" id="passingYear" placeholder="Enter passing year" required>
+              <label for="passingYear" class="form-label">Passing Year <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" name="passingYear" id="passingYear" placeholder="Enter passing year" min="2016" max="2100" required>
             </div>
 
             <div class="mb-3">
-              <label for="mobile" class="form-label">Mobile Number</label>
+              <label for="mobile" class="form-label">Mobile Number <span class="text-danger">*</span></label>
               <input type="text" class="form-control" name="mobile" id="mobile" maxlength="10" autocomplete="off" required placeholder="10 digit mobile number">
             </div>
             <!-- <div class="input-group mb-3">
@@ -64,29 +71,27 @@
               <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
             </div> -->
 
-            <label for="email" class="form-label">Email Address</label>
+            <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
               <input type="email" class="form-control" name="email" id="email" autocomplete="off" placeholder="abc@example.com" required>
             </div>
-            <label for="pass1" class="form-label">Password</label>
+            <label for="pass1" class="form-label">Password <span class="text-danger">*</span></label>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
               <input type="password" id="pass1" class="form-control" name="pass1" title="atleast 8 characters" required>
             </div>
 
-            <label for="pass2" class="form-label">Confirm Password</label>
+            <label for="pass2" class="form-label">Confirm Password <span class="text-danger">*</span></label>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                 <input type="password" id="pass2" class="form-control" name="pass2" required>
               </div>
           </div>
           <div class="modal-footer">
-            <button type="reset
-              " class="btn btn-secondary" data-bs-dismiss="modal">reset
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">reset
             </button>
-            <button type="submit
-              " class="btn btn-danger">Register</button>
+            <button type="submit" class="btn btn-danger">Register</button>
           </div>
           </div>
       </form>

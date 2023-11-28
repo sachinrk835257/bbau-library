@@ -499,3 +499,7 @@ def returnedBooks(request):
 def gallery(request):
     title = '''Gallery'''
     return render(request,'gallery.html',{"title":title})
+
+def contact(request):
+    title = '''Contact Us'''
+    return render(request,'contact.html')
