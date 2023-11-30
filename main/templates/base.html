@@ -58,6 +58,9 @@
           <li class="nav-item">
             <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/">Dashboard</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/about/">About Us</a>
+          </li>
 
           {% if user.is_superuser %}
           <li class="nav-item dropdown">
@@ -115,6 +118,10 @@
           <li class="nav-item">
             <a class="nav-link text-dark" href="/">Issued Books</a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/contact-us/">Contact US</a>
+          </li>
           
           {% endif %}
 
@@ -126,9 +133,7 @@
           <li class="nav-item">
             <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/gallery/">Gallery</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" aria-current="page" href="http://127.0.0.1:8000/contact-us/">Contact US</a>
-          </li>
+          
         </ul>
         {% else %}
         <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">

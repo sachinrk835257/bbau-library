@@ -18,8 +18,8 @@ class Profile(models.Model):
     mobile = models.CharField(default="", max_length=10,verbose_name="MOBILE NO.")
     joiningYear = models.CharField(default="",max_length=4,verbose_name="ADMISSION YEAR")
     passingYear = models.CharField(default="",max_length=4,verbose_name="PASSING YEAR")
-    issuedBooks = models.PositiveIntegerField(default=0,verbose_name="ISSUED BOOKS")
-    returnedBooks = models.PositiveIntegerField(default=0,verbose_name="RETURNED BOOKS")
+    issuedBooks = models.TextField(default="Null",verbose_name="ISSUED BOOKS")
+    returnedBooks = models.TextField(default="Null",verbose_name="RETURNED BOOKS")
     fine = models.PositiveIntegerField(default=0,verbose_name="FINE (in RS.)")
     
     def __str__(self) -> str:

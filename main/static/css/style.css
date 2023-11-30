@@ -73,6 +73,8 @@ body{
     row-gap: 10px;
     column-gap: 1.3rem;
     margin: 0px 20px;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .cards-box .card{
 

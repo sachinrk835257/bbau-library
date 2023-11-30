@@ -9,54 +9,61 @@
 <div class="container mt-2 dashboard-boxes">
     <h4 class="my-header">{{staff_status}} Dashboard</h4>
     <div class="cards-box">
-        <div class="col">
+        
           <div class="card align-items-center p-2 border-2 border-success rounded book-listed-box">
             <i class="fa-duotone fa-books" style="font-size: 5.4rem;"></i>
             <div class="card-body">
                 <p class="card-text text-center">{{bookListedNumbers}}</p>
               <h5 class="card-title">Books Listed</h5>
             </div>
-          </div>
+        
         </div>
-        <div class="col">
+        
           <div class="card align-items-center p-2 border-22 border-danger rounded issued-books-box">
             <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
             <div class="card-body">
                 <p class="card-text text-center">{{issuedBooks}}</p>
                 <h5 class="card-title">Issued Books</h5>
             </div>
-          </div>
+        
         </div>
 
-          <div class="col">
+          
             <div class="card align-items-center p-2 border-22 border-danger rounded returned-books-box">
               <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
               <div class="card-body">
                   <p class="card-text text-center">{{returnedBooks}}</p>
                   <h5 class="card-title">Returned Books</h5>
               </div>
-            </div>
+          
              </div>
        
-          <div class="col">
+          
             <div class="card align-items-center p-2 border-2 border-success rounded registred-users-box">
                 <i class="fa-solid fa-users" style="color: #51c1e6;font-size: 5.4rem;"></i>
               <div class="card-body">
                   <p class="card-text text-center">{{registeredUsers}}</p>
                 <h5 class="card-title">Registered Users</h5>
               </div>
-            </div>
+          
           </div>
-
-
-          <div class="col">
+          {% if not user.is_superuser %}
+          
+            <div class="card align-items-center p-2 border-2 border-success rounded profile-user-box">
+                <i class="fa-solid fa-users" style="color: #51c1e6;font-size: 5.4rem;"></i>
+              <div class="card-body">
+                <h5 class="card-title">Profile</h5>
+              </div>
+            </div>
+                   {% endif %}
+          
             <div class="card align-items-center p-2 border-2 border-primary rounded">
               <i class="fa-duotone fa-grid-4" style="font-size: 5.4rem;"></i>
               <div class="card-body">
                   <p class="card-text text-center">20 {{listedCategories}}</p>
                   <h5 class="card-title">Listed Categories</h5>
               </div>
-            </div>
+          
           </div>
       </div>
     
@@ -213,21 +220,30 @@
 
 <script>
     var bookListedCard = document.querySelector('.book-listed-box')
+    bookListedCard.addEventListener('click',()=>{
+      document.location = "http://127.0.0.1:8000/listed-books/";
+    })
+    {% if user.is_superuser %}
+    var registredUsersBox = document.querySelector('.registred-users-box')
+    registredUsersBox.addEventListener('click',()=>{
+        document.location = "http://127.0.0.1:8000/registered-students/";
+    })
+    {% endif %}
+
+
     var issuedBooksCard = document.querySelector('.issued-books-box')
     var returnedBooksCard = document.querySelector('.returned-books-box')
-    var registredUsersBox = document.querySelector('.registred-users-box')
-    console.log(bookListedCard)
-    bookListedCard.addEventListener('click',()=>{
-        document.location = "http://127.0.0.1:8000/listed-books/";
-    })
+
     issuedBooksCard.addEventListener('click',()=>{
         document.location = "http://127.0.0.1:8000/issued-books/";
     })
     returnedBooksCard.addEventListener('click',()=>{
         document.location = "http://127.0.0.1:8000/returned-books/";
     })
-    registredUsersBox.addEventListener('click',()=>{
-        document.location = "http://127.0.0.1:8000/registered-students/";
+    var profileUserBox = document.querySelector('.profile-user-box')
+
+    profileUserBox.addEventListener('click',()=>{
+      document.location = "http://127.0.0.1:8000/edit-profile/{{user.profile.library_id}}";
     })
 
 

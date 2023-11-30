@@ -29,16 +29,19 @@ def index(request):
         issued_books_obj = Issued_Books.objects.all().count()
         returned_books_obj = Returned_Books.objects.all().count()
         print(issued_books_obj,returned_books_obj)
+        profile_count = Profile.objects.all().count()
         
         if (request.user.is_superuser) :
             staff_status = "Admin"
-            profile_count = Profile.objects.all().count()
             return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBooks":returned_books_obj,"issuedBooks":issued_books_obj})
         
 
-        issuedBooks = user_obj.profile.issuedBooks
+        issuedBooks = (user_obj.profile.issuedBooks)
+        listOfIssueBook = issuedBooks.split(',')
         returnedBooks = user_obj.profile.returnedBooks
-        return render(request,"index.html",{"title":title,"staff_status":staff_status,"bookListedNumbers":book_obj,"issuedBooks":issuedBooks,"returnedBooks":returnedBooks})
+        listOfReturnBook = returnedBooks.split(',')
+        print(returnedBooks)
+        return render(request,"index.html",{"title":title,"staff_status":staff_status,"bookListedNumbers":book_obj,"issuedBooks":len(listOfIssueBook),"returnedBooks":len(listOfReturnBook),"registeredUsers":profile_count})
     
     else:
         messages.add_message(request, messages.WARNING, "Login First !!!")
@@ -340,23 +343,40 @@ def issueBook(request):
             found = True
             book_obj = Registered_Books.objects.filter(ISBN = ISBN)
             profile_obj = Profile.objects.filter(library_id = library_id)
+            print(profile_obj[0].issuedBooks)
+            
             # print(returned_obj.exists())
             if not book_obj.exists():
                 found = False
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
+                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
 
             if not profile_obj.exists():
                 found = False
                 messages.add_message(request, messages.WARNING, "Student Not Found !!!")
+                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
 
-
-            print("status --",book_obj[0].status == "Available")
+            if (len(listOfIssueBooks) - len(listOfReturnBooks)) >= 2:
+                found = False
+                messages.add_message(request, messages.WARNING, "Already 2 Books Issued to this User !!!")
+                return render(request,'issue-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
+            
             if not book_obj[0].status == "Available":
                 found = False
                 messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
                 return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
+            
+            if profile_obj[0].issuedBooks == 'Null':
+                profile_obj[0].issuedBooks = ""
 
-            return render(request,'issue-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
+            if profile_obj[0].returnedBooks == 'Null':
+                profile_obj[0].returnedBooks = ""
+            listOfIssueBooks = (profile_obj[0].issuedBooks).split(',')
+            listOfReturnBooks = (profile_obj[0].returnedBooks).split(',')
+            print(listOfIssueBooks,listOfReturnBooks)
+            
+            print(found)
+            return render(request,'issue-book.html',{"title":title,"book":book_obj,"student":profile_obj,"IssuedBooks":len(listOfIssueBooks),"ReturnedBooks":len(listOfReturnBooks),"found":found})
 
     except Exception as e:
         print(e)
@@ -374,12 +394,13 @@ def issuingBook(request):
         if request.method == 'POST':
             ISBN = request.POST.get('ISBN')
             library_id = request.POST.get('library_id')
-            
-
             book_obj = Registered_Books.objects.get(ISBN = ISBN)
             profile_obj = Profile.objects.get(library_id = library_id)   
+            if profile_obj.issuedBooks == 'Null':
+                profile_obj.issuedBooks = ""
 
-            profile_obj.issuedBooks = profile_obj.issuedBooks + 1
+            profile_obj.issuedBooks = profile_obj.issuedBooks + "{},".format(ISBN)
+            print(profile_obj.issuedBooks)
             profile_obj.save()
             book_obj.last_issued_by = profile_obj.name
             print(book_obj.status)
@@ -388,7 +409,6 @@ def issuingBook(request):
             print(book_obj.status)
 
             issued_book_obj = Issued_Books.objects.create(issued_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, issue_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN, category = book_obj.category )
-
             
             print(book_obj.status)
             issued_book_obj.save()
@@ -418,6 +438,9 @@ def returnBook(request):
             book_obj = Registered_Books.objects.filter(ISBN = ISBN)
             profile_obj = Profile.objects.filter(library_id = library_id)
             issued_obj = Issued_Books.objects.filter(ISBN =ISBN,library_id = library_id)
+            listOfIssueBooks = (profile_obj[0].issuedBooks).split(',')
+            listOfReturnBooks = (profile_obj[0].returnedBooks).split(',')
+            print(listOfIssueBooks,listOfReturnBooks)
             if not book_obj.exists():
                 found = False
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
@@ -431,7 +454,9 @@ def returnBook(request):
                 messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
                 return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
 
-            return render(request,'return-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
+            print(found)
+            # return render(request,'return-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
+            return render(request,'return-book.html',{"title":title,"book":book_obj,"student":profile_obj,"IssuedBooks":len(listOfIssueBooks),"ReturnedBooks":len(listOfReturnBooks),"found":found})
 
     except Exception as e:
         print(e)
@@ -458,7 +483,9 @@ def returningBook(request):
             profile_obj = Profile.objects.get(library_id = library_id)
             profile_obj.fine = profile_obj.fine + int(fine)
             issued_books_obj.return_date = timezone.now().strftime('%Y-%m-%d')
-            profile_obj.returnedBooks = profile_obj.returnedBooks + 1
+            if profile_obj.returnedBooks == 'Null':
+                profile_obj.returnedBooks = ""
+            profile_obj.returnedBooks = profile_obj.returnedBooks + "{},".format(ISBN)
             print(book_obj.status)
             # Registered_Books.objects.update(last_issued_by = profile_obj.name, status = 'Available')
             book_obj.status = "Available"
@@ -472,7 +499,6 @@ def returningBook(request):
             profile_obj.save()
             issued_books_obj.save()
             returned_books_obj.save()
-
             return redirect('http://127.0.0.1:8000/returned-books/')
 
     except Exception as e:
@@ -482,12 +508,20 @@ def returningBook(request):
     
 def issuedBooks(request):
     print(" in issued book funtion")
-    if not request.user.is_superuser:
+    title = '''BBAU SATELLITE | Issued Books'''
+    if not request.user.is_authenticated:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''BBAU SATELLITE | BBAU-LIBRARY | Issued Books'''
-    issued_book_obj = Issued_Books.objects.all()
+    
 
+    if request.user.is_superuser:
+        issued_book_obj = Issued_Books.objects.all()
+
+    else:
+        profil_obj = Profile.objects.filter(library_id = request.user.profile.library_id)
+        print(profil_obj)
+        print(profil_obj[0].issuedBooks)
+    
     return render(request,'issued-books.html',{"title":title,"issued_books":issued_book_obj})
     
 def returnedBooks(request):
