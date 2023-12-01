@@ -36,11 +36,20 @@ def index(request):
             return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBooks":returned_books_obj,"issuedBooks":issued_books_obj})
         
 
-        issuedBooks = (user_obj.profile.issuedBooks)
-        listOfIssueBook = issuedBooks.split(',')
-        returnedBooks = user_obj.profile.returnedBooks
-        listOfReturnBook = returnedBooks.split(',')
-        print(returnedBooks)
+        profile_obj = Profile.objects.get(library_id = request.user.profile.library_id)
+        if profile_obj.issuedBooks == 'Null':
+                profile_obj.issuedBooks = ""
+
+        if profile_obj.returnedBooks == 'Null':
+            profile_obj.returnedBooks = ""
+        
+        profile_obj.save()
+        issuedBooks = (profile_obj.issuedBooks)
+        listOfIssueBook = issuedBooks.split()
+        print("list",listOfIssueBook)
+        returnedBooks = profile_obj.returnedBooks
+        listOfReturnBook = returnedBooks.split()
+        print("vvvv   ",len(listOfReturnBook))
         return render(request,"index.html",{"title":title,"staff_status":staff_status,"bookListedNumbers":book_obj,"issuedBooks":len(listOfIssueBook),"returnedBooks":len(listOfReturnBook),"registeredUsers":profile_count})
     
     else:
@@ -344,6 +353,12 @@ def issueBook(request):
             book_obj = Registered_Books.objects.filter(ISBN = ISBN)
             profile_obj = Profile.objects.filter(library_id = library_id)
             print(profile_obj[0].issuedBooks)
+
+            listOfIssueBooks = (profile_obj[0].issuedBooks).split()
+            listOfReturnBooks = (profile_obj[0].returnedBooks).split()
+            print(type(listOfIssueBooks),listOfIssueBooks,len(listOfIssueBooks))
+            print(len(listOfIssueBooks),len(listOfReturnBooks))
+            print(len(listOfIssueBooks) - len(listOfReturnBooks))
             
             # print(returned_obj.exists())
             if not book_obj.exists():
@@ -371,8 +386,8 @@ def issueBook(request):
 
             if profile_obj[0].returnedBooks == 'Null':
                 profile_obj[0].returnedBooks = ""
-            listOfIssueBooks = (profile_obj[0].issuedBooks).split(',')
-            listOfReturnBooks = (profile_obj[0].returnedBooks).split(',')
+            
+            
             print(listOfIssueBooks,listOfReturnBooks)
             
             print(found)
@@ -399,7 +414,7 @@ def issuingBook(request):
             if profile_obj.issuedBooks == 'Null':
                 profile_obj.issuedBooks = ""
 
-            profile_obj.issuedBooks = profile_obj.issuedBooks + "{},".format(ISBN)
+            profile_obj.issuedBooks = profile_obj.issuedBooks + "{} ".format(ISBN)
             print(profile_obj.issuedBooks)
             profile_obj.save()
             book_obj.last_issued_by = profile_obj.name
@@ -438,8 +453,8 @@ def returnBook(request):
             book_obj = Registered_Books.objects.filter(ISBN = ISBN)
             profile_obj = Profile.objects.filter(library_id = library_id)
             issued_obj = Issued_Books.objects.filter(ISBN =ISBN,library_id = library_id)
-            listOfIssueBooks = (profile_obj[0].issuedBooks).split(',')
-            listOfReturnBooks = (profile_obj[0].returnedBooks).split(',')
+            listOfIssueBooks = (profile_obj[0].issuedBooks).split()
+            listOfReturnBooks = (profile_obj[0].returnedBooks).split()
             print(listOfIssueBooks,listOfReturnBooks)
             if not book_obj.exists():
                 found = False
@@ -485,7 +500,7 @@ def returningBook(request):
             issued_books_obj.return_date = timezone.now().strftime('%Y-%m-%d')
             if profile_obj.returnedBooks == 'Null':
                 profile_obj.returnedBooks = ""
-            profile_obj.returnedBooks = profile_obj.returnedBooks + "{},".format(ISBN)
+            profile_obj.returnedBooks = profile_obj.returnedBooks + "{} ".format(ISBN)
             print(book_obj.status)
             # Registered_Books.objects.update(last_issued_by = profile_obj.name, status = 'Available')
             book_obj.status = "Available"
@@ -519,18 +534,26 @@ def issuedBooks(request):
 
     else:
         profil_obj = Profile.objects.filter(library_id = request.user.profile.library_id)
-        print(profil_obj)
-        print(profil_obj[0].issuedBooks)
+        listOfIssueBooks = (profil_obj[0].issuedBooks).split()
+        issued_book_obj = Issued_Books.objects.filter(ISBN__in = listOfIssueBooks)
+
     
     return render(request,'issued-books.html',{"title":title,"issued_books":issued_book_obj})
     
 def returnedBooks(request):
     print(" in returned book funtion")
-    if not request.user.is_superuser:
+    if not request.user.is_authenticated:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     title = '''BBAU SATELLITE | BBAU-LIBRARY | Returned Books'''
-    returned_books_obj = Returned_Books.objects.all()
+    
+    if request.user.is_superuser:
+        returned_books_obj = Returned_Books.objects.all()
+
+    else:
+        profil_obj = Profile.objects.filter(library_id = request.user.profile.library_id)
+        listOfReturnBooks = (profil_obj[0].returnedBooks).split()
+        returned_books_obj = Returned_Books.objects.filter(ISBN__in = listOfReturnBooks)
 
     return render(request,'returned-books.html',{"title":title,"returned_books":returned_books_obj})
 
