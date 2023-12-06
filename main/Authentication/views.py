@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from Dashboard.models import Profile,Registered_Books, Issued_Books, Returned_Books
+from Dashboard.models import Profile,Registered_Books, Issued_Books, Returned_Books,Department
 from Authentication.models import ChangePassword,SuperUser
 
 from django.utils import timezone
@@ -48,6 +48,8 @@ def user_login(request):
 
 def addStudent(request):
     title = '''BBAU SATELLITE | Register'''
+
+    department_obj = Department.objects.all()
     if request.method == 'POST':
         try:
             name = request.POST.get('name').upper()
@@ -86,7 +88,7 @@ def addStudent(request):
             messages.add_message(request, messages.WARNING, "{}".format(e))
             return redirect('http://127.0.0.1:8000/authenticate/register/')
 
-    return render(request,'register.html',{"title":title})
+    return render(request,'register.html',{"title":title,"Departments":department_obj})
 
 # @user_passes_test(is_staff_member, login_url="http://127.0.0.1:8000/authenticate/admin-login/")
 def adminRegister(request):

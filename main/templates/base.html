@@ -105,11 +105,11 @@
           </li>
           <li class="nav-item">
             <a type="button" id="issue-book" class="nav-link text-dark" onclick="setAction(this.id)" data-bs-toggle="modal"
-              data-bs-target="#exampleModal">Issue Book</a>
+              data-bs-target="#issueReturnModal">Issue Book</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark" id="return-book" onclick="setAction(this.id)" data-bs-toggle="modal"
-              data-bs-target="#exampleModal">Return Book</a>
+            <a type="button" class="nav-link text-dark" id="return-book" onclick="setAction(this.id)" data-bs-toggle="modal"
+              data-bs-target="#issueReturnModal">Return Book</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-dark" href="http://127.0.0.1:8000/registered-students/">Registered Students</a>
@@ -160,20 +160,19 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="mainDropdown">
                 <div class="dropend">
-                  <button class="btn dropdown-toggle" type="button" id="nestedDropdown1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button class="btn dropdown-toggle" type="button" id="nestedDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
                     Library Incharge
                   </button>
                   <div class="dropdown-menu" aria-labelledby="nestedDropdown">
-                    <a class="dropdown-item bg-primary" href="#">Poonam Sharma</a>
+                    <a class="dropdown-item bg-primary" href="#">Aditya Khamparia</a>
                   </div>
                 </div>
-                <a class="dropdown-item" href="#"></a>
                 <div class="dropend">
-                  <button class="btn dropdown-toggle" type="button" id="nestedDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
-                    Library Coordinator
+                  <button class="btn dropdown-toggle" type="button" id="nestedDropdown1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Library Assistant
                   </button>
                   <div class="dropdown-menu" aria-labelledby="nestedDropdown">
-                    <a class="dropdown-item bg-primary" href="#">Aditya Khamparia</a>
+                    <a class="dropdown-item bg-primary" href="#">Poonam Sharma</a>
                   </div>
                 </div>
               </div>
@@ -241,14 +240,14 @@
 
   </footer>
 
-  <!-- Button trigger modal -->
-
+    <!-- Button trigger modal -->
+{% if user.is_superuser %}
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="issueReturnModal" tabindex="-1" aria-labelledby="issueReturnModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Provide Details</h5>
+          <h5 class="modal-title" id="issueReturnModalLabel">Provide Details</h5>
 
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -277,6 +276,8 @@
       </div>
     </div>
   </div>
+
+{% endif %}
 
   <!-- Optional JavaScript; choose one of the two! -->
 
