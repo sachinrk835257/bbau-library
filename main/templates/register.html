@@ -40,7 +40,9 @@
             <label for="depart" class="form-label">Department <span class="text-danger">*</span></label>
             <select class="form-select" id="depart" name="depart" placeholder="Department Name" required>
               <option selected>----Select Department----</option>
+              {% for i in departments %}
               <option value="CS">Computer Science</option>
+              {% endfor %}
               <option value="IT">Information Technology</option>
               <option value="B.A">B.A</option>
               <option value="B.Com">B.Com</option>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Dashboard.models import Profile,Registered_Books,Issued_Books,Returned_Books
+from Dashboard.models import Profile,Registered_Books,Issued_Books,Returned_Books, Department
 
 
 # admmin model
@@ -28,3 +28,4 @@ admin.site.register(Profile,ProfileAdmin)
 admin.site.register(Registered_Books,Registered_Books_Admin)
 admin.site.register(Issued_Books,Issued_Books_Admin)
 admin.site.register(Returned_Books,Returned_Books_Admin)
+admin.site.register(Department)
