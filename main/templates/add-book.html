@@ -22,17 +22,18 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="bookName">Book Name</label>
-            <input type="text" class="form-control" name="bookName" id="bookName" placeholder="Enter Book Name">
+            <input type="text" class="form-control" name="bookName" id="bookName" placeholder="Enter Book Name" required>
           </div>
         </div>
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="department">Department</label>
-            <select class="form-select" name="department" id="department" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="cs">cs</option>
-              <option value="IT">IT</option>
-              <option value="Others">Others</option>
+            <select class="form-select" name="department" id="department" aria-label="Default select example" required>
+              <option selected>----Select Department----</option>
+              {% for i in Departments %}
+              <option value="{{i|upper}}">{{i|upper}}</option>
+              {% endfor %}
+              <option value="MISCELLENEOUS">MISCELLENEOUS</option>
             </select>
           </div>
         </div>
@@ -42,8 +43,8 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="cetegory">Category</label>
-            <select class="form-select" name="category" id="category" aria-label="Default select example">
-              <option selected>Open this select menu</option>
+            <select class="form-select" name="category" id="category" aria-label="Default select example" required>
+              <option selected>---SELECT CATEGORY</option>
               <option value="technology">Technology</option>
               <option value="programming">Programming</option>
               <option value="database learning">Database learning</option>
@@ -54,7 +55,7 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="ISBN">ISBN Nummber</label>
-            <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter unique ISBN number">
+            <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter unique ISBN number" required>
           </div>
         </div>
       </div>
@@ -63,13 +64,13 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="bookPrice">Price</label>
-            <input type="text" class="form-control" name="bookPrice" id="bookPrice" placeholder="Enter Price in Rs.">
+            <input type="text" class="form-control" name="bookPrice" id="bookPrice" placeholder="Enter Price in Rs." required>
           </div>
         </div>
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="autherName">Author Name</label>
-            <input type="text" class="form-control" name="authorName" id="autherName" placeholder="Author Nmae">
+            <input type="text" class="form-control" name="authorName" id="autherName" placeholder="Author Nmae" required>
           </div>
         </div>
 
@@ -79,7 +80,7 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="coverImage">Cover Image</label><br>
-            <input type="file" name="coverImage" id="coverImage" accept="image/*">
+            <input type="file" name="coverImage" id="coverImage" accept="image/*" required>
           </div>
         </div>
       </div>
@@ -91,6 +92,20 @@
     </div>
   </form>
 </div>
+
+<script>
+  var departmentSelect = document.getElementById('department');
+  departmentSelect.addEventListener('change',()=>{
+    console.log(departmentSelect.value)
+    if (!(departmentSelect.value == "COMPUTER SCIENCE" || departmentSelect.value == "INFORMATION TECHNOLOGY")) {
+      
+      document.getElementById('category').disabled = true;
+    }else{
+      document.getElementById('category').disabled = false;
+    }
+
+  })
+</script>
     
 
 {% endblock body %}

@@ -29,7 +29,7 @@ class Registered_Books(models.Model):
     register_by = models.CharField(default="",max_length=50, verbose_name="book register by")
     bookName = models.CharField(default="",max_length=255, verbose_name="Book Name")
     department = models.CharField(default="",max_length=50, verbose_name="Department")
-    category = models.CharField(default="",max_length=50, verbose_name="Category")
+    category = models.CharField(default="Null",max_length=50, verbose_name="Category")
     authorName = models.CharField(default="",max_length=50, verbose_name="Author Name")
     ISBN = models.CharField(default="",unique=True,max_length=255, verbose_name="ISBN Number")
     bookPrice = models.PositiveIntegerField(default=0, verbose_name="Book Price")

@@ -1,14 +1,14 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-from Dashboard.models import Profile,Registered_Books,Issued_Books,Returned_Books
+from Dashboard.models import Profile,Registered_Books,Issued_Books,Returned_Books, Department
 from django.contrib.auth.decorators import login_required
 # from django.contrib.admin.views.decorators import staff_member_required
 from Authentication.send_mail import send_mail
 from Authentication.models import ChangePassword
 from uuid import uuid4
 from django.utils import timezone
-from django.db.models import Count
+from django.db.models import Count,Q
 
 # Create your views here.
 def about(request):
@@ -34,14 +34,10 @@ def index(request):
         
         if (request.user.is_superuser) :
             staff_status = "Admin"
-            book_name = Registered_Books.objects.values("bookName","authorName").annotate(count = Count("id"))
-        
-            book_name3 = Registered_Books.objects.values("bookName","authorName").annotate(count = Count("id"))
-            book_name4 = Registered_Books.objects.values("bookName","authorName").annotate(count = Count("id"))
-            author_name = Registered_Books.objects.values("authorName").distinct()
-            print(book_name)
-            print(author_name)
-            print(Count)
+            # author_name = Registered_Books.objects.values("authorName").distinct()
+            # print(book_name)
+            # print(author_name)
+            # print(Count)
             return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBooks":returned_books_obj,"issuedBooks":issued_books_obj})
         
 
@@ -146,11 +142,12 @@ def addBook(request):
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     title = '''BBAU SATELLITE | adding book'''
+    department_obj = Department.objects.all()
     try:
         if request.method == 'POST':
             bookName = request.POST.get('bookName')
             department = request.POST.get('department')
-            category = request.POST.get('category')
+            
             isbn = request.POST.get('ISBN')
             authorName = request.POST.get('authorName')
             bookPrice = request.POST.get('bookPrice')
@@ -159,8 +156,12 @@ def addBook(request):
 
 
             if coverImage:
-                print(bookName,department,category,isbn,authorName,bookPrice,coverImage)    
-                book_obj = Registered_Books.objects.create(register_by = request.user.first_name, bookName = bookName,department = department, category = category, ISBN = isbn, authorName = authorName, bookPrice = bookPrice, coverImage =coverImage)
+                # print(bookName,department,isbn,authorName,bookPrice,coverImage)    
+                book_obj = Registered_Books.objects.create(register_by = request.user.first_name, bookName = bookName,department = department, ISBN = isbn, authorName = authorName, bookPrice = bookPrice, coverImage =coverImage)
+
+                if department == "COMPUTER SCIENCE" or department == "INFORMATION TECHNOLOGY":
+                    category = request.POST.get('category')
+                    book_obj.category = category
                 book_obj.save()
                 messages.add_message(request, messages.SUCCESS, "Book Added Successfully")
                 return redirect('http://127.0.0.1:8000/add-book/')
@@ -173,7 +174,7 @@ def addBook(request):
         messages.add_message(request, messages.WARNING, "Some Error !!!")
         return redirect('http://127.0.0.1:8000/add-book/')
     
-    return render(request,'add-book.html',{"title":title})
+    return render(request,'add-book.html',{"title":title,"Departments":department_obj})
 
 
 def deleteBook(request,isbn):
@@ -196,12 +197,27 @@ def deleteProfile(request,myid):
 
 @login_required(login_url='http://127.0.0.1:8000/')
 def listedBooks(request):
+    print("in Listed books")
     if request.user.is_authenticated:
         title = '''BBAU SATELLITE | Registered Books'''
         book_obj = Registered_Books.objects.all()
-        print(book_obj[0].status)
+        print(book_obj.count())
+        same_books = book_obj.values('bookName','authorName','department').annotate(book_count = Count("pk"), availability_count=Count('id', filter=Q(status='Available')),
+        not_availability_count=Count('id', filter=Q(status='Not Available'))).filter(book_count__gt=1)
+        print(same_books,type(same_books))
+        bookName = []
+        authorName = []
+        for i in same_books:
+            bookName.append(i["bookName"])
+            authorName.append(i["authorName"])
+
+        copy_books = book_obj.filter(bookName__in = bookName,authorName__in = authorName)
         
-        return render(request,'registered-books.html',{"title":title,"books":book_obj})
+        print(copy_books.count())
+        exclude_copy_books = book_obj.exclude(pk__in = copy_books.values('pk'))
+        print(exclude_copy_books)
+
+        return render(request,'registered-books.html',{"title":title,"sameBooks":same_books,"remainingBooks":exclude_copy_books})
 
 
 def manageBook(request):

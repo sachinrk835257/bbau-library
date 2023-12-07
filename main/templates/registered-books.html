@@ -27,8 +27,39 @@
   </form>
 
 </div>
+  <div class="card-group justify-content-evenly p-3">
+
+    {% for book in sameBooks %}
+    <div class="card"
+      style="min-width: none;max-width: 23%;border: 2px solid rgb(195, 190, 190);padding-top: 0.3rem;border-radius: 10px;box-shadow: 2px 2px 2px darkgrey;">
+      <img src="" class="card-img-top" style=" width: 150px;
+    height: 150px; margin: auto;" alt="">
+      <div class="card-body" style="padding: 0.5rem 0.5rem 0rem 0.5rem;">
+        <h5 class="card-title">{{book.bookName|upper}}</h5>
+        <p class="card-text">Department : {{book.department}}</p>
+        {% if book.department == 'Cs' or book.department == 'IT'%}
+        <p class="card-text">Category : {{book.category}}</p>{% endif %}        
+        <p class="card-text">Author Name : {{book.authorName}}</p>
+        <p class="card-text"><a type="button" class="btn btn-success">
+          Available <span class="badge text-bg-secondary">{{book.availability_count}}</span>
+        </a>
+        <a type="button" class="btn btn-danger"> Not Available <span class="badge text-bg-secondary">{{book.not_availability_count}}</span>
+        </a></p>
+        <p class=""><a type="button" class="btn btn-primary">Total Book Copies <span class="badge text-bg-secondary">{{book.book_count}}</span>
+        </a></p>
+      </div>
+    </div>
+    {% if forloop.counter|divisibleby:4 %}
+    
+  </div><div class="card-group justify-content-evenly p-3">
+    {% endif %}
+    
+    
+    {% endfor %}
+    
+  </div>
   <div class="card-group justify-content-between p-3">
-    {% for book in books reversed %}
+  {% for book in remainingBooks reversed %}
     <div class="card"
       style="min-width: none;max-width: 23%;border: 2px solid rgb(195, 190, 190);padding-top: 0.3rem;border-radius: 10px;box-shadow: 2px 2px 2px darkgrey;">
       <img src="/media/{{book.coverImage}}" class="card-img-top" style=" width: 150px;
@@ -36,7 +67,8 @@
       <div class="card-body" style="padding: 0.5rem 0.5rem 0rem 0.5rem;">
         <h5 class="card-title">{{book.bookName|upper}}</h5>
         <p class="card-text">Department : {{book.department}}</p>
-        <p class="card-text">Category : {{book.category}}</p>
+        {% if book.department == 'Cs' or book.department == 'IT'%}
+        <p class="card-text">Category : {{book.category}}</p>{% endif %}    
         {% if book.status == 'Available' %}<a type="button" class="btn btn-success">
           Status <span class="badge text-bg-secondary">{{book.status}}</span>
         </a>{% endif %}
