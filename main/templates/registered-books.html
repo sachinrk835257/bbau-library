@@ -37,7 +37,12 @@
         <h5 class="card-title">{{book.bookName|upper}}</h5>
         <p class="card-text">Department : {{book.department}}</p>
         <p class="card-text">Category : {{book.category}}</p>
-        <p class="card-text {% if book.status == 'Available' %}text-success {% else %} text-danger{% endif %}">status : {{book.status}}</p>
+        {% if book.status == 'Available' %}<a type="button" class="btn btn-success">
+          Status <span class="badge text-bg-secondary">{{book.status}}</span>
+        </a>{% endif %}
+        {% if book.status == 'Not Available' %}<a type="button" class="btn btn-danger">
+          Status <span class="badge text-bg-secondary">{{book.status}}</span>
+        </a>{% endif %}
         <p class="card-text">Author Name : {{book.authorName}}</p>
         <p class="card-text">ISBN NUMBER : {{book.ISBN}}</p>
         <p class="card-text mb-1">Price : {{book.bookPrice}}</p>

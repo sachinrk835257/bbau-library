@@ -8,6 +8,7 @@ from Authentication.send_mail import send_mail
 from Authentication.models import ChangePassword
 from uuid import uuid4
 from django.utils import timezone
+from django.db.models import Count
 
 # Create your views here.
 def about(request):
@@ -33,6 +34,14 @@ def index(request):
         
         if (request.user.is_superuser) :
             staff_status = "Admin"
+            book_name = Registered_Books.objects.values("bookName","authorName").annotate(count = Count("id"))
+        
+            book_name3 = Registered_Books.objects.values("bookName","authorName").annotate(count = Count("id"))
+            book_name4 = Registered_Books.objects.values("bookName","authorName").annotate(count = Count("id"))
+            author_name = Registered_Books.objects.values("authorName").distinct()
+            print(book_name)
+            print(author_name)
+            print(Count)
             return render(request,"index.html",{"title":title,"staff_status":staff_status,"registeredUsers":profile_count,"bookListedNumbers":book_obj,"returnedBooks":returned_books_obj,"issuedBooks":issued_books_obj})
         
 
