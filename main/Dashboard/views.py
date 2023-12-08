@@ -149,6 +149,10 @@ def addBook(request):
             department = request.POST.get('department')
             
             isbn = request.POST.get('ISBN')
+            if (" " in isbn or "," in isbn):
+                messages.add_message(request, messages.WARNING, "ISBN without characters of \'  \', or \' , \' !!!")
+                return redirect('http://127.0.0.1:8000/add-book/')
+
             authorName = request.POST.get('authorName')
             bookPrice = request.POST.get('bookPrice')
             coverImage = request.FILES['coverImage']
@@ -171,11 +175,58 @@ def addBook(request):
 
     except Exception as e:
         print(e)
-        messages.add_message(request, messages.WARNING, "Some Error !!!")
+        messages.add_message(request, messages.WARNING, "ISBN should be Unique OR Technical Error !!!")
         return redirect('http://127.0.0.1:8000/add-book/')
     
     return render(request,'add-book.html',{"title":title,"Departments":department_obj})
 
+def addMultiple(request):
+    if not request.user.is_superuser:
+        messages.add_message(request, messages.WARNING, "Admin Login First !!!")
+        return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
+    title = '''BBAU SATELLITE | adding Multiple book'''
+    department_obj = Department.objects.all()
+    try:
+        if request.method == 'POST':
+            bookName = request.POST.get('bookName')
+            department = request.POST.get('department')
+            
+            isbn = request.POST.get('ISBN')
+            print(isbn,type(isbn))
+            if "," in isbn:
+                isbn = ''.join(isbn.split())
+                isbn = isbn.split(',')
+                print(isbn)
+            else:
+                messages.add_message(request, messages.WARNING, "unique ISBN should be written with comma seperated  !!!")
+                return redirect('http://127.0.0.1:8000/multiple-entry/')
+            
+            authorName = request.POST.get('authorName')
+            bookPrice = request.POST.get('bookPrice')
+            coverImage = request.FILES['coverImage']
+           
+            if coverImage:
+                print(bookName,department,isbn,authorName,bookPrice,coverImage)   
+
+                for b in isbn:
+                    book_obj = Registered_Books.objects.create(register_by = request.user.first_name, bookName = bookName,department = department, ISBN = b, authorName = authorName, bookPrice = bookPrice, coverImage =coverImage)
+
+                    if department == "COMPUTER SCIENCE" or department == "INFORMATION TECHNOLOGY":
+                        category = request.POST.get('category')
+                        book_obj.category = category
+                    book_obj.save()
+                messages.add_message(request, messages.SUCCESS, "Book Added Successfully")
+                return redirect('http://127.0.0.1:8000/multiple-entry/')
+            else:
+                messages.add_message(request, messages.WARNING, "Please Upload an Image !!!")
+                return redirect('http://127.0.0.1:8000/multiple-entry/')
+
+    except Exception as e:
+        print(e)
+        messages.add_message(request, messages.WARNING, "ISBN should be Unique OR Technical Error !!!")
+        return redirect('http://127.0.0.1:8000/add-book/')
+    
+    return render(request,'add-same-book.html',{"title":title,"Departments":department_obj})
 
 def deleteBook(request,isbn):
     if not request.user.is_superuser:
@@ -207,14 +258,17 @@ def listedBooks(request):
         print(same_books,type(same_books))
         bookName = []
         authorName = []
-        coverImages = []
+        coverImages = {}
         for i in same_books:
             bookName.append(i["bookName"])
             authorName.append(i["authorName"])
-            coverImages.append(book_obj.filter(bookName = i["bookName"], authorName = i["authorName"]).first().coverImage)
-
+            coverImages["img"] = (book_obj.filter(bookName = i["bookName"], authorName = i["authorName"]).first().coverImage)
         copy_books = book_obj.filter(bookName__in = bookName,authorName__in = authorName)
-        print(type(coverImages),type(same_books))
+        print("****")
+        print(bookName,authorName)
+        print(copy_books.values("bookName").distinct())
+        print("****")
+        print(type(coverImages),coverImages)
         print(copy_books.count())
         exclude_copy_books = book_obj.exclude(pk__in = copy_books.values('pk'))
         print(exclude_copy_books)
