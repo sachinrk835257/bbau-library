@@ -207,17 +207,19 @@ def listedBooks(request):
         print(same_books,type(same_books))
         bookName = []
         authorName = []
+        coverImages = []
         for i in same_books:
             bookName.append(i["bookName"])
             authorName.append(i["authorName"])
+            coverImages.append(book_obj.filter(bookName = i["bookName"], authorName = i["authorName"]).first().coverImage)
 
         copy_books = book_obj.filter(bookName__in = bookName,authorName__in = authorName)
-        
+        print(type(coverImages),type(same_books))
         print(copy_books.count())
         exclude_copy_books = book_obj.exclude(pk__in = copy_books.values('pk'))
         print(exclude_copy_books)
 
-        return render(request,'registered-books.html',{"title":title,"sameBooks":same_books,"remainingBooks":exclude_copy_books})
+        return render(request,'registered-books.html',{"title":title,"sameBooks":same_books,"coverImages":coverImages,"remainingBooks":exclude_copy_books})
 
 
 def manageBook(request):
