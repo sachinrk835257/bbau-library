@@ -1,7 +1,6 @@
 from django.contrib import admin
 from Dashboard.models import Profile,Registered_Books,Issued_Books,Returned_Books, Department
-from import_export 
-
+from
 
 # admmin model
 class ProfileAdmin(admin.ModelAdmin):

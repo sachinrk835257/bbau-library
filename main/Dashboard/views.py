@@ -9,7 +9,6 @@ from Authentication.models import ChangePassword
 from uuid import uuid4
 from django.utils import timezone
 from django.db.models import Count,Q
-
 # Create your views here.
 def about(request):
     title = '''BBAU SATELLITE | About Us'''
