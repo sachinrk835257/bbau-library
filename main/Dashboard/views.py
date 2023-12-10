@@ -228,6 +228,43 @@ def addMultiple(request):
     
     return render(request,'add-same-book.html',{"title":title,"Departments":department_obj})
 
+
+def importBook(request):
+    print("in import Book")
+    if not request.user.is_superuser:
+        messages.add_message(request, messages.WARNING, "Admin Login First !!!")
+        return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
+    title = '''BBAU SATELLITE | Import Excel File'''
+    department_obj = Department.objects.all()
+    try:
+        if request.method == 'POST':
+            print("posted")
+
+    except Exception as e:
+        print(e)
+        messages.add_message(request, messages.WARNING, "ISBN should be Unique OR Technical Error !!!")
+        return redirect('http://127.0.0.1:8000/add-book/')
+    
+    return render(request,'import-file.html',{"title":title,"Departments":department_obj})
+
+def exportBook(request):
+    print("export Book")
+    if not request.user.is_superuser:
+        messages.add_message(request, messages.WARNING, "Admin Login First !!!")
+        return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
+    title = '''BBAU SATELLITE | Export File'''
+    department_obj = Department.objects.all()
+    try:
+        if request.method == 'POST':
+            print("posted")
+
+    except Exception as e:
+        print(e)
+        messages.add_message(request, messages.WARNING, "ISBN should be Unique OR Technical Error !!!")
+        return redirect('http://127.0.0.1:8000/add-book/')
+    
+    return render(request,'export-file.html',{"title":title,"Departments":department_obj})
+
 def deleteBook(request,isbn):
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
