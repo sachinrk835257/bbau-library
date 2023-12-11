@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Authentication',
-    'Dashboard',
-    'import_export',
+    'Dashboard'
 ]
 
 MIDDLEWARE = [
