@@ -79,7 +79,7 @@ class Returned_Books(models.Model):
 
 
 class Department(models.Model):
-    department_name = models.CharField(default="Null",max_length=50,verbose_name="Department Name")
+    departmentName = models.CharField(default="Null",max_length=50,verbose_name="Department Name")
 
     def __str__(self) -> str:
-        return self.department_name
+        return self.departmentName

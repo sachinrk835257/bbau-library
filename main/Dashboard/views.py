@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 # from django.contrib.admin.views.decorators import staff_member_required
 from Authentication.send_mail import send_mail
 from Authentication.models import ChangePassword
+from tablib import Dataset
+from Dashboard.resource import Registered_BooksResource,Returned_BooksResource,Issued_BooksResource,ProfileResource
 from uuid import uuid4
 from django.utils import timezone
 from django.db.models import Count,Q
@@ -228,25 +230,46 @@ def addMultiple(request):
     return render(request,'add-same-book.html',{"title":title,"Departments":department_obj})
 
 
-def importBook(request):
+def importFile(request):
     print("in import Book")
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     title = '''BBAU SATELLITE | Import Excel File'''
-    department_obj = Department.objects.all()
     try:
         if request.method == 'POST':
             print("posted")
+            profile_resources = ProfileResource()
+            dateset = Dataset()
+            print("next")
+            myfile = request.FILES.get('myfile')
+            print(myfile)
+            if not myfile.name.endswith('xlsx'):
+                messages.add_message(request, messages.WARNING, "WRONG FILE FORMAT !!!")
+                return redirect('http://127.0.0.1:8000/import-file/')
+            imported_data = dateset.load(myfile.read(),format="xlsx")
+
+            for data in imported_data:
+                print(data)
+                print(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
+                try:
+                    value = Profile(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
+                    value.save()
+                except Exception as e:
+                    print(e)
+                    messages.add_message(request, messages.WARNING, "{}".format(e))
+                    return redirect('http://127.0.0.1:8000/import-file/')
+
 
     except Exception as e:
         print(e)
         messages.add_message(request, messages.WARNING, "ISBN should be Unique OR Technical Error !!!")
-        return redirect('http://127.0.0.1:8000/add-book/')
+        return redirect('http://127.0.0.1:8000/import-file/')
     
-    return render(request,'import-file.html',{"title":title,"Departments":department_obj})
+    
+    return render(request,'import-file.html',{"title":title,})
 
-def exportBook(request):
+def exportFile(request):
     print("export Book")
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")

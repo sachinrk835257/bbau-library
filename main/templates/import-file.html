@@ -5,7 +5,7 @@
 
 
 <div class="container mt-2 mx-auto">
-    <h4 class="my-header">Add Multiple Books</h4>
+    <h4 class="my-header">Import Excel File</h4>
     
     <form method="post" enctype="multipart/form-data"> {% csrf_token %}
     <div class="container card p-2" style="width: 65vw;">
@@ -15,7 +15,9 @@
       </div>
 
       <ul>
-        <li>Enter UNIQUE ISBN number with coommma seperated. For EX. xxxxx, xxxxxx, xxxx etc...</li>
+        <li>This importer will import the following fields: id, user, name, gender, department, library_id, mobile, joiningYear, passingYear, issuedBooks, returnedBooks, fine</li>
+        <li>"id","issuedBooks","returnedBooks" columns are empty but must be created.</li>
+        <li>"user" is the Email of user</li>
         <li>If you entered a record which is already exist then occurs an erorr.</li>
        
       </ul>
@@ -33,75 +35,15 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="form-group">
-            <label for="bookName">Book Name</label>
-            <input type="text" class="form-control" name="bookName" id="bookName" placeholder="Enter Book Name" required>
-          </div>
-        </div>
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="department">Department</label>
-            <select class="form-select" name="department" id="department" aria-label="Default select example" required>
-              <option selected>----Select Department----</option>
-              {% for i in Departments %}
-              <option value="{{i|upper}}">{{i|upper}}</option>
-              {% endfor %}
-              <option value="MISCELLENEOUS">MISCELLENEOUS</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="cetegory">Category</label>
-            <select class="form-select" name="category" id="category" aria-label="Default select example" required>
-              <option selected>---SELECT CATEGORY</option>
-              <option value="technology">Network Security</option>
-              <option value="technology">Technology</option>
-              <option value="programming">Programming</option>
-              <option value="database learning">Database learning</option>
-              <option value="technology">Others</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="ISBN">ISBN Nummber</label>
-            <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Ex. xxxx,xxxx,(Enter unique ISBN comma seperated)" required>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="bookPrice">Price</label>
-            <input type="text" class="form-control" name="bookPrice" id="bookPrice" placeholder="Enter Price in Rs." required>
-          </div>
-        </div>
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="autherName">Author Name</label>
-            <input type="text" class="form-control" name="authorName" id="autherName" placeholder="Author Nmae" required>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="coverImage">Cover Image</label><br>
-            <input type="file" name="coverImage" id="coverImage" accept="image/*" required>
+            <label for="bookName">Import File</label>
+            <input type="file" class="form-control" name="myfile" id="myfile" required>
           </div>
         </div>
       </div>
       
       <div class="col-auto">
         <button type="reset" class="btn btn-danger">Reset</button>
-        <button type="submit" class="btn btn-primary" onclick="confirm('Are you sure want to Add Books?')">Add Book</button>
+        <button type="submit" class="btn btn-primary" onclick="confirm('Are you sure want to upload file?')">Upload File</button>
       </div>
     </div>
   </form>
