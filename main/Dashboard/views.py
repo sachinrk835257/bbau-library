@@ -157,10 +157,15 @@ def addBook(request):
             authorName = request.POST.get('authorName')
             bookPrice = request.POST.get('bookPrice')
             coverImage = request.FILES['coverImage']
+            print(coverImage)
            
 
 
             if coverImage:
+                if not (coverImage.name.endswith('jpeg') or coverImage.name.endswith('jpg')):
+                    print(coverImage)
+                    messages.add_message(request, messages.WARNING, "Please upload .jpeg or .jpg image only !!!")
+                    return redirect('http://127.0.0.1:8000/add-book/')
                 # print(bookName,department,isbn,authorName,bookPrice,coverImage)    
                 book_obj = Registered_Books.objects.create(register_by = request.user.first_name, bookName = bookName,department = department, ISBN = isbn, authorName = authorName, bookPrice = bookPrice, coverImage =coverImage)
 
@@ -171,7 +176,7 @@ def addBook(request):
                 messages.add_message(request, messages.SUCCESS, "Book Added Successfully")
                 return redirect('http://127.0.0.1:8000/add-book/')
             else:
-                messages.add_message(request, messages.WARNING, "Please Upload an Image !!!")
+                messages.add_message(request, messages.WARNING, "Please Upload an Image with extension of .jpeg or .jpg !!!")
                 return redirect('http://127.0.0.1:8000/add-book/')
 
     except Exception as e:
@@ -253,7 +258,7 @@ def importFile(request):
                 print(data)
                 print(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
                 try:
-                    value = Profile(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
+                    value = Registered_Books(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
                     value.save()
                 except Exception as e:
                     print(e)
@@ -363,8 +368,8 @@ def bookDetails(request,isbn):
             category = request.POST.get('category')
             authorName = request.POST.get('authorName')
             bookPrice = request.POST.get('bookPrice')
-                           
-            print("not in cover image")
+            coverImage = request.FILES['coverImage']
+                        
             print(bookName,department,category,isbn,authorName,bookPrice)  
             book_obj1.bookName = bookName
             book_obj1.authorName = authorName
@@ -373,13 +378,15 @@ def bookDetails(request,isbn):
             book_obj1.bookPrice = bookPrice
             book_obj1.save()
 
-            if request.FILES['coverImage']:
-                print("in cover image") 
-                book_obj1.coverImage = request.FILES['coverImage']
-                book_obj1.save()
+            if not(coverImage.name.endswith('jpg') or coverImage.name.endswith('jpeg')):
+                messages.add_message(request, messages.WARNING, "Upload jpeg or jpg image file only !!!")
+                return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
 
-            messages.add_message(request, messages.SUCCESS, "Book Updated Successfully")
-            return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
+            if coverImage:
+                book_obj1.coverImage = coverImage
+                book_obj1.save()
+                messages.add_message(request, messages.SUCCESS, "Book Updated Successfully")
+                return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
 
     except Exception as e:
         print(e)
