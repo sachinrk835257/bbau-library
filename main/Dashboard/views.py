@@ -11,6 +11,7 @@ from Dashboard.resource import Registered_BooksResource,Returned_BooksResource,I
 from uuid import uuid4
 from django.utils import timezone
 from django.db.models import Count,Q
+import pandas as pd
 # Create your views here.
 def about(request):
     title = '''BBAU SATELLITE | About Us'''
@@ -244,7 +245,7 @@ def importFile(request):
     try:
         if request.method == 'POST':
             print("posted")
-            profile_resources = ProfileResource()
+            registered_books_resources = Registered_BooksResource()
             dateset = Dataset()
             print("next")
             myfile = request.FILES.get('myfile')
@@ -258,7 +259,7 @@ def importFile(request):
                 print(data)
                 print(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
                 try:
-                    value = Registered_Books(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
+                    value = registered_books_resources(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
                     value.save()
                 except Exception as e:
                     print(e)
@@ -276,18 +277,26 @@ def importFile(request):
 
 def exportFile(request):
     print("export Book")
-    if not request.user.is_superuser:
-        messages.add_message(request, messages.WARNING, "Admin Login First !!!")
-        return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
-    title = '''BBAU SATELLITE | Export File'''
-    department_obj = Department.objects.all()
+    # if not request.user.is_superuser:
+    #     messages.add_message(request, messages.WARNING, "Admin Login First !!!")
+    #     return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
+    # title = '''BBAU SATELLITE | Export File'''
+    # department_obj = Department.objects.all()
     try:
-        if request.method == 'POST':
-            print("posted")
+        # if request.method == 'POST':
+        #     print("posted")
+        books = Registered_Books.objects.all()
+        data = []
+        for obj in books:
+            count = 1
+            data.append({"Sr No.":count,"Book Name":obj.bookName,"Register By":obj.register_by,"Department":obj.department,"Category":obj.category,"Author Name":obj.authorName,"Book ISBN":obj.ISBN,"Book Price":obj.bookPrice,"Registered At":obj.registered_at})
+            count += 1
+        pd.DataFrame(data).to_excel("Book_Details.xlsx")
+        return redirect('http://127.0.0.1:8000/')
 
     except Exception as e:
         print(e)
-        messages.add_message(request, messages.WARNING, "ISBN should be Unique OR Technical Error !!!")
+        messages.add_message(request, messages.WARNING, "{}".format(e))
         return redirect('http://127.0.0.1:8000/add-book/')
     
     return render(request,'export-file.html',{"title":title,"Departments":department_obj})
