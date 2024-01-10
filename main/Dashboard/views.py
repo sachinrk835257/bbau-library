@@ -292,7 +292,7 @@ def exportFile(request):
             count = 1
             data.append({"Sr No.":count,"Book Name":obj.bookName,"Register By":obj.register_by,"Department":obj.department,"Category":obj.category,"Author Name":obj.authorName,"Book ISBN":obj.ISBN,"Book Price":obj.bookPrice,"Registered At":obj.registered_at})
             count += 1
-        pd.DataFrame(data).to_excel("Book_Details.xlsx")
+        pd.DataFrame(data).to_csv("Book_Details.csv")
         return redirect('http://127.0.0.1:8000/')
 
     except Exception as e:
