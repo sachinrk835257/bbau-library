@@ -11,7 +11,7 @@ from Dashboard.resource import Registered_BooksResource,Returned_BooksResource,I
 from uuid import uuid4
 from django.utils import timezone
 from django.db.models import Count,Q
-import pandas
+
 # Create your views here.
 def about(request):
     title = '''BBAU SATELLITE | About Us'''
