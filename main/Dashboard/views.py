@@ -290,9 +290,11 @@ def exportFile(request):
         data = []
         for obj in books:
             count = 1
-            data.append({"Sr No.":count,"Book Name":obj.bookName,"Register By":obj.register_by,"Department":obj.department,"Category":obj.category,"Author Name":obj.authorName,"Book ISBN":obj.ISBN,"Book Price":obj.bookPrice,"Registered At":obj.registered_at})
+            data.append({"Sr No.":count,"Book Name":obj.bookName,"Register By":obj.register_by,"Department":obj.department,"Category":obj.category,"Author Name":obj.authorName,"Book ISBN":obj.ISBN,"Book Price":obj.bookPrice,"Registered Date":obj.registered_at.date()})
             count += 1
-        pd.DataFrame(data).to_csv("Book_Details.csv")
+            print(count)
+        print(pd.DataFrame(data).to_excel("Book_Details.xlsx"))
+        print(data)
         return redirect('http://127.0.0.1:8000/')
 
     except Exception as e:
@@ -363,22 +365,33 @@ def manageBook(request):
 
 
 def bookDetails(request,isbn):
+    print("in book details")
     if not request.user.is_superuser:
         messages.add_message(request, messages.WARNING, "Admin Login First !!!")
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     
     title = '''BBAU SATELLITE | Update Books Details'''
     print(isbn)
+    departments = Department.objects.all()
     book_obj1 = Registered_Books.objects.get(ISBN = isbn)
-    print(book_obj1.category)
+    
+    return render(request,'book-detail.html', {"title":title,"book":book_obj1,"Departments":departments})
+
+def updateBook(request):
+    print(request)
+    print("in update book")
     try:
+        print(request.method)
         if request.method == 'POST':
+            print("posted")
             bookName = request.POST.get('bookName')
             department = request.POST.get('department')
             category = request.POST.get('category')
+            isbn = request.POST.get('isbn')
             authorName = request.POST.get('authorName')
             bookPrice = request.POST.get('bookPrice')
             coverImage = request.FILES['coverImage']
+            book_obj1 = Registered_Books.objects.get(isbn = isbn)
                         
             print(bookName,department,category,isbn,authorName,bookPrice)  
             book_obj1.bookName = bookName
@@ -398,13 +411,12 @@ def bookDetails(request,isbn):
                 messages.add_message(request, messages.SUCCESS, "Book Updated Successfully")
                 return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
 
+            print("Done")
+
     except Exception as e:
         print(e)
         messages.add_message(request, messages.SUCCESS, "Book Updated Successfully")
         return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
-    
-    return render(request,'book-detail.html', {"title":title,"book":book_obj1})
-
 
 @login_required(login_url='http://127.0.0.1:8000/')
 def searchByRegisteredBooks(request):

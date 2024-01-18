@@ -5,9 +5,13 @@
 
 
 <div class="container mt-2 mx-auto">
+
+
+
+  000
     <h4 class="my-header">Book Details</h4>
     
-    <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+    <form method="post" action="http://127.0.0.1:8000/update-book/" enctype="multipart/form-data"> {% csrf_token %}
     <div class="container card p-2" style="width: 65vw;">
       
       {% if messages %}
@@ -33,6 +37,12 @@
               <option value="IT">IT</option>
               <option value="Others">Others</option>
             </select>
+            {% comment %} <select class="form-select" name="department" id="department" value="{{book.department}}" aria-label="Default select example" required>
+              <option selected>{{book.department}}</option>
+              {% for i in Departments %}
+              <option value="{{i|upper}}">{{i|upper}}</option>
+              {% endfor %}
+            </select> {% endcomment %}
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
 
 // Wait for the DOM to be ready
 document.addEventListener("DOMContentLoaded", function () {
+
+    var loaderWrapper = document.getElementById("loader-wrapper");
+    loaderWrapper.style.display = "none";
     // all gloabal variables are here
     console.log("script is running")
     let spanYear = document.getElementById('currYear')
