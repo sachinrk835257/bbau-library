@@ -246,7 +246,6 @@ def importFile(request):
     try:
         if request.method == 'POST':
             print("posted")
-            registered_books_resources = Registered_BooksResource()
             dateset = Dataset()
             print("next")
             myfile = request.FILES.get('myfile')
@@ -257,15 +256,15 @@ def importFile(request):
             imported_data = dateset.load(myfile.read(),format="xlsx")
 
             for data in imported_data:
-                # print(data)
-                print(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
-                # try:
-                #     value = registered_books_resources(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
-                #     value.save()
-                # except Exception as e:
-                #     print(e)
-                #     messages.add_message(request, messages.WARNING, "{}".format(e))
-                #     return redirect('http://127.0.0.1:8000/import-file/')
+                # purchaseDate,accessionNo,author,title, place&publisher, year, pages , source,cost,billNoDate
+                # print(data[0],data[1],data[2],data[3],data[5],data[6],data[7],data[9],data[10],data[14])
+                try:
+                    register_obj = Registered_Books(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = data[0],ISBN = data[1],authorName = data[2],bookName = data[3],place_and_publisher = data[5],printYear = data[6],bookPages = data[7],bookSource = data[9],bookPrice = data[10],billNo_Date = data[14])
+                    register_obj.save()
+                except Exception as e:
+                    print(e)
+                    messages.add_message(request, messages.WARNING, "{}".format(e))
+                    return redirect('http://127.0.0.1:8000/import-file/')
 
 
     except Exception as e:
@@ -371,37 +370,36 @@ def bookDetails(request,isbn):
         return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
     
     title = '''BBAU SATELLITE | Update Books Details'''
-    print(isbn)
     departments = Department.objects.all()
     book_obj1 = Registered_Books.objects.get(ISBN = isbn)
     
     return render(request,'book-detail.html', {"title":title,"book":book_obj1,"Departments":departments})
 
-def updateBook(request):
-    print(request)
+def updateBook(request,isbn):
     print("in update book")
+    print(isbn)
     try:
-        print(request.method)
         if request.method == 'POST':
-            print("posted")
             bookName = request.POST.get('bookName')
             department = request.POST.get('department')
             category = request.POST.get('category')
-            isbn = request.POST.get('isbn')
             authorName = request.POST.get('authorName')
             bookPrice = request.POST.get('bookPrice')
             coverImage = request.FILES['coverImage']
-            book_obj1 = Registered_Books.objects.get(isbn = isbn)
+            print("posted")
+            print(bookName,department,category,authorName,bookPrice)  
+            book_obj1 = Registered_Books.objects.get(ISBN = isbn)
                         
-            print(bookName,department,category,isbn,authorName,bookPrice)  
             book_obj1.bookName = bookName
             book_obj1.authorName = authorName
             book_obj1.category = category
             book_obj1.department = department
             book_obj1.bookPrice = bookPrice
+            print("here")
             book_obj1.save()
 
             if not(coverImage.name.endswith('jpg') or coverImage.name.endswith('jpeg')):
+                print("in this")
                 messages.add_message(request, messages.WARNING, "Upload jpeg or jpg image file only !!!")
                 return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
 

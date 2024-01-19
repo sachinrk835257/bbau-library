@@ -39,7 +39,7 @@ class Registered_Books(models.Model):
     printYear = models.IntegerField(default = 0000, verbose_name = "Printed Year")
     bookPages = models.IntegerField(default = 0000, verbose_name = "Book Pages")
     bookSource = models.TextField(default="Not Available", verbose_name="Book Source")
-    coverImage = models.ImageField(upload_to='cover images/',verbose_name="Book Cover Image")
+    coverImage = models.ImageField(default = "",upload_to='cover images/',verbose_name="Book Cover Image")
     status = models.CharField(default="Available",max_length=30,verbose_name="Status")
     last_issued_by = models.CharField(default="null",null=True, max_length=30,verbose_name="Last Issued By")
     last_returned_by = models.CharField(default="null",null=True, max_length=30,verbose_name="Last Returned By")

@@ -17,6 +17,7 @@ class Registered_BooksAdmin(ImportExportModelAdmin):
     list_filter = ('bookName','authorName','ISBN','department')
     search_fields = ('bookName', 'department','ISBN','authorName')
 
+
 @admin.register(Returned_Books)
 class Returned_BooksAdmin(ImportExportModelAdmin):
     list_display = ('library_id','returned_by','bookName','ISBN', 'department','authorName')
