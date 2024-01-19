@@ -257,15 +257,15 @@ def importFile(request):
             imported_data = dateset.load(myfile.read(),format="xlsx")
 
             for data in imported_data:
-                print(data)
+                # print(data)
                 print(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
-                try:
-                    value = registered_books_resources(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
-                    value.save()
-                except Exception as e:
-                    print(e)
-                    messages.add_message(request, messages.WARNING, "{}".format(e))
-                    return redirect('http://127.0.0.1:8000/import-file/')
+                # try:
+                #     value = registered_books_resources(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11])
+                #     value.save()
+                # except Exception as e:
+                #     print(e)
+                #     messages.add_message(request, messages.WARNING, "{}".format(e))
+                #     return redirect('http://127.0.0.1:8000/import-file/')
 
 
     except Exception as e:
