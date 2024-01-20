@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}{{title}}{% endblock title %}
 
-{% block body %} 
+{% block body %}
 
 
 <div class="container mt-2 mx-auto">
-    <h4 class="my-header">Import Excel File</h4>
-    
-    <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+  <h4 class="my-header">Import Excel File</h4>
+
+  <form method="post" enctype="multipart/form-data"> {% csrf_token %}
     <div class="container card p-2" style="width: 65vw;">
 
       <div class="alert alert-danger" role="alert">
@@ -15,53 +15,63 @@
       </div>
 
       <ul>
-        <li>This importer will import the following fields: id, user, name, gender, department, library_id, mobile, joiningYear, passingYear, issuedBooks, returnedBooks, fine</li>
+        <li>This importer will import the following fields: id, user, name, gender, department, library_id, mobile,
+          joiningYear, passingYear, issuedBooks, returnedBooks, fine</li>
         <li>"id","issuedBooks","returnedBooks" columns are empty but must be created.</li>
         <li>"user" is the Email of user</li>
         <li>If you entered a record which is already exist then occurs an erorr.</li>
-       
+
       </ul>
       <hr>
-      
+
       {% if messages %}
-          {% for message in messages %}
-          <div class="alert alert-{{message.tags}}" role="alert">
-              {{message}}
-            </div>
-            <hr>
-            {% endfor %}
-            {% endif %}
+      {% for message in messages %}
+      <div class="alert alert-{{message.tags}}" role="alert">
+        {{message}}
+      </div>
+      <hr>
+      {% endfor %}
+      {% endif %}
 
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="form-group">
-            <label for="bookName">Import File</label>
-            <input type="file" class="form-control" name="myfile" id="myfile" required>
+            <label for="bookName">Download Format</label>
+            <a href="https://docs.google.com/spreadsheets/d/1y-epxv8Qq2WjTxDm8EGsLyAxNg8oJcUg/edit?usp=sharing&ouid=115405742947605448800&rtpof=true&sd=true"
+              download>Download Excel Format File</a>
           </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="form-group">
+          <label for="bookName">Import File</label>
+          <input type="file" class="form-control" name="myfile" id="myfile" required>
         </div>
       </div>
       
       <div class="col-auto">
         <button type="reset" class="btn btn-danger">Reset</button>
-        <button type="submit" class="btn btn-primary" onclick="confirm('Are you sure want to upload file?')">Upload File</button>
+        <button type="submit" class="btn btn-primary" onclick="confirm('Are you sure want to upload file?')">Upload
+          File</button>
+        </div>
       </div>
-    </div>
-  </form>
+</div>
+</form>
 </div>
 
 <script>
   var departmentSelect = document.getElementById('department');
-  departmentSelect.addEventListener('change',()=>{
+  departmentSelect.addEventListener('change', () => {
     console.log(departmentSelect.value)
     if (!(departmentSelect.value == "COMPUTER SCIENCE" || departmentSelect.value == "INFORMATION TECHNOLOGY")) {
-      
+
       document.getElementById('category').disabled = true;
-    }else{
+    } else {
       document.getElementById('category').disabled = false;
     }
 
   })
 </script>
-    
+
 
 {% endblock body %}

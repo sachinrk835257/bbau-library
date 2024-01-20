@@ -28,8 +28,9 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="department">Department</label>
+            
             <select class="form-select" name="department" id="department" aria-label="Default select example" required>
-              <option selected>----Select Department----</option>
+              <option selected>--- select department ---</option>
               {% for i in Departments %}
               <option value="{{i|upper}}">{{i|upper}}</option>
               {% endfor %}
@@ -41,22 +42,15 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="form-group">
-            <label for="cetegory">Category</label>
-            <select class="form-select" name="category" id="category" aria-label="Default select example" required>
-              <option selected>---SELECT CATEGORY</option>
-              <option value="technology">Network Security</option>
-              <option value="technology">Technology</option>
-              <option value="programming">Programming</option>
-              <option value="database learning">Database learning</option>
-              <option value="technology">Others</option>
-            </select>
+            <label for="ISBN">ISBN Nummber</label>
+            <input type="text" class="form-control" name="ISBN" id="ISBN" required>
           </div>
         </div>
 
         <div class="col-md-6 mb-3">
           <div class="form-group">
-            <label for="ISBN">ISBN Nummber</label>
-            <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter unique ISBN number without space and comma" required>
+            <label for="bookPages">Book Pages</label>
+            <input type="text" class="form-control" name="bookPages" id="bookPages" required>
           </div>
         </div>
       </div>
@@ -65,7 +59,7 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="bookPrice">Price</label>
-            <input type="text" class="form-control" name="bookPrice" id="bookPrice" placeholder="Enter Price in Rs." required>
+            <input type="text" class="form-control" name="bookPrice" id="bookPrice" placeholder="Enter Price in Rs.">
           </div>
         </div>
         <div class="col-md-6 mb-3">
@@ -76,14 +70,74 @@
         </div>
 
       </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="volume">Volume</label>
+            <input type="text" class="form-control" name="volume" id="volume" placeholder="Book Volume">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="edition">EDition</label>
+            <input type="text" class="form-control" name="edition" id="edition" placeholder="Enter Book Edition">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookSource">Book Source</label>
+            <input type="text" class="form-control" name="bookSource" id="bookSource" placeholder="Enter Book Source">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="billNo_Date">Bill No. & Date</label>
+            <input type="text" class="form-control" name="billNo_Date" id="billNo_Date" placeholder="Enter Bill no. & Bill Date" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="purchaseDate">Purchase Date</label>
+            <input type="text" class="form-control" name="purchaseDate" id="purchaseDate" placeholder="dd--mm-yyyy">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="printYear">Print Year</label>
+            <input type="text" class="form-control" name="printYear" id="printYear" placeholder="Enter Print Year">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookContact">Book Contact no.</label>
+            <input type="text" class="form-control" name="bookContact" id="bookContact" placeholder="dd--mm-yyyy">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="withDrawDate">Withdraw Date & Remark</label>
+            <input type="text" class="form-control" name="withDrawDate" id="withDrawDate" placeholder="Enter Print Year">
+          </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="coverImage">Cover Image</label><br>
-            <input type="file" name="coverImage" id="coverImage" accept="image/*" required>
+            <input type="file" name="coverImage" id="coverImage" accept="image/*">
           </div>
         </div>
+
       </div>
       
       <div class="col-auto">
@@ -94,19 +148,6 @@
   </form>
 </div>
 
-<script>
-  var departmentSelect = document.getElementById('department');
-  departmentSelect.addEventListener('change',()=>{
-    console.log(departmentSelect.value)
-    if (!(departmentSelect.value == "COMPUTER SCIENCE" || departmentSelect.value == "INFORMATION TECHNOLOGY")) {
-      
-      document.getElementById('category').disabled = true;
-    }else{
-      document.getElementById('category').disabled = false;
-    }
 
-  })
-</script>
-    
 
 {% endblock body %}

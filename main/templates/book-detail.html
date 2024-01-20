@@ -29,9 +29,9 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="department">Department</label>
-            <select class="form-select" name="department" id="department" value="{{book.department}}"
-              aria-label="Default select example" required>
-              <option selected value="book.department">{{book.department}}</option>
+            
+            <select class="form-select" name="department" id="department" aria-label="Default select example" required>
+              <option selected value="{{book.department}}">{{book.department}}</option>
               {% for i in Departments %}
               <option value="{{i|upper}}">{{i|upper}}</option>
               {% endfor %}
@@ -43,21 +43,15 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="form-group">
-            <label for="cetegory">Category</label>
-            <select class="form-select" name="category" id="category" value="{{book.category}}"
-              aria-label="Default select example">
-              <option selected value="{{book.category}}">{{book.category}}</option>
-              <option value="technology">Technology</option>
-              <option value="programming">Programming</option>
-              <option value="database learning">Database learning</option>
-            </select>
+            <label for="ISBN">ISBN Nummber</label>
+            <input type="text" class="form-control" name="ISBN" id="ISBN" value="{{book.ISBN}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 mb-3">
           <div class="form-group">
-            <label for="ISBN">ISBN Nummber</label>
-            <input type="text" class="form-control" name="ISBN" id="ISBN" value="{{book.ISBN}}" readonly>
+            <label for="bookPages">Book Pages</label>
+            <input type="text" class="form-control" name="bookPages" id="bookPages" value="{{book.bookPages}}">
           </div>
         </div>
       </div>
@@ -74,10 +68,77 @@
           <div class="form-group">
             <label for="autherName">Author Name</label>
             <input type="text" class="form-control" name="authorName" id="autherName" value="{{book.authorName}}"
-              placeholder="Author Nmae">
+              placeholder="Author Nmae" required>
           </div>
         </div>
 
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="volume">Volume</label>
+            <input type="text" class="form-control" name="volume" id="volume" value="{{book.volume}}"
+              placeholder="Book Volume">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="edition">EDition</label>
+            <input type="text" class="form-control" name="edition" id="edition" value="{{book.edition}}"
+              placeholder="Enter Book Edition">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookSource">Book Source</label>
+            <input type="text" class="form-control" name="bookSource" id="bookSource" value="{{book.bookSource}}"
+              placeholder="Enter Book Source">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="billNo_Date">Bill No. & Date</label>
+            <input type="text" class="form-control" name="billNo_Date" id="billNo_Date" value="{{book.billNo_Date}}"
+              placeholder="Enter Bill no. & Bill Date" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="purchaseDate">Purchase Date</label>
+            <input type="text" class="form-control" name="purchaseDate" id="purchaseDate" value="{{book.purchaseDate}}"
+              placeholder="dd--mm-yyyy">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="printYear">Print Year</label>
+            <input type="text" class="form-control" name="printYear" id="printYear" value="{{book.printYear}}"
+              placeholder="Enter Print Year">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookContact">Book Contact no.</label>
+            <input type="text" class="form-control" name="bookContact" id="bookContact" value="{{book.bookContact}}"
+              placeholder="dd--mm-yyyy">
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="withDrawDate">Withdraw Date & Remark</label>
+            <input type="text" class="form-control" name="withDrawDate" id="withDrawDate" value="{{book.withDrawDate}}"
+              placeholder="Enter Print Year">
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -90,7 +151,7 @@
               src="{{book.coverImage.url}}" accept="image/*">
 
             {% else %}
-            <img src="" alt="Image" style="width: 100px; height: 100px;">
+            <img src="" alt="No Image" style="width: 100px; height: 100px;">
             <input type="file" name="coverImage" id="coverImage" accept="image/*">
 
             {% endif %}

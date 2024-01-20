@@ -170,10 +170,6 @@ def addBook(request):
                     return redirect('http://127.0.0.1:8000/add-book/')
                 # print(bookName,department,isbn,authorName,bookPrice,coverImage)    
                 book_obj = Registered_Books.objects.create(register_by = request.user.first_name, bookName = bookName,department = department, ISBN = isbn, authorName = authorName, bookPrice = bookPrice, coverImage =coverImage)
-
-                if department == "COMPUTER SCIENCE" or department == "INFORMATION TECHNOLOGY":
-                    category = request.POST.get('category')
-                    book_obj.category = category
                 book_obj.save()
                 messages.add_message(request, messages.SUCCESS, "Book Added Successfully")
                 return redirect('http://127.0.0.1:8000/add-book/')
@@ -198,30 +194,36 @@ def addMultiple(request):
         if request.method == 'POST':
             bookName = request.POST.get('bookName')
             department = request.POST.get('department')
-            
-            isbn = request.POST.get('ISBN')
-            print(isbn,type(isbn))
-            if "," in isbn:
-                isbn = ''.join(isbn.split())
-                isbn = isbn.split(',')
-                print(isbn)
+            # category =  verbose_name="Category"
+            ISBN = request.POST.get('ISBN')
+            authorName = request.POST.get('authorName')
+            purchaseDate = request.POST.get('purchaseDate')
+            bookPrice = request.POST.get('bookPrice')
+            billNo_Date = request.POST.get('billNo_Date')
+            place_and_publisher = request.POST.get('place_and_publisher')
+            edition = request.POST.get('edition')
+            volume = request.POST.get('volume')
+            printYear = request.POST.get('printYear')
+            bookPages = request.POST.get('bookPages')
+            bookContact = request.POST.get('bookContact')
+            bookSource = request.POST.get('bookSource')
+            withDrawDate = request.POST.get('withDrawDate')
+        
+            if "," in ISBN:
+                ISBN = ''.join(ISBN.split())
+                ISBN = ISBN.split(',')
+                # print(isbn)
             else:
                 messages.add_message(request, messages.WARNING, "unique ISBN should be written with comma seperated  !!!")
                 return redirect('http://127.0.0.1:8000/multiple-entry/')
             
-            authorName = request.POST.get('authorName')
-            bookPrice = request.POST.get('bookPrice')
             coverImage = request.FILES['coverImage']
            
             if coverImage:
-                print(bookName,department,isbn,authorName,bookPrice,coverImage)   
+                print(bookName,department,ISBN,authorName,bookPrice,coverImage)   
 
                 for b in isbn:
                     book_obj = Registered_Books.objects.create(register_by = request.user.first_name, bookName = bookName,department = department, ISBN = b, authorName = authorName, bookPrice = bookPrice, coverImage =coverImage)
-
-                    if department == "COMPUTER SCIENCE" or department == "INFORMATION TECHNOLOGY":
-                        category = request.POST.get('category')
-                        book_obj.category = category
                     book_obj.save()
                 messages.add_message(request, messages.SUCCESS, "Book Added Successfully")
                 return redirect('http://127.0.0.1:8000/multiple-entry/')
@@ -256,10 +258,11 @@ def importFile(request):
             imported_data = dateset.load(myfile.read(),format="xlsx")
 
             for data in imported_data:
-                # purchaseDate,accessionNo,author,title, place&publisher, year, pages , source,cost,billNoDate
-                # print(data[0],data[1],data[2],data[3],data[5],data[6],data[7],data[9],data[10],data[14])
+                # DATE Accession Number AUTHOR TITLE Deparmtent Edition Place&Publishers Year Pages. Vol. Source Cost Call No.	Bill No.&Date  WithdrawlDate & Rem.		
+                # print(data)
+                print(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11],data[12],data[13],data[15])
                 try:
-                    register_obj = Registered_Books(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = data[0],ISBN = data[1],authorName = data[2],bookName = data[3],place_and_publisher = data[5],printYear = data[6],bookPages = data[7],bookSource = data[9],bookPrice = data[10],billNo_Date = data[14])
+                    register_obj = Registered_Books(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = data[0],ISBN = data[1],authorName = data[2],bookName = data[3],department = data[4],edition = data[5],place_and_publisher = data[6],printYear = data[7],bookPages = data[8],volume = data[9],bookSource = data[10],bookPrice = data[11],bookContact = data[12],billNo_Date = data[13],withDrawDate = data[14])
                     register_obj.save()
                 except Exception as e:
                     print(e)
@@ -289,7 +292,7 @@ def exportFile(request):
         data = []
         for obj in books:
             count = 1
-            data.append({"Sr No.":count,"Book Name":obj.bookName,"Register By":obj.register_by,"Department":obj.department,"Category":obj.category,"Author Name":obj.authorName,"Book ISBN":obj.ISBN,"Book Price":obj.bookPrice,"Registered Date":obj.registered_at.date()})
+            data.append({"Sr No.":count,"Book Name":obj.bookName,"Register By":obj.register_by,"Department":obj.department,"Author Name":obj.authorName,"Book ISBN":obj.ISBN,"Book Price":obj.bookPrice,"Registered Date":obj.registered_at.date()})
             count += 1
             print(count)
         print(pd.DataFrame(data).to_excel("Book_Details.xlsx"))
@@ -376,43 +379,44 @@ def bookDetails(request,isbn):
     return render(request,'book-detail.html', {"title":title,"book":book_obj1,"Departments":departments})
 
 def updateBook(request,isbn):
-    print("in update book")
-    print(isbn)
-    try:
-        if request.method == 'POST':
+    print("in update")
+    if not request.user.is_superuser:
+        messages.add_message(request, messages.WARNING, "Admin Login First !!!")
+        return redirect('http://127.0.0.1:8000/authenticate/admin-login/')
+    if request.method == 'POST':
+        print("posted")
+        try:
+            book_obj1 = Registered_Books.objects.get(ISBN = isbn)     
             bookName = request.POST.get('bookName')
             department = request.POST.get('department')
-            category = request.POST.get('category')
             authorName = request.POST.get('authorName')
             bookPrice = request.POST.get('bookPrice')
-            coverImage = request.FILES['coverImage']
-            print("posted")
-            print(bookName,department,category,authorName,bookPrice)  
-            book_obj1 = Registered_Books.objects.get(ISBN = isbn)
-                        
             book_obj1.bookName = bookName
             book_obj1.authorName = authorName
-            book_obj1.category = category
             book_obj1.department = department
             book_obj1.bookPrice = bookPrice
-            print("here")
+            print("done")
+            print(bookName,department,authorName,bookPrice)  
             book_obj1.save()
+        except:
+            messages.add_message(request, messages.WARNING, "Technical Error !!!")
+            return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
+        try:
+            if request.FILES :
+                coverImage = request.FILES['coverImage']
+                # print(coverImage)
+                if coverImage:
+                    if not(coverImage.name.endswith('jpg') or coverImage.name.endswith('jpeg')):
+                        # print("in this")
+                        messages.add_message(request, messages.WARNING, "Upload jpeg or jpg image file only !!!")
+                        return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
+                    book_obj1.coverImage = coverImage
+                    book_obj1.save()
+        except:
+            messages.add_message(request, messages.WARNING, "Image Uploading Error !!!")
+            return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
 
-            if not(coverImage.name.endswith('jpg') or coverImage.name.endswith('jpeg')):
-                print("in this")
-                messages.add_message(request, messages.WARNING, "Upload jpeg or jpg image file only !!!")
-                return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
 
-            if coverImage:
-                book_obj1.coverImage = coverImage
-                book_obj1.save()
-                messages.add_message(request, messages.SUCCESS, "Book Updated Successfully")
-                return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
-
-            print("Done")
-
-    except Exception as e:
-        print(e)
         messages.add_message(request, messages.SUCCESS, "Book Updated Successfully")
         return redirect('http://127.0.0.1:8000/edit-book/{}'.format(isbn))
 
@@ -427,7 +431,6 @@ def searchByRegisteredBooks(request):
         book_obj2 = Registered_Books.objects.filter(ISBN__contains = search)
         book_obj3 = Registered_Books.objects.filter(authorName__contains = search)
         book_obj4 = Registered_Books.objects.filter(department__contains = search)
-        book_obj5 = Registered_Books.objects.filter(category__contains = search)
         book_obj5 = Registered_Books.objects.filter(status = search.lower())
         union_queryset = book_obj1 | book_obj2 | book_obj3 | book_obj4 | book_obj5
         print(union_queryset)
@@ -590,7 +593,7 @@ def issuingBook(request):
             book_obj.save()
             print(book_obj.status)
 
-            issued_book_obj = Issued_Books.objects.create(issued_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, issue_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN, category = book_obj.category )
+            issued_book_obj = Issued_Books.objects.create(issued_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, issue_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN)
             
             print(book_obj.status)
             issued_book_obj.save()
@@ -674,7 +677,7 @@ def returningBook(request):
             book_obj.last_returned_by = profile_obj.name
             print(book_obj.status)
             print(book_obj.last_returned_by)
-            returned_books_obj = Returned_Books.objects.create(returned_by = profile_obj.name,issue_date = issued_books_obj.issue_date, email = profile_obj.user.email, fine = fine, isPaid = isPaid, mobile = profile_obj.mobile, return_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN, category = book_obj.category )
+            returned_books_obj = Returned_Books.objects.create(returned_by = profile_obj.name,issue_date = issued_books_obj.issue_date, email = profile_obj.user.email, fine = fine, isPaid = isPaid, mobile = profile_obj.mobile, return_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN)
 
             book_obj.save()
             print(book_obj.status)
