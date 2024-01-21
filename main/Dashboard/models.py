@@ -32,7 +32,7 @@ class Registered_Books(models.Model):
     # category = models.CharField(default="Null",max_length=50, verbose_name="Category")
     ISBN = models.CharField(default="",unique=True,max_length=255, verbose_name="ISBN Number")
     authorName = models.CharField(default="",max_length=50, verbose_name="Author Name")
-    purchaseDate = models.DateField(verbose_name="Purchase Date")
+    purchaseDate = models.TextField(default = "00-00-0000", max_length = 15,verbose_name="Purchase Date")
     bookPrice = models.PositiveIntegerField(default=0, verbose_name="Book Price")
     billNo_Date = models.TextField(default="Not Available", verbose_name="Bill No and Date")
     place_and_publisher = models.TextField(default = "Null", verbose_name ="Place And Publisher")
