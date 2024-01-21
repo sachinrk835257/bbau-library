@@ -36,9 +36,13 @@ body{
     border-radius: 7px;
     transition: background-color 0.2s;
 }
-
+.navbar-collapse{
+    padding-right: 1rem !important;
+  }
 .navbar .nav-link{
-    margin-right: 0.9rem;
+    margin-right: 0.7rem;
+    padding-right: 0.7rem !important;
+    padding-left: 0rem !important;
 }
 
 .my-header {
