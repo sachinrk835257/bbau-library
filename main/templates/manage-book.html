@@ -32,9 +32,9 @@
                 <th scope="col">Status</th>
                 <th scope="col">Book Name</th>
                 <th scope="col">Department</th>
-                <th scope="col">Category</th>
                 <th scope="col">Author Name</th>
                 <th scope="col">ISBN</th>
+                <th scope="col">Cost (in RS.)</th>
                 <th scope="col">Place & Publisher</th>
                 <th scope="col">Purchase Date</th>
                 <th scope="col">Pages</th>
@@ -42,10 +42,10 @@
                 <th scope="col">Call No.</th>
                 <th scope="col">Vol.</th>
                 <th scope="col">Source</th>
+                <th scope="col">Edition</th>
                 <th scope="col">Bill No. & Date</th>
                 <th scope="col">WithdrawDate & Rem.</th>
                 <th scope="col">Last Issued By</th>
-                <th scope="col">Cost (in RS.)</th>
                 <th scope="col">Action</th>
 
                
@@ -57,14 +57,24 @@
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td><img src="/media/{{book.coverImage}}" alt="" style="width: 100px;height: 100px;"></td>
+                <td class="{% if book.status == 'Available' %}text-success{% else %} text-Danger {% endif %}">status : {{book.status|default:"Not Available"}}</td>
                 <td>{{book.bookName}}</td>
                 <td>{{book.department}}</td>
-                <td>{{book.category}}</td>
                 <td>{{book.authorName}}</td>
                 <td>{{book.ISBN}}</td>
-                <td class="{% if book.status == 'Available' %}text-success{% else %} text-Danger {% endif %}">status : {{book.status|default:"Not Available"}}</td>
-                <td>{{book.last_issued_by}}</td>
                 <td>{{book.bookPrice}}</td>
+                <td>{{book.place_and_publisher}}</td>
+                <td>{{book.purchaseDate}}</td>
+                <td>{{book.bookPages}}</td>
+                <td>{{book.printYear}}</td>
+                <td>{{book.bookContact}}</td>
+                <td>{{book.volume}}</td>
+                <td>{{book.bookSource}}</td>
+                <td>{{book.edition}}</td>
+                <td>{{book.edition}}</td>
+                <td>{{book.billNo_Date}}</td>
+                <td>{{book.withDrawDate}}</td>             
+                <td>{{book.last_issued_by}}</td>
                 <td><a id="edit-{{book.ISBN}}" href="http://127.0.0.1:8000/edit-book/{{book.ISBN}}/" class="btn btn-primary me-2">Edit</a>
             
                 <a id="del-{{book.ISBN}}" href="http://127.0.0.1:8000/delete-book/{{book.ISBN}}/" class="btn btn-danger" onclick="confirm('are you sure want delete book?')">Delete</a>

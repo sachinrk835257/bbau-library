@@ -152,17 +152,17 @@ def addBook(request):
             department = request.POST.get('department')
             isbn = request.POST.get('ISBN')
             authorName = request.POST.get('authorName')
-            purchaseDate = request.POST.get('purchaseDate')
+            purchaseDate = request.POST.get('purchaseDate','Null')
             bookPrice = request.POST.get('bookPrice')
-            billNo_Date = request.POST.get('billNo_Date')
-            place_and_publisher = request.POST.get('place_and_publisher')
-            edition = request.POST.get('edition')
-            volume = request.POST.get('volume')
-            printYear = request.POST.get('printYear')
-            bookPages = request.POST.get('bookPages')
-            bookContact = request.POST.get('bookContact')
-            bookSource = request.POST.get('bookSource')
-            withDrawDate = request.POST.get('withDrawDate')
+            billNo_Date = request.POST.get('billNo_Date','Null')
+            place_and_publisher = request.POST.get('place_and_publisher','Null')
+            edition = request.POST.get('edition','Null')
+            volume = request.POST.get('volume','Null')
+            printYear = request.POST.get('printYear','Null')       
+            bookPages = request.POST.get('bookPages','Null')
+            bookContact = request.POST.get('bookContact','Null')
+            bookSource = request.POST.get('bookSource','Null')
+            withDrawDate = request.POST.get('withDrawDate','Null')
             if (" " in isbn or "," in isbn):
                 messages.add_message(request, messages.WARNING, "ISBN without characters of \'  \', or \' , \' !!!")
                 return redirect('http://127.0.0.1:8000/add-book/')
@@ -183,7 +183,7 @@ def addBook(request):
 
                 book_obj.save()
                 messages.add_message(request, messages.SUCCESS, "Book Added Successfully")
-                return redirect('http://127.0.0.1:8000/listed-book/')
+                return redirect('http://127.0.0.1:8000/manage-book/')
             except Exception as e:
                 print(e)
                 messages.add_message(request, messages.WARNING, "Technical Error !!!")
@@ -230,24 +230,25 @@ def addMultiple(request):
                 messages.add_message(request, messages.WARNING, "unique ISBN should be written with comma seperated  !!!")
                 return redirect('http://127.0.0.1:8000/multiple-entry/')
             
-            print(bookName,department,isbn,authorName,bookPrice,purchaseDate,place_and_publisher,withDrawDate,volume,edition,bookSource,bookContact,printYear,billNo_Date,sep=", ")  
-            print(request.FILES)
-            # try:
-            #     if coverImage:
-            #         if not (coverImage.name.endswith('jpeg') or coverImage.name.endswith('jpg')):
-            #             messages.add_message(request, messages.WARNING, "Please upload .jpeg or .jpg image only !!!")
-            #             return redirect('http://127.0.0.1:8000/multiple-entry/')
-            #         for i in isbn:
-            #             book_obj = Registered_Books.objects.create(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = purchaseDate,ISBN = i,authorName = authorName,bookName = bookName,department = department,edition = edition,place_and_publisher = place_and_publisher,printYear = printYear,bookPages = bookPages,volume = volume,bookSource = bookSource,bookPrice = bookPrice,bookContact = bookContact,billNo_Date = billNo_Date,withDrawDate = withDrawDate,coverImage = coverImage)
-            #     else:  
-            #         for j in isbn:
-            #             book_obj = Registered_Books.objects.create(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = purchaseDate,ISBN = j,authorName = authorName,bookName = bookName,department = department,edition = edition,place_and_publisher = place_and_publisher,printYear = printYear,bookPages = bookPages,volume = volume,bookSource = bookSource,bookPrice = bookPrice,bookContact = bookContact,billNo_Date = billNo_Date,withDrawDate = withDrawDate)
-            # except Exception as e:
-            #     print(e)
-            #     messages.add_message(request, messages.WARNING, "Technical Error !!!")
-            #     return redirect('http://127.0.0.1:8000/multiple-entry/')
+            print(bookName,department,isbn,authorName,bookPrice,purchaseDate,place_and_publisher,withDrawDate,volume,edition,bookSource,bookContact,printYear,billNo_Date,sep=", ") 
+            print(request.FILES) 
+            try:
+                if request.FILES:
+                    coverImage = request.FILES['coverImage']
+                    if not (coverImage.name.endswith('jpeg') or coverImage.name.endswith('jpg')):
+                        messages.add_message(request, messages.WARNING, "Please upload .jpeg or .jpg image only !!!")
+                        return redirect('http://127.0.0.1:8000/multiple-entry/')
+                    for i in isbn:
+                        book_obj = Registered_Books.objects.create(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = purchaseDate,ISBN = i,authorName = authorName,bookName = bookName,department = department,edition = edition,place_and_publisher = place_and_publisher,printYear = printYear,bookPages = bookPages,volume = volume,bookSource = bookSource,bookPrice = bookPrice,bookContact = bookContact,billNo_Date = billNo_Date,withDrawDate = withDrawDate,coverImage = coverImage)
+                else:  
+                    for j in isbn:
+                        book_obj = Registered_Books.objects.create(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = purchaseDate,ISBN = j,authorName = authorName,bookName = bookName,department = department,edition = edition,place_and_publisher = place_and_publisher,printYear = printYear,bookPages = bookPages,volume = volume,bookSource = bookSource,bookPrice = bookPrice,bookContact = bookContact,billNo_Date = billNo_Date,withDrawDate = withDrawDate)
+            except Exception as e:
+                print(e)
+                messages.add_message(request, messages.WARNING, "Technical Error !!!")
+                return redirect('http://127.0.0.1:8000/multiple-entry/')
             
-            # book_obj.save()
+            book_obj.save()
             messages.add_message(request, messages.SUCCESS, f"Books {isbn} Added Successfully")
             return redirect('http://127.0.0.1:8000/manage-book/')
 

@@ -1,0 +1,36 @@
+@media (min-width: 992px) and (max-width: 1100px) {
+  
+    body {
+      background-color: rgb(54, 42, 221);
+    }
+    /* navbar */
+    .header-text{
+        font-size: 1.1rem;
+    }
+    .navbar-nav .nav-item{
+        font-size: 0.9rem;
+    }
+    #atTop h3{
+        font-size: 1.5rem;
+    }
+
+  
+  }
+  
+  /* For screens between 768px and 991px (small tablets) */
+  @media (min-width: 768px) and (max-width: 991px) {
+  
+    body {
+      background-color: rgb(42, 221, 134);
+    }
+   
+  
+  }
+/* For screens smaller than 768px (typical smartphones) */
+@media (max-width: 767px) {
+    body {
+      background-color: rgb(236, 132, 132);
+    }
+  
+}
+  
