@@ -37,7 +37,9 @@ body{
     transition: background-color 0.2s;
 }
 
-
+.navbar .nav-link{
+    margin-right: 0.9rem;
+}
 
 .my-header {
     padding: 20px 25px;
