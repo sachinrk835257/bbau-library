@@ -132,9 +132,11 @@
   }
 }
 /* importFile.html */
-#importFile{
+#importFile,#bookDetails{
   width: auto !important;
 }
+
+
  
 
 }
@@ -204,7 +206,7 @@
     margin-bottom: 10px !important;
   }
 /* importFile.html */
-  #importFile{
+  #importFile,#bookDetails{
     width: auto !important;
   }
 

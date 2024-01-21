@@ -8,7 +8,7 @@
   <h4 class="my-header">Book Details</h4>
 
   <form method="post" action="http://127.0.0.1:8000/update-book/{{book.ISBN}}/" enctype="multipart/form-data"> {% csrf_token %}
-    <div class="container card p-2" style="width: 65vw;">
+    <div class="container card p-2" id="bookDetails" style="width: 65vw;">
 
       {% if messages %}
       {% for message in messages %}
