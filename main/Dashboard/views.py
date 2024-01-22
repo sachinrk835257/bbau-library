@@ -167,11 +167,12 @@ def addBook(request):
                 messages.add_message(request, messages.WARNING, "ISBN without characters of \'  \', or \' , \' !!!")
                 return redirect('http://127.0.0.1:8000/add-book/')
 
-            coverImage = request.FILES['coverImage']
-            print(bookName,department,isbn,authorName,bookPrice,purchaseDate,place_and_publisher,withDrawDate,volume,edition,bookSource,bookContact,printYear,billNo_Date,coverImage,sep=", ")  
+
+            # print(bookName,department,isbn,authorName,bookPrice,purchaseDate,place_and_publisher,withDrawDate,volume,edition,bookSource,bookContact,printYear,billNo_Date,coverImage,sep=", ")  
             try:
 
-                if coverImage:
+                if request.FILES:
+                    coverImage = request.FILES['coverImage']
                     if not (coverImage.name.endswith('jpeg') or coverImage.name.endswith('jpg')):
                         messages.add_message(request, messages.WARNING, "Please upload .jpeg or .jpg image only !!!")
                         return redirect('http://127.0.0.1:8000/add-book/')
@@ -281,9 +282,9 @@ def importFile(request):
             for data in imported_data:
                 # DATE Accession Number AUTHOR TITLE Deparmtent Edition Place&Publishers Year Pages. Vol. Source Cost Call No.	Bill No.&Date  WithdrawlDate & Rem.		
                 # print(data)
-                # print(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11],data[12],data[13],data[15])
+                # print(data[0],"--",data[1],"---",data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11],data[12],data[13],data[15])
                 try:
-                    register_obj = Registered_Books.create(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = data[0],ISBN = data[1],authorName = data[2],bookName = data[3],department = data[4],edition = data[5],place_and_publisher = data[6],printYear = data[7],bookPages = data[8],volume = data[9],bookSource = data[10],bookPrice = data[11],bookContact = data[12],billNo_Date = data[13],withDrawDate = data[14])
+                    register_obj = Registered_Books.objects.create(register_by = f"{request.user.first_name} {request.user.last_name}", purchaseDate = data[0],ISBN = data[1],authorName = data[2],bookName = data[3],department = data[4],edition = data[5],place_and_publisher = data[6],printYear = data[7],bookPages = data[8],volume = data[9],bookSource = data[10],bookPrice = data[11],bookContact = data[12],billNo_Date = data[13],withDrawDate = data[14])
                     
                 except Exception as e:
                     print(e)

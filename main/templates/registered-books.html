@@ -9,13 +9,13 @@
 
 <div class="container mt-2 registered-books">
   <h4 class="my-header">Registered Books</h4>
-<div class="filer-tools d-flex justify-content-end">
+<div class="filer-tools d-flex justify-content-end" style="position: sticky;top: 70px;left: 0px;z-index: 10;">
   {% if user.is_superuser %}
   <a href="http://127.0.0.1:8000/add-book/" class="btn btn-primary me-2">Add Book</a>
   <a href="http://127.0.0.1:8000/add-book/" class="btn btn-primary me-2">Export Excel Data</a>
   {% endif %}
   <form action="http://127.0.0.1:8000/registered-books-search-by/" class="d-flex me-2" method="post">{% csrf_token %}
-    <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,and more" required aria-label="Search" style="display: inline;width: auto;">
+    <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,Department" required aria-label="Search" style="display: inline;width: auto;">
     <button class="btn btn-success" type="submit">Search</button>
   </form>
 

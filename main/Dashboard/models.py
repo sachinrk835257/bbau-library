@@ -28,21 +28,21 @@ class Profile(models.Model):
 class Registered_Books(models.Model):
     # book columns
     bookName = models.CharField(default="",max_length=255, verbose_name="Book Name")
-    department = models.CharField(default="",max_length=50, verbose_name="Department")
+    department = models.CharField(default="Null",null = True,max_length=50, verbose_name="Department")
     # category = models.CharField(default="Null",max_length=50, verbose_name="Category")
     ISBN = models.CharField(default="",unique=True,max_length=255, verbose_name="ISBN Number")
     authorName = models.CharField(default="",max_length=50, verbose_name="Author Name")
     purchaseDate = models.TextField(default = "00-00-0000", max_length = 15,verbose_name="Purchase Date")
-    bookPrice = models.CharField(default="Null",max_length=7, verbose_name="Book Price")
-    billNo_Date = models.TextField(default="Not Available", verbose_name="Bill No and Date")
-    place_and_publisher = models.TextField(default = "Null", verbose_name ="Place And Publisher")
-    edition = models.CharField(default = "",max_length = 10,verbose_name ="Edition")
-    volume = models.CharField(default="",max_length = 10,verbose_name = "Volume")
-    printYear = models.CharField(default = "Null",max_length = 10, verbose_name = "Printed Year")
-    bookPages = models.CharField(default = "Null", max_length = 10, verbose_name = "Book Pages")
-    bookContact = models.TextField(default = "Null", verbose_name ="Call No.")
+    bookPrice = models.CharField(default="Null",null = True,max_length=20, verbose_name="Book Price")
+    billNo_Date = models.TextField(default="Not Available",blank = False, verbose_name="Bill No and Date")
+    place_and_publisher = models.TextField(default = "Null",null = True, verbose_name ="Place And Publisher")
+    edition = models.CharField(default = "Null",null = True,max_length = 10,verbose_name ="Edition")
+    volume = models.CharField(default="Null",null = True,max_length = 10,verbose_name = "Volume")
+    printYear = models.CharField(default = "Null",null = True,max_length = 10, verbose_name = "Printed Year")
+    bookPages = models.CharField(default = "Null",null = True, max_length = 30, verbose_name = "Book Pages")
+    bookContact = models.TextField(default = "Null",null = True, verbose_name ="Call No.")
     bookSource = models.TextField(default="Not Available", verbose_name="Book Source")
-    withDrawDate = models.TextField(default = "", verbose_name ="WithDraw Date & Remarks")
+    withDrawDate = models.TextField(default = "Null",null = True, verbose_name ="WithDraw Date & Remarks")
     # self created columns
     register_by = models.CharField(default="",max_length=50, verbose_name="book register by")
     coverImage = models.ImageField(default = "",upload_to='cover images/',verbose_name="Book Cover Image")
@@ -52,7 +52,7 @@ class Registered_Books(models.Model):
     registered_at = models.DateTimeField(auto_now_add=True,verbose_name="Registered At")
 
     def __str__(self) -> str:
-        return self.bookName + " " + self.department + " " + self.ISBN
+        return self.bookName + " " + self.ISBN
 
 class Issued_Books(models.Model):
     issued_by = models.CharField(default="Null",max_length=30,verbose_name="Issued By")

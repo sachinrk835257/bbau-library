@@ -5,25 +5,14 @@
 
 <div class="container mt-2 mx-auto">
     <h4 class="my-header">Manage Book Details</h4>
-    <div class="filer-tools d-flex justify-content-end">
+    <div class="filer-tools d-flex justify-content-end" style="position: sticky;top: 70px;left: 0px;z-index: 10;">
       <form action="http://127.0.0.1:8000/manage-books-search-by/" class="d-flex me-2" method="post">{% csrf_token %}
-        <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,and more" required aria-label="Search" style="display: inline;width: auto;">
+        <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,Department" required aria-label="Search" style="display: inline;width: auto;">
         <button class="btn btn-success" type="submit">Search</button>
-      </form>
-      <form action="http://127.0.0.1:8000/manage-books-sort-by/" class="d-flex" method="post">{% csrf_token %}
-        
-        <select class="form-select me-2" id="sort" name="sort-by" aria-label="Default select example" style="width: auto;">
-          <option selected value="bookName" >Book Name</option>
-          <option value="department">Department</option>
-          <option value="category">Category</option>
-          <option value="status">Available Books</option>
-          <option value="registered_at">New Book First</option>
-        </select>
-        <button class="btn btn-success" type="submit">Apply filter</button>
       </form>
     
     </div>
-    <div class="container mt-2" style="width: 85vw;height:100vh;overflow-y:hidden;box-shadow: 5px 0px 4px mediumpurple;">
+    <div class="container mt-2" style="width: 85vw;overflow-y:hidden;box-shadow: 5px 0px 4px mediumpurple;">
         <table class="table table-hover table-bordered">
             <thead>
               <tr>
@@ -46,6 +35,7 @@
                 <th scope="col">Bill No. & Date</th>
                 <th scope="col">WithdrawDate & Rem.</th>
                 <th scope="col">Last Issued By</th>
+                <th scope="col">Last Returned By</th>
                 <th scope="col">Action</th>
 
                
@@ -71,10 +61,10 @@
                 <td>{{book.volume}}</td>
                 <td>{{book.bookSource}}</td>
                 <td>{{book.edition}}</td>
-                <td>{{book.edition}}</td>
                 <td>{{book.billNo_Date}}</td>
                 <td>{{book.withDrawDate}}</td>             
                 <td>{{book.last_issued_by}}</td>
+                <td>{{book.last_returned_by}}</td>
                 <td><a id="edit-{{book.ISBN}}" href="http://127.0.0.1:8000/edit-book/{{book.ISBN}}/" class="btn btn-primary me-2">Edit</a>
             
                 <a id="del-{{book.ISBN}}" href="http://127.0.0.1:8000/delete-book/{{book.ISBN}}/" class="btn btn-danger" onclick="confirm('are you sure want delete book?')">Delete</a>
