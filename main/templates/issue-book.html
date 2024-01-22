@@ -48,8 +48,8 @@
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
-              <label for="category">Category</label>
-              <input type="text" class="form-control" name="catefory" id="category" value="{{book.0.category}}" readonly>
+              <label for="bookPages">Book Pages</label>
+              <input type="number" class="form-control" name="bookPages" id="bookPages" value="{{book.0.bookPages}}" readonly>
             </div>
           </div>
 
@@ -66,15 +66,38 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="status">Book Status</label>
-              <input type="text" class="form-control text-danger" name="status" id="status" value="{{book.0.status}}" readonly>
+              <input type="text" class="form-control bg-danger text-light" name="status" id="status" value="{{book.0.status}}" readonly>
             </div>
           </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="bookSource">Book Source</label>
+            <input type="text" class="form-control" name="bookSource" id="bookSource" value="{{book.0.bookSource}}" readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="bookPrice">Book Price</label>
+              <input type="text" class="form-control text-danger" name="bookPrice" id="bookPrice" value="{{book.0.bookPrice}}" readonly>
+            </div>
+          </div>
+      </div>
 
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="coverImage">Cover Image</label><br>
-            <img src="{{ book.0.coverImage.url }}" alt="Image" style="width: 100px; height: 100px;">
+            {% if book.0.coverImage %}
+            <img src="{{book.0.coverImage.url}}" alt="Image" style="width: 100px; height: 100px;">
+              src="{{book.0.coverImage.url}}" accept="image/*">
+
+            {% else %}
+            <img src="" alt="No Image" style="width: 100px; height: 100px;">
+            {% endif %}
           </div>
         </div>
       </div>
@@ -114,8 +137,25 @@
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
-              <label for="mobile">Mobile Number</label>
-              <input type="text" class="form-control" name="mobile" id="mobile" value="{{student.0.mobile}}" readonly>
+              <label for="semester">Semester</label>
+              <input type="text" class="form-control" name="semester" id="semester" value="{{student.0.mobile}} change please" readonly>
+            </div>
+          </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="mobile">Mobile Number</label>
+            <input type="text" class="form-control" name="mobile" id="mobile" value="{{student.0.mobile}}" readonly>
+          </div>
+        </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" name="email" id="email" value="{{student.0.user.email}}" readonly>
             </div>
           </div>
 

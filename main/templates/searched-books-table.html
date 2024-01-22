@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block title %}{{title}}{% endblock title %}
-
 {% block body %} 
 
 <div class="container mt-2 mx-auto">
     <h4 class="my-header">Manage Book Details</h4>
     <div class="filer-tools d-flex justify-content-end" style="position: sticky;top: 70px;left: 0px;z-index: 10;">
+        {% if user.is_superuser %}
+        <a href="http://127.0.0.1:8000/add-book/" class="btn btn-primary me-2">Add Book</a>
+        <a href="http://127.0.0.1:8000/" class="btn btn-primary me-2">Export Excel Data</a>
+        {% endif %}
       <form action="http://127.0.0.1:8000/manage-books-search-by/" class="d-flex me-2" method="post">{% csrf_token %}
         <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,Department" required aria-label="Search" style="display: inline;width: auto;">
         <button class="btn btn-success" type="submit">Search</button>
@@ -14,8 +17,8 @@
     </div>
     <div class="container mt-2" style="width: 85vw;overflow-y:hidden;box-shadow: 5px 0px 4px mediumpurple;">
         <table class="table table-hover table-bordered">
-            <thead class="text-center">
-              <tr>
+            <thead>
+              <tr class="text-center">
                 <th scope="col">Sr No.</th>
                 <th scope="col">Cover Image</th>
                 <th scope="col">Status</th>
@@ -43,7 +46,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for book in books reversed %}
+              {% for book in books %}
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td><img src="/media/{{book.coverImage}}" alt="" style="width: 100px;height: 100px;"></td>
@@ -72,6 +75,9 @@
                 </td>
                 
               </tr>
+
+              {% empty %}
+                <h3 class="text-danger">Record is not found !!!</h3>
               {% endfor %}
               
             </tbody>
