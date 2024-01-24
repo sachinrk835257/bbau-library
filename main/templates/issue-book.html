@@ -7,7 +7,7 @@
 <div class="container mt-2 mx-auto">
     <h4 class="my-header">Issue Book</h4>
     
-    <form method="post" action="http://127.0.0.1:8000/issuing-book/"> {% csrf_token %}
+    <form method="post" action="http://127.0.1:8000/issuing-book/"> {% csrf_token %}
     <div class="container card p-2" style="width: 65vw;">        
         {% if messages %}
         {% for message in messages %}
@@ -25,14 +25,14 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="ISBN">ISBN Nummber <span class="text-danger"> *</span></label>
-              <input type="text" class="form-control" name="ISBN" id="ISBN" value="{{book.0.ISBN}}" readonly>
+              <input type="text" class="form-control" name="ISBN" id="ISBN" value="{{book.ISBN}}" readonly>
             </div>
           </div>
 
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="bookName">Book Name</label>
-            <input type="text" class="form-control" name="bookName" id="bookName" value="{{book.0.bookName}}" readonly>
+            <input type="text" class="form-control" name="bookName" id="bookName" value="{{book.bookName}}" readonly>
           </div>
         </div>
         
@@ -42,14 +42,14 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="depart">Book Department</label>
-              <input type="text" class="form-control" name="bookDepartment" id="depart" value="{{book.0.department}}" readonly>
+              <input type="text" class="form-control" name="bookDepartment" id="depart" value="{{book.department}}" readonly>
             </div>
           </div>
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="bookPages">Book Pages</label>
-              <input type="number" class="form-control" name="bookPages" id="bookPages" value="{{book.0.bookPages}}" readonly>
+              <input type="number" class="form-control" name="bookPages" id="bookPages" value="{{book.bookPages}}" readonly>
             </div>
           </div>
 
@@ -59,14 +59,14 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="autherName">Author Name</label>
-            <input type="text" class="form-control" name="authorName" id="autherName" value="{{book.0.authorName}}" readonly>
+            <input type="text" class="form-control" name="authorName" id="autherName" value="{{book.authorName}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="status">Book Status</label>
-              <input type="text" class="form-control bg-danger text-light" name="status" id="status" value="{{book.0.status}}" readonly>
+              <input type="text" class="form-control bg-danger text-light" name="status" id="status" value="{{book.status}}" readonly>
             </div>
           </div>
       </div>
@@ -75,14 +75,14 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="bookSource">Book Source</label>
-            <input type="text" class="form-control" name="bookSource" id="bookSource" value="{{book.0.bookSource}}" readonly>
+            <input type="text" class="form-control" name="bookSource" id="bookSource" value="{{book.bookSource}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="bookPrice">Book Price</label>
-              <input type="text" class="form-control text-danger" name="bookPrice" id="bookPrice" value="{{book.0.bookPrice}}" readonly>
+              <input type="text" class="form-control text-danger" name="bookPrice" id="bookPrice" value="{{book.bookPrice}}" readonly>
             </div>
           </div>
       </div>
@@ -91,8 +91,8 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="coverImage">Cover Image</label><br>
-            {% if book.0.coverImage %}
-            <img src="{{book.0.coverImage.url}}" alt="Image" style="width: 100px; height: 100px;">
+            {% if book.coverImage %}
+            <img src="{{book.coverImage.url}}" alt="Image" style="width: 100px; height: 100px;">
             {% else %}
             <img src="" alt="No Image" style="width: 100px; height: 100px;">
             {% endif %}
@@ -112,14 +112,14 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="library_id">Library Id <span class="text-danger"> *</span></label>
-              <input type="text" class="form-control" name="library_id" id="library_id" value="{{student.0.library_id}}" readonly>
+              <input type="text" class="form-control" name="library_id" id="library_id" value="{{student.library_id}}" readonly>
             </div>
           </div>
 
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="name">Student Name</label>
-            <input type="text" class="form-control" name="name" id="name" value="{{student.0.name}}" readonly>
+            <input type="text" class="form-control" name="name" id="name" value="{{student.name}}" readonly>
           </div>
         </div>
         
@@ -129,14 +129,14 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="studentDepartment">Student Department</label>
-              <input type="text" class="form-control" name="studentDepartment" id="studentDepartment" value="{{student.0.department}}" readonly>
+              <input type="text" class="form-control" name="studentDepartment" id="studentDepartment" value="{{student.department}}" readonly>
             </div>
           </div>
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="semester">Semester</label>
-              <input type="text" class="form-control" name="semester" id="semester" value="{{student.0.semester}}" readonly>
+              <input type="text" class="form-control" name="semester" id="semester" value="{{student.semester}}" readonly>
             </div>
           </div>
 
@@ -146,14 +146,14 @@
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="mobile">Mobile Number</label>
-            <input type="text" class="form-control" name="mobile" id="mobile" value="{{student.0.mobile}}" readonly>
+            <input type="text" class="form-control" name="mobile" id="mobile" value="{{student.mobile}}" readonly>
           </div>
         </div>
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="text" class="form-control" name="email" id="email" value="{{student.0.user.email}}" readonly>
+              <input type="text" class="form-control" name="email" id="email" value="{{student.user.email}}" readonly>
             </div>
           </div>
 
@@ -163,20 +163,20 @@
         <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="issuedBooks">Issued Books</label>
-              <input type="text" class="form-control text-danger" name="issuedBooks" id="issuedBooks" value="{{student.0.issuedBooks}}" readonly>
+              <input type="text" class="form-control text-danger" name="issuedBooks" id="issuedBooks" value="{{student.issuedBooks}}" readonly>
             </div>
           </div>
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="returnedBooks">Returned Books</label>
-              <input type="text" class="form-control text-danger" name="returnedBooks" id="returnedBooks" value="{{student.0.returnedBooks}}" readonly>
+              <input type="text" class="form-control text-danger" name="returnedBooks" id="returnedBooks" value="{{student.returnedBooks}}" readonly>
             </div>
           </div>
         </div>
 
-        <a type="button" href="http://127.0.0.1:8000/" class="btn btn-danger mb-1">Cancel</a>
-        {% if found and book.0.status == 'Available' %}<button type="submit" class="btn btn-success" onclick="confirm('Sure {{book.0.bookName}} is issuing to {{student.0.name}} ?')">Issue Book</button>{% endif %}
+        <a type="button" href="http://127.0.1:8000/" class="btn btn-danger mb-1">Cancel</a>
+        {% if found and book.status == 'Available' %}<button type="submit" class="btn btn-success" onclick="confirm('Sure {{book.bookName}} is issuing to {{student.name}} ?')">Issue Book</button>{% endif %}
 
   </form>
 </div>
