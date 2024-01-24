@@ -54,6 +54,8 @@ def addStudent(request):
         try:
             name = request.POST.get('name').upper()
             gender = request.POST.get('gender').upper()
+            semester = request.POST.get('semester').upper()
+
             depart = request.POST.get('depart').upper()
             library_id = request.POST.get('library_id')
             joiningYear = request.POST.get('joiningYear')
@@ -77,7 +79,7 @@ def addStudent(request):
             print(pass1,pass2)
             user = User.objects.create_user(username= email,email = email, is_staff = False)
             user.set_password(pass2)
-            profile = Profile.objects.create(user = user,name = name,gender = gender, mobile = mobile, library_id = library_id, department = depart,joiningYear = joiningYear,passingYear = passingYear)
+            profile = Profile.objects.create(user = user,name = name,gender = gender, semester = semester, mobile = mobile, library_id = library_id, department = depart,joiningYear = joiningYear,passingYear = passingYear)
             profile.save()
             user.save()
             messages.add_message(request, messages.SUCCESS, "Registered Successfully")

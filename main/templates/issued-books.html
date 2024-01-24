@@ -10,17 +10,6 @@
         <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name,and more" required aria-label="Search" style="display: inline;width: auto;">
         <button class="btn btn-success" type="submit">Search</button>
       </form>
-      <form action="http://127.0.0.1:8000/sort-by/" class="d-flex" method="post">{% csrf_token %}
-        
-        <select class="form-select me-2" id="sort" name="sort-by" aria-label="Default select example" style="width: auto;">
-          <option selected value="bookName" >Book Name</option>
-          <option value="department">Department</option>
-          <option value="category">Category</option>
-          <option value="status">Available Books</option>
-          <option value="registered_at">New Book First</option>
-        </select>
-        <button class="btn btn-success" type="submit">Apply filter</button>
-      </form>
     
     </div>
     <div class="container mt-2">
@@ -32,10 +21,10 @@
                 <th scope="col">ISBN</th>
                 <th scope="col">Book Name</th>
                 <th scope="col">Book Department</th>
-                <th scope="col">Category</th>
                 <th scope="col">Author Name</th>
                 <th scope="col">Issued By</th>
                 <th scope="col">Student Library Id</th>
+                <th scope="col">Semester</th>
                 <th scope="col">Email</th>
                 <th scope="col">Mobile</th>
                 <th scope="col">Issue Date</th>
@@ -53,10 +42,10 @@
                 <td>{{issued_book.ISBN}}</td>
                 <td>{{issued_book.bookName}}</td>
                 <td>{{issued_book.department}}</td>
-                <td>{{issued_book.category}}</td>
                 <td>{{issued_book.authorName}}</td>
                 <td>{{issued_book.issued_by}}</td>
                 <td>{{issued_book.library_id}}</td>
+                <td>{{issued_book.semester}}</td>
                 <td>{{issued_book.email}}</td>
                 <td>{{issued_book.mobile}}</td>
                 <td>{{issued_book.issue_date}}</td>

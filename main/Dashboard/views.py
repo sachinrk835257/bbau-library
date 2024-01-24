@@ -368,13 +368,13 @@ def listedBooks(request):
             coverImages["img"] = (book_obj.filter(bookName = i["bookName"], authorName = i["authorName"]).first().coverImage)
         copy_books = book_obj.filter(bookName__in = bookName,authorName__in = authorName)
         print("****")
-        print(bookName,authorName)
-        print(copy_books.values("bookName").distinct())
+        print(same_books,coverImages)
+        # print(copy_books.values("bookName").distinct())
         print("****")
-        print(type(coverImages),coverImages)
-        print(copy_books.count())
+        # print(type(coverImages),coverImages)
+        # print(copy_books.count())
         exclude_copy_books = book_obj.exclude(pk__in = copy_books.values('pk'))
-        print(exclude_copy_books)
+        # print(exclude_copy_books)
 
         return render(request,'registered-books.html',{"title":title,"sameBooks":same_books,"coverImages":coverImages,"remainingBooks":exclude_copy_books})
 
@@ -509,7 +509,7 @@ def searchByRegisteredStudents(request):
         book_obj1 = Profile.objects.filter(name__contains = search)
         book_obj2 = Profile.objects.filter(library_id = search)
         book_obj4 = Profile.objects.filter(department__contains = search)
-        union_queryset = book_obj1 | book_obj2 | book_obj4 
+        union_queryset = book_obj1 | book_obj2 | book_obj4
         print(union_queryset)
 
         return render(request,'searched-students-table.html',{"title":title,"students":union_queryset})
@@ -528,42 +528,45 @@ def issueBook(request):
             library_id = request.POST.get('library_id')
             print(ISBN,library_id)
             found = True
-            book_obj = Registered_Books.objects.filter(ISBN = ISBN)
-            profile_obj = Profile.objects.filter(library_id = library_id)
-            print(book_obj,profile_obj)
+            try:
+                book_obj = Registered_Books.objects.get(ISBN = ISBN)
+            except Exception:
+                messages.add_message(request, messages.WARNING, "Book Not Found !!!")
+                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
 
-            listOfIssueBooks = (profile_obj[0].issuedBooks).split()
-            listOfReturnBooks = (profile_obj[0].returnedBooks).split()
+            try:
+                profile_obj = Profile.objects.get(library_id = library_id)
+            except Exception:        
+                messages.add_message(request, messages.WARNING, "Student Not Found !!!")
+                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
+
+            
+            if not book_obj.status == "Available":
+                found = False
+                messages.add_message(request, messages.WARNING, "Already Issued this book !!!")
+                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
+            
+            listOfIssueBooks = (profile_obj.issuedBooks).split()
+            listOfReturnBooks = (profile_obj.returnedBooks).split()
             print(type(listOfIssueBooks),listOfIssueBooks,len(listOfIssueBooks))
             print(len(listOfIssueBooks),len(listOfReturnBooks))
             print(len(listOfIssueBooks) - len(listOfReturnBooks))
             
-            # print(returned_obj.exists())
-            if not book_obj.exists():
-                found = False
-                messages.add_message(request, messages.WARNING, "Book Not Found !!!")
-                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
-
-            if not profile_obj.exists():
-                found = False
-                messages.add_message(request, messages.WARNING, "Student Not Found !!!")
-                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
-
             if (len(listOfIssueBooks) - len(listOfReturnBooks)) >= 2:
                 found = False
                 messages.add_message(request, messages.WARNING, "Already 2 Books Issued to this User !!!")
                 return render(request,'issue-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
-            
-            if not book_obj[0].status == "Available":
-                found = False
-                messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
-                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
-            
-            if profile_obj[0].issuedBooks == 'Null':
-                profile_obj[0].issuedBooks = ""
+            if profile_obj.issuedBooks == 'Null':
+                print("sdgv")
+                profile_obj.issuedBooks = ""
+                profile_obj.save()
 
-            if profile_obj[0].returnedBooks == 'Null':
-                profile_obj[0].returnedBooks = ""
+            print("at := ",profile_obj[0].returnedBooks== "Null")
+            if profile_obj.returnedBooks == 'Null':
+                print("dgf")
+                profile_obj.returnedBooks = ""
+                profile_obj.save()
+            
             
             
             print(listOfIssueBooks,listOfReturnBooks)
@@ -591,19 +594,24 @@ def issuingBook(request):
             profile_obj = Profile.objects.get(library_id = library_id)   
             if profile_obj.issuedBooks == 'Null':
                 profile_obj.issuedBooks = ""
+                profile_obj.save()
+
+
 
             profile_obj.issuedBooks = profile_obj.issuedBooks + "{} ".format(ISBN)
             print(profile_obj.issuedBooks)
             profile_obj.save()
-            book_obj.last_issued_by = profile_obj.name
+            book_obj.last_issued_by = profile_obj.library_id
             print(book_obj.status)
             book_obj.status = "Not Available"
             book_obj.save()
             print(book_obj.status)
-
-            issued_book_obj = Issued_Books.objects.create(issued_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, issue_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN)
-            
-            print(book_obj.status)
+            try:
+                
+                issued_book_obj = Issued_Books.objects.create(issued_by = profile_obj.name, email = profile_obj.user.email, mobile = profile_obj.mobile, issue_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = profile_obj.department,semester = profile_obj.semester, ISBN = book_obj.ISBN)
+            except Exception:
+                messages.add_message(request, messages.WARNING, "Technical Error !!!")
+                return redirect('http://127.0.0.1:8000/issue-book/')
             issued_book_obj.save()
 
             return redirect('http://127.0.0.1:8000/issued-books/')

@@ -93,8 +93,6 @@
             <label for="coverImage">Cover Image</label><br>
             {% if book.0.coverImage %}
             <img src="{{book.0.coverImage.url}}" alt="Image" style="width: 100px; height: 100px;">
-              src="{{book.0.coverImage.url}}" accept="image/*">
-
             {% else %}
             <img src="" alt="No Image" style="width: 100px; height: 100px;">
             {% endif %}
@@ -138,7 +136,7 @@
           <div class="col-md-6 mb-3">
             <div class="form-group">
               <label for="semester">Semester</label>
-              <input type="text" class="form-control" name="semester" id="semester" value="{{student.0.mobile}} change please" readonly>
+              <input type="text" class="form-control" name="semester" id="semester" value="{{student.0.semester}}" readonly>
             </div>
           </div>
 
