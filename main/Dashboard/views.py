@@ -654,7 +654,6 @@ def returnBook(request):
             if not book_obj[0].status == "Not Available":
                 found = False
                 messages.add_message(request, messages.WARNING, "Book is not Issued Yet !!!")
-                return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
             
 
             if not issued_obj.exists():
