@@ -651,9 +651,9 @@ def returnBook(request):
                 found = False
                 messages.add_message(request, messages.WARNING, "Student Not Found !!!")
 
-            if not book_obj.status == "Not Available":
+            if not book_obj[0].status == "Not Available":
                 found = False
-                messages.add_message(request, messages.WARNING, "Book Status is Available !!!")
+                messages.add_message(request, messages.WARNING, "Book is not Issued Yet !!!")
                 return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
             
 
@@ -662,9 +662,9 @@ def returnBook(request):
                 messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
                 return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
 
-
-            listOfIssueBooks = ("".join(profile_obj.issuedBooks.split())).split(',')
-            listOfReturnBooks = ("".join(profile_obj.returnedBooks.split())).split(',')
+            print("rghgf")
+            listOfIssueBooks = ("".join(profile_obj[0].issuedBooks.split())).split(',')
+            listOfReturnBooks = ("".join(profile_obj[0].returnedBooks.split())).split(',')
 
             print(type(listOfIssueBooks),type(listOfIssueBooks),len(listOfIssueBooks),len(listOfReturnBooks))
             print(listOfIssueBooks,listOfReturnBooks)
