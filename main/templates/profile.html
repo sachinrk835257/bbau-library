@@ -26,15 +26,15 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="name" class="form-label">Enter Full Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name" value="{{profile.name}}" required>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name" value="{{profile.name}}" {% if not user.is_superuser %}readonly{% endif %} required>
               </div>
               <div class="mb-3">
                 <label for="depart" class="form-label">Department <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="department" id="depart" value="{{profile.department}}" placeholder="Department Name" required>
+                <input type="text" class="form-control" name="department" id="depart" value="{{profile.department}}" {% if not user.is_superuser %}readonly{% endif %} placeholder="Department Name" required>
               </div>
               <div class="mb-3">
                 <label for="libId" class="form-label">Library Id <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="library_id" value="{{profile.library_id}}" id="libId" {% if user.is_authenticated %}readonly{% endif %} placeholder="Enter Library Id" required>
+                <input type="text" class="form-control" name="library_id" value="{{profile.library_id}}" id="libId" {% if not user.is_superuser %}readonly{% endif %} placeholder="Enter Library Id" required>
               </div>
 
               <div class="mb-3">
@@ -61,7 +61,7 @@
                 <input type="email" class="form-control" name="email" id="email" value="{{profile.user.username}}" {% if not user.is_superuser %}readonly{% endif %} autocomplete="off" placeholder="abc@example.com" required>
               </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-danger">Save Changes</button>
+              <button type="submit" class="btn btn-danger" {% if not user.is_superuser %}disabled{% endif %}>Save Changes</button>
             </div>
             </div>
         </form>

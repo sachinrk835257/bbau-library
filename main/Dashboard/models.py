@@ -13,15 +13,14 @@ class Profile(models.Model):
     name = models.CharField(default="",max_length=30,verbose_name="STUDENT NAME")
     semester = models.CharField(default="",max_length=10,verbose_name="Semester")
     gender = models.CharField(default="MALE",max_length=6, choices=GENDER_CHOICES)
-    department = models.CharField(default="",max_length=20,verbose_name="DEPARTMENT")
+    department = models.CharField(default="",max_length=50,verbose_name="DEPARTMENT")
     library_id = models.CharField(default="",unique=True, max_length=10,verbose_name="LIBRARY ID")
     mobile = models.CharField(default="", max_length=10,verbose_name="MOBILE NO.")
     joiningYear = models.CharField(default="",max_length=4,verbose_name="ADMISSION YEAR")
     passingYear = models.CharField(default="",max_length=4,verbose_name="PASSING YEAR")
     issuedBooks = models.TextField(default="Null",verbose_name="ISSUED BOOKS")
     returnedBooks = models.TextField(default="Null",verbose_name="RETURNED BOOKS")
-    fine = models.PositiveIntegerField(default=0,verbose_name="FINE (in RS.)")
-    
+        
     def __str__(self) -> str:
         return self.user.username
     
@@ -81,7 +80,7 @@ class Returned_Books(models.Model):
     library_id = models.CharField(default="", max_length=10,verbose_name="Library ID")
     bookName = models.CharField(default="",max_length=255, verbose_name="Book Name")
     fine = models.PositiveIntegerField(default=0,verbose_name="FINE (in RS.)")
-    isPaid = models.BooleanField(default=False,null=False)
+    # isPaid = models.BooleanField(default=False,null=False)
     department = models.CharField(default="",max_length=50, verbose_name="Department")
     semester = models.CharField(default="",max_length=10,verbose_name="Semester")
     # category = models.CharField(default="",max_length=50, verbose_name="Category")

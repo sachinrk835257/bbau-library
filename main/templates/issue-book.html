@@ -4,7 +4,7 @@
 {% block body %} 
 
 
-<div class="container mt-2 mx-auto">
+<div class="container mt-2 mx-auto" id="issue-book">
     <h4 class="my-header">Issue Book</h4>
     
     <form method="post" action="http://127.0.1:8000/issuing-book/"> {% csrf_token %}
@@ -92,7 +92,7 @@
           <div class="form-group">
             <label for="coverImage">Cover Image</label><br>
             {% if book.coverImage %}
-            <img src="{{book.coverImage.url}}" alt="Image" style="width: 100px; height: 100px;">
+            <img src="{{book.coverImage.url}}" alt="No Image" style="width: 100px; height: 100px;">
             {% else %}
             <img src="" alt="No Image" style="width: 100px; height: 100px;">
             {% endif %}

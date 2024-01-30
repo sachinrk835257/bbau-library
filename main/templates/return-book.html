@@ -4,7 +4,7 @@
 {% block body %} 
 
 
-<div class="container mt-2 mx-auto">
+<div class="container mt-2 mx-auto" id="return-book">
     <h4 class="my-header">Return Book</h4>
     
     <form method="post" action="http://127.0.0.1:8000/returning-book/"> {% csrf_token %}
@@ -47,8 +47,8 @@
 
           <div class="col-md-6 mb-3">
             <div class="form-group">
-              <label for="category">Category</label>
-              <input type="text" class="form-control" name="category" id="category" value="{{book.0.category}}" readonly>
+              <label for="bookPages">Book Pages</label>
+              <input type="text" class="form-control" name="bookPages" id="bookPages" value="{{book.0.bookPages}}" readonly>
             </div>
           </div>
 
@@ -69,35 +69,27 @@
             </div>
           </div>
 
-      <div class="row">
-
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="Fine">Any Fine (in RS.)</label>
-            <input type="text" class="form-control text-danger" name="fine" id="Fine" placeholder="Enter Fine in Rs." required>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="form-group">
+                <label for="bookSource">Book Source</label>
+                <input type="text" class="form-control" name="bookSource" id="bookSource" value="{{book.0.bookSource}}" readonly>
+              </div>
+            </div>
+    
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="bookPrice">Book Price</label>
+                  <input type="text" class="form-control text-danger" name="bookPrice" id="bookPrice" value="{{book.0.bookPrice}}" readonly>
+                </div>
+              </div>
           </div>
-        </div>
-
-      </div>
 
       <div class="row">
-        <div class="col-md-6 mb-3">
-          <div class="form-group">
-            <label for="paid">Fine Paid</label>
-            <br>
-            <a type="button" class="btn btn-primary" href="https://rzp.io/l/0pNeaGL8"> Pay Online</a>
-            <select class="form-select" name="isPaid" id="paid" aria-label="Default select example" required>
-              <option value="True">Fine Paid Manually</option>
-              <option value="True"></option>
-              <option value="False"></option>
-            </select>
-          </div>
-        </div>
-
         <div class="col-md-6 mb-3">
           <div class="form-group">
             <label for="coverImage">Cover Image</label><br>
-            <img src="{{ book.0.coverImage.url }}" alt="Image" style="width: 100px; height: 100px;">
+            <img src="{{ book.0.coverImage.url }}" alt="No Image" style="width: 100px; height: 100px;">
           </div>
         </div>
 
