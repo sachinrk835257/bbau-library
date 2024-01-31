@@ -642,16 +642,27 @@ def returnBook(request):
             profile_obj = Profile.objects.filter(library_id = library_id)
             issued_obj = Issued_Books.objects.filter(ISBN =ISBN,library_id = library_id)
 
-            
-            if not book_obj.exists():
-                found = False
+            try:
+                book_obj = Registered_Books.objects.get(ISBN = ISBN)
+            except Exception:
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
+                return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
 
-            if not profile_obj.exists():
-                found = False
+            try:
+                profile_obj = Profile.objects.get(library_id = library_id)
+            except Exception:        
                 messages.add_message(request, messages.WARNING, "Student Not Found !!!")
+                return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
+            
+            # if not book_obj.exists():
+            #     found = False
+            #     messages.add_message(request, messages.WARNING, "Book Not Found !!!")
 
-            if not book_obj[0].status == "Not Available":
+            # if not profile_obj.exists():
+            #     found = False
+            #     messages.add_message(request, messages.WARNING, "Student Not Found !!!")
+
+            if not book_obj.status == "Not Available":
                 found = False
                 messages.add_message(request, messages.WARNING, "Book is not Issued Yet !!!")
             
@@ -659,19 +670,16 @@ def returnBook(request):
             if not issued_obj.exists():
                 found = False
                 messages.add_message(request, messages.WARNING, "Record Not found for this details !!!")
-                return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
 
-            print("rghgf")
-            listOfIssueBooks = ("".join(profile_obj[0].issuedBooks.split())).split(',')
-            listOfReturnBooks = ("".join(profile_obj[0].returnedBooks.split())).split(',')
+            listOfIssueBooks = ("".join(profile_obj.issuedBooks.split())).split(',')
+            listOfReturnBooks = ("".join(profile_obj.returnedBooks.split())).split(',')
 
             print(type(listOfIssueBooks),type(listOfIssueBooks),len(listOfIssueBooks),len(listOfReturnBooks))
             print(listOfIssueBooks,listOfReturnBooks)
             print(len(listOfIssueBooks) - len(listOfReturnBooks))
 
             print(found)
-            # return render(request,'return-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
-            return render(request,'return-book.html',{"title":title,"book":book_obj,"student":profile_obj,"IssuedBooks":len(listOfIssueBooks),"ReturnedBooks":len(listOfReturnBooks),"found":found})
+            return render(request,'return-book.html',{"title":title,"book":book_obj,"student":profile_obj,"found":found})
 
     except Exception as e:
         print(e)
@@ -690,15 +698,10 @@ def returningBook(request):
             print("posted")
             ISBN = request.POST.get('ISBN')
             library_id = request.POST.get('library_id')
-            # fine = request.POST.get('fine')
-            # isPaid = request.POST.get('isPaid')
-            # print(fine,isPaid)
             book_obj = Registered_Books.objects.get(ISBN = ISBN)
             issued_books_obj = Issued_Books.objects.filter(ISBN = ISBN).last()
             profile_obj = Profile.objects.get(library_id = library_id)
             try:
-
-
                 issued_books_obj.return_date = timezone.now().strftime('%Y-%m-%d')
                 profile_obj.returnedBooks = profile_obj.returnedBooks + "{}, ".format(ISBN)
                 book_obj.status = "Available"

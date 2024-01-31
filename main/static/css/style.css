@@ -98,6 +98,11 @@ body{
     opacity: 0.8;
 }
 
+.library-executors .executors-img{
+    width: 100px;
+    border-radius: 50%;
+}
+
 /* dashboard.html */
 
 .cards-box{
@@ -126,6 +131,7 @@ body{
  /* dashboard */
  .dashboard-boxes .card:hover{
     border: 2px solid rgb(103, 101, 101);
+    cursor: pointer;
     box-shadow: 1px 1px 5px rgb(75, 23, 180);
 }
 /* about-us */

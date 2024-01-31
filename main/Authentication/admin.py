@@ -1,9 +1,9 @@
 from django.contrib import admin
-from Authentication.models import ChangePassword,SuperUser
+from Authentication.models import ChangePassword,SuperUserReference
 
 # Register your models here.
 class SuperUserAdmin(admin.ModelAdmin):
-    list_display = ('id','name','user')
+    list_display = ('name','email','created_at','token')
 admin.site.register(ChangePassword)
-admin.site.register(SuperUser,SuperUserAdmin)
+admin.site.register(SuperUserReference,SuperUserAdmin)
 

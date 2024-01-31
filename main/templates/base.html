@@ -260,17 +260,17 @@
 
 
           <div class="modal-body">
-            <label for="ISBN" class="form-label">Book ISBN Number</label>
+            <label for="ISBN" class="form-label">Book ISBN Number <span class="text-danger">*</span></label>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="fa-solid fa-book fa-beat"></i></i></span>
-              <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter Unique ISBN Number">
+              <input type="text" class="form-control" name="ISBN" id="ISBN" placeholder="Enter Unique ISBN Number" required>
             </div>
 
-            <label for="library_id" class="form-label">Student Library Id</label>
+            <label for="library_id" class="form-label">Student Library Id <span class="text-danger">*</span></label>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="fa-regular fa-id-card fa-fade"></i></span>
               <input type="text" class="form-control" name="library_id" id="library_id"
-                placeholder="Enter Unique Student Library Id">
+                placeholder="Enter Unique Student Library Id" required>
             </div>
           </div>
           <div class="modal-footer">

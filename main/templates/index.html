@@ -7,244 +7,268 @@
 <!-- login form -->
 {% if user.is_authenticated %}
 <div class="container mt-2 dashboard-boxes">
-    <h4 class="my-header">{{staff_status}} Dashboard</h4>
-    <div class="cards-box">
-        
-          <div class="card align-items-center p-2 border-2 border-success rounded book-listed-box">
-            <i class="fa-duotone fa-books" style="font-size: 5.4rem;"></i>
-            <div class="card-body">
-                <p class="card-text text-center">{{bookListedNumbers}}</p>
-              <h5 class="card-title">Books Listed</h5>
-            </div>
-        
-        </div>
-        
-          <div class="card align-items-center p-2 border-22 border-danger rounded issued-books-box">
-            <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
-            <div class="card-body">
-                <p class="card-text text-center">{{issuedBooks}}</p>
-                <h5 class="card-title">Issued Books</h5>
-            </div>
-        
-        </div>
+  <h4 class="my-header">{{staff_status}} Dashboard</h4>
+  <div class="cards-box">
 
-          
-            <div class="card align-items-center p-2 border-22 border-danger rounded returned-books-box">
-              <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
-              <div class="card-body">
-                  <p class="card-text text-center">{{returnedBooks}}</p>
-                  <h5 class="card-title">Returned Books</h5>
-              </div>
-          
-             </div>
-       
-          
-            <div class="card align-items-center p-2 border-2 border-success rounded registred-users-box">
-                <i class="fa-solid fa-users" style="color: #51c1e6;font-size: 5.4rem;"></i>
-              <div class="card-body">
-                  <p class="card-text text-center">{{registeredUsers}}</p>
-                <h5 class="card-title">Registered Users</h5>
-              </div>
-          
-          </div>
-          {% if not user.is_superuser %}
-          
-            <div class="card align-items-center p-2 border-2 border-success rounded profile-user-box">
-                <i class="fa-solid fa-users" style="color: #51c1e6;font-size: 5.4rem;"></i>
-              <div class="card-body">
-                <h5 class="card-title">Profile</h5>
-              </div>
-            </div>
-                   {% endif %}
-          
-            <div class="card align-items-center p-2 border-2 border-primary rounded">
-              <i class="fa-duotone fa-grid-4" style="font-size: 5.4rem;"></i>
-              <div class="card-body">
-                  <p class="card-text text-center">20 {{listedCategories}}</p>
-                  <h5 class="card-title">Listed Categories</h5>
-              </div>
-          
-          </div>
+    <div class="card align-items-center p-2 border-2 border-success rounded book-listed-box">
+      <i class="fa-duotone fa-books" style="font-size: 5.4rem;"></i>
+      <div class="card-body">
+        <p class="card-text text-center">{{bookListedNumbers}}</p>
+        <h5 class="card-title">Books Listed</h5>
       </div>
-    
+
+    </div>
+
+    <div class="card align-items-center p-2 border-22 border-danger rounded issued-books-box">
+      <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
+      <div class="card-body">
+        <p class="card-text text-center">{{issuedBooks}}</p>
+        <h5 class="card-title">Issued Books</h5>
+      </div>
+
+    </div>
+
+
+    <div class="card align-items-center p-2 border-22 border-danger rounded returned-books-box">
+      <i class="fa-solid fa-bin-recycle" style="color: #fb0e26; font-size: 5.4rem;"></i>
+      <div class="card-body">
+        <p class="card-text text-center">{{returnedBooks}}</p>
+        <h5 class="card-title">Returned Books</h5>
+      </div>
+
+    </div>
+
+
+    <div class="card align-items-center p-2 border-2 border-success rounded registred-users-box">
+      <i class="fa-solid fa-users" style="color: #51c1e6;font-size: 5.4rem;"></i>
+      <div class="card-body">
+        <p class="card-text text-center">{{registeredUsers}}</p>
+        <h5 class="card-title">Registered Users</h5>
+      </div>
+
+    </div>
+    {% if not user.is_superuser %}
+
+    <div class="card align-items-center p-2 border-2 border-success rounded profile-user-box">
+      <i class="fa-solid fa-users" style="color: #51c1e6;font-size: 5.4rem;"></i>
+      <div class="card-body">
+        <h5 class="card-title">Profile</h5>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="card align-items-center p-2 border-2 border-primary rounded">
+      <i class="fa-duotone fa-grid-4" style="font-size: 5.4rem;"></i>
+      <div class="card-body">
+        <p class="card-text text-center">20 {{listedCategories}}</p>
+        <h5 class="card-title">Listed Categories</h5>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 {% else %}
 
 
 <!-- carousal -->
 <div id="carouselExampleControls" class="carousel mt-2 container slide" data-bs-ride="carousel">
-    <div class="carousel-inner" style="margin: 0px auto 0px auto;
+  <div class="carousel-inner" style="margin: 0px auto 0px auto;
  border: 6px solid purple;
  border-radius: 5px;
  padding: 2px;">
-        <div class="carousel-item active">
-            <img src="{% static 'images/1.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
-        <div class="carousel-item">
-            <img src="{% static 'images/2.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
-        <div class="carousel-item">
-            <img src="{% static 'images/4.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
-        <div class="carousel-item">
-            <img src="{% static 'images/5.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
-        <div class="carousel-item">
-            <img src="{% static 'images/6.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
-        <div class="carousel-item">
-            <img src="{% static 'images/7.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
-        <div class="carousel-item">
-            <img src="{% static 'images/8.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
-        <div class="carousel-item">
-            <img src="{% static 'images/8.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
-        </div>
+    <div class="carousel-item active">
+      <img src="{% static 'images/1.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev"
-        style="left: 6vw;">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next"
-        style="right: 6vw;">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+    <div class="carousel-item">
+      <img src="{% static 'images/2.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/4.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/5.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/6.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/7.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/8.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/8.jpg' %}" class="d-block w-100" alt="..." style="height: 400px;">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev"
+    style="left: 6vw;">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next"
+    style="right: 6vw;">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 <div class="container mt-2">
-    <h4 class="my-header">Introduction</h4>
-    <p class="home-para">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam, rerum earum. Maiores id dolores hic tempore ea quae qui at! Voluptatum, eos unde ratione harum labore perferendis animi quae libero praesentium, eveniet quibusdam dicta veritatis. Modi nisi totam consequatur tempora consequuntur nobis voluptatum odio. Magni laboriosam asperiores dignissimos soluta reprehenderit.
-      <br>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur distinctio quos voluptates, voluptatibus deserunt laboriosam omnis amet eum debitis? Praesentium, dolorum officia. Assumenda, doloremque blanditiis quae molestias possimus asperiores omnis ipsa provident deleniti quo eius itaque. Debitis non odio architecto porro cupiditate consequatur fugit eligendi perferendis aliquid eum distinctio doloremque sint vel dolorum, ullam provident vero aut id voluptas. Ab quidem quisquam harum voluptatem nobis corrupti fugiat consequatur, ut rerum repellendus eos totam hic tempore eaque placeat, repudiandae voluptatibus natus, rem fugit labore. Nisi nesciunt animi omnis consequuntur? Nam, sed! Repellat aperiam provident debitis perspiciatis error soluta necessitatibus delectus voluptatibus. Quam ipsa illum consectetur, dolore labore quas quisquam nihil aut consequatur at quae nobis assumenda, repudiandae modi voluptates ad nisi sint doloremque. Repellat voluptas recusandae voluptatibus? Illum debitis iste cupiditate nisi, quas commodi, voluptatum consequuntur sunt tempora delectus inventore impedit, ipsa recusandae aspernatur labore dolorum a! Sit minus error optio laudantium. Doloribus earum quisquam officia esse, amet officiis omnis minus reprehenderit, eligendi, inventore eius itaque. Aspernatur nihil fugit culpa excepturi? Nobis quos recusandae pariatur accusantium nostrum vero quo laudantium, nam sint illo laboriosam magni iste eligendi facilis culpa, vitae architecto repudiandae libero eveniet qui aperiam ex ipsa. Hic, error vitae?
-    </p>
+  <h4 class="my-header">Introduction</h4>
+  <p class="home-para">It was an initiative by our university to provide a digitally available library system for our
+    students and staff members. This innovative system aims to enhance the overall library experience by offering a
+    user-friendly platform with features such as adding books, managing book details, and checking the status of book
+    issues and returns. Through the user registration and authentication system, individuals can personalize their
+    interactions with the library, ensuring a seamless and tailored experience. Additionally, the platform encourages
+    collaboration and community engagement, fostering a sense of connection among our university members. Explore the
+    diverse functionalities and make the most out of our digital library for an enriched learning journey!
+  </p>
 
 </div>
 
 <div class="container mt-2">
   <h4 class="my-header">User Instructions</h4>
   <ol type="1" class="instruction-ol">
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
-    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, porro.</li>
+    <li>Log in to the digital library system using your university credentials.</li>
+    <li>If you are a new user, click on the registration link to create your account.</li>
+    <li>Navigate through the user-friendly interface to access various features.</li>
+    <li>Check the status of book issues and returns through the dedicated feature.</li>
+    <li>Issue books for borrowing and return them using the system.</li>
+    <li>Customize your library experience by leveraging the user registration and authentication system.</li>
+    <li>Explore collaborative opportunities and engage with other members for a sense of community.</li>
+    <li>If you encounter any issues or have questions, refer to the system's Contat section for assistance and may be
+      contact to library assistant.</li>
+    <li>Provide feedback on your experience and share suggestions for further improvements.</li>
   </ol>
+  <p class="home-para">These instructions aim to guide users through the various functionalities of the digital library
+    system, encouraging a seamless and interactive experience.</p>
 
 </div>
 
 
 
 <div class="container notice-board mt-2">
-        <div class="row">
-          <div class="col-12 col-sm- col-md-4 text-center">
-            <div class="card">
-              <div class="card-header bg-info text-white">
-                Important Dates
-              </div>
-              <div class="card-body marquees">
-                <marquee width="100%" behavior="scroll" direction="up" scrollamount="3" class="text-center mb-0"
-                  onmouseover="this.stop();" onmouseout="this.start();">
-                  <p href="#" class="dates text-center">Paper Submission - 30 December 2023</p>
-                  <!-- 2019 -->
-                  <p href="#" class="dates text-center">Notification of Acceptance - 05 February 2024</p>
-                  <!-- 2020 -->
-                  <p href="#" class="dates text-center">Early Bird Registration - 15 February 2024</p>
-                  <!-- 2020 -->
-                </marquee>
-                <a href="important_dates.html" class="btn btn-primary ">see More</a>
-              </div>
-            </div>
-          </div>
-          
-          <!-- this is for using Downloads -->
-          <div class="col-12 col-sm- col-md-4 text-center">
-            <div class="card">
-              <div class="card-header bg-info text-white">
-                Downloads
-              </div>
-              <div class="card-body marquees">
-                <marquee width="100%" behavior="scroll" direction="up" scrollamount="3" class="text-center dates mb-0"
-                  onmouseover="this.stop();" onmouseout="this.start();">
-                  <a href="http://dosci-conf.com/ManuscriptguidelinesforEnglishbooks.pdf">
-                      Manu Script Guidelines </a><br>
-                 
-                  <a href="http://dosci-conf.com/Checklist.pdf"> Checklist </a><br>
-                
-                  <a href="http://dosci-conf.com/SpringerWordTemplate.zip" >
-                      Spring Word Template </a><br>
-                
-                  <a href="http://dosci-conf.com/SpringerLaTeXTemplate.zip" >
-                      Spring La Tex Template </a> <br>
-                  
-            <a href="/gallery/Brochure 2.pdf">
-              Conference Brochure
-                 </a>      
-          </div>
-                  <hr>
-                </marquee>
-                <a href="downloads.html" class="btn btn-primary ">see More</a>
-              </div>
-            </div>
-          </div>
-          <!-- this is for Important Notices -->
-          <div class="col-12 col-sm- col-md-4 text-center">
-            <div class="card">
-              <div class="card-header bg-info text-white">
-                Notices
-              </div>
-              <div class="card-body marquees">
-                <marquee width="100%" behavior="scroll" direction="up" scrollamount="3" class="text-center dates mb-0"
-                  onmouseover="this.stop();" onmouseout="this.start();">
-                  <a href="#" class="dates text-center">ComSIA 2024 will be jointly organsied by School of Open Learning,
-                    University of Delhi and Shaheed Rajguru College of Applied Sciences, University of Delhi.</a>
-                  <hr id="hrr">
-                </marquee>
-                <a href="#" class="btn btn-primary ">see More</a>
-              </div>
-            </div>
-          </div>
+  <h4 class="my-header">Notice Board</h4>
+  <div class="row" style="padding: 0px 20px;">
+    <div class="col-md-4 text-center">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          Important Dates
         </div>
-          <!-- end of cards -->
+        <div class="card-body marquees">
+          <marquee width="100%" behavior="scroll" direction="up" scrollamount="3" class="text-center mb-0"
+            onmouseover="this.stop();" onmouseout="this.start();">
+            <p href="#" class="text-center">Not Provided</p>          
+            <p href="#" class="text-center">Not Provided</p>
+            <p href="#" class="text-center">Not Provided</p>
+
+          </marquee>
+        </div>
+      </div>
+    </div>
+
+    <!-- this is for using Downloads -->
+    <div class="col-md-4 text-center">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          Downloads
+        </div>
+        <div class="card-body marquees">
+          <marquee width="100%" behavior="scroll" direction="up" scrollamount="3" class="text-center dates mb-0"
+            onmouseover="this.stop();" onmouseout="this.start();">
+            <a href="">
+              Guidelines </a><br>
+
+            <a href=""> Checklist </a><br>
+
+            <a href="">
+              Download 2 </a><br>
+
+        </div>
+        <hr>
+        </marquee>
+      </div>
+    </div>
   </div>
-     
+  <!-- this is for Important Notices -->
+  <div class="col-md-4 text-center">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Notices
+      </div>
+      <div class="card-body marquees">
+        <marquee width="100%" behavior="scroll" direction="up" scrollamount="3" class="text-center dates mb-0"
+          onmouseover="this.stop();" onmouseout="this.start();">
+          <a href="#" class="text-center">Notice 1</a>
+          <hr>
+          <a href="#" class="text-center">Notice 2</a>
+          <hr>
+          <a href="#" class="text-center">Notice 3</a>
+        </marquee>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end of cards -->
+</div>
+
+<div class="container library-executors mt-2">
+  <h4 class="my-header">Library Executors</h4>
+  <div class="row justify-content-evenly">
+    <div class="col-md-6" style="width: fit-content;">
+      <div class="card align-items-center"><img src="{% static 'images/Khamparia.jpeg' %}" alt="Error"
+          class="executors-img">
+        <div class="card-body">
+          <div class="card-title">Aditya Khamparia</div>
+          <p>Department of Computer Science</p>
+          <p>Library Incharge</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" style="width: fit-content;">
+      <div class="card align-items-center"><img src="{% static 'images/Khamparia.jpeg' %}" alt="Error"
+          class="executors-img">
+        <div class="card-body">
+          <div class="card-title">Aditya Khamparia</div>
+          <p>Department of Computer Science</p>
+          <p>Library Assistant</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 {% endif %}
 
 <script>
-    var bookListedCard = document.querySelector('.book-listed-box')
-    bookListedCard.addEventListener('click',()=>{
-      document.location = "http://127.0.0.1:8000/listed-books/";
-    })
-    {% if user.is_superuser %}
-    var registredUsersBox = document.querySelector('.registred-users-box')
-    registredUsersBox.addEventListener('click',()=>{
-        document.location = "http://127.0.0.1:8000/registered-students/";
-    })
-    {% endif %}
+  var bookListedCard = document.querySelector('.book-listed-box')
+  bookListedCard.addEventListener('click', () => {
+    document.location = "http://127.0.0.1:8000/listed-books/";
+  })
+  {% if user.is_superuser %}
+  var registredUsersBox = document.querySelector('.registred-users-box')
+  registredUsersBox.addEventListener('click', () => {
+    document.location = "http://127.0.0.1:8000/registered-students/";
+  })
+  {% endif %}
 
 
-    var issuedBooksCard = document.querySelector('.issued-books-box')
-    var returnedBooksCard = document.querySelector('.returned-books-box')
+  var issuedBooksCard = document.querySelector('.issued-books-box')
+  var returnedBooksCard = document.querySelector('.returned-books-box')
 
-    issuedBooksCard.addEventListener('click',()=>{
-        document.location = "http://127.0.0.1:8000/issued-books/";
-    })
-    returnedBooksCard.addEventListener('click',()=>{
-        document.location = "http://127.0.0.1:8000/returned-books/";
-    })
-    var profileUserBox = document.querySelector('.profile-user-box')
+  issuedBooksCard.addEventListener('click', () => {
+    document.location = "http://127.0.0.1:8000/issued-books/";
+  })
+  returnedBooksCard.addEventListener('click', () => {
+    document.location = "http://127.0.0.1:8000/returned-books/";
+  })
+  var profileUserBox = document.querySelector('.profile-user-box')
 
-    profileUserBox.addEventListener('click',()=>{
-      document.location = "http://127.0.0.1:8000/edit-profile/{{user.profile.library_id}}";
-    })
+  profileUserBox.addEventListener('click', () => {
+    document.location = "http://127.0.0.1:8000/edit-profile/{{user.profile.library_id}}";
+  })
 
 
 </script>
-    {% endblock body %}
+{% endblock body %}
