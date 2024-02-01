@@ -5,13 +5,6 @@
 
 <div class="container mt-2 mx-auto">
     <h4 class="my-header">Returned Book Details</h4>
-     <div class="filer-tools d-flex justify-content-end" style="position: sticky;top: 70px;left: 0px;z-index: 10;">
-      <form action="http://127.0.0.1:8000/search-by/" class="d-flex me-2" method="post">{% csrf_token %}
-        <input class="form-control me-2" type="search" name="search-by" placeholder="Book Name,ISBN,Auther Name" required aria-label="Search" style="display: inline;width: auto;">
-        <button class="btn btn-success" type="submit">Search</button>
-      </form>
-    
-    </div>
     <div class="container mt-2">
         <table class="table table-hover table-bordered">
             <thead>
@@ -46,6 +39,8 @@
                 <td>{{returned_book.return_date}}</td>
                 
               </tr>
+              {% empty %}
+              <h5 class="text-danger">No Record Found !!!</h5>
               {% endfor %}
               
             </tbody>

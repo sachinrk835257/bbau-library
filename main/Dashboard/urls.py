@@ -7,6 +7,9 @@ from Dashboard import views
 urlpatterns = [
     path('',views.index, name="home page"),
     # path('dashboard/',views.dashboard, name="go to dashboard login"),
+
+    path('authenticate/',include('Authentication.urls'),name="go to authentication") ,
+
     path('registered-students/',views.regStudents, name="go to registered students"),
     path('about/',views.about, name="go to registered students"),
     path('user-login/',views.userLogin, name="go to login page"),
@@ -34,7 +37,7 @@ urlpatterns = [
     
     path('issued-books/',views.issuedBooks, name="issued books"),
     path('returned-books/',views.returnedBooks, name="returned books"),
+    
     path('forgot-password/',views.forgotPassword, name="forgot passwordt"),
-    path('authenticate/',include('Authentication.urls'),name="go to authentication")    
 
 ]

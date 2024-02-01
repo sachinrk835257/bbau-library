@@ -623,7 +623,6 @@ def issuingBook(request):
         messages.add_message(request, messages.SUCCESS, "Some Error !!")
         return redirect('http://127.0.0.1:8000/')
     
-    
 def returnBook(request):
     print(" in return book funtion")
     if not request.user.is_superuser:
@@ -743,9 +742,14 @@ def issuedBooks(request):
         issued_book_obj = Issued_Books.objects.all()
 
     else:
-        profil_obj = Profile.objects.filter(library_id = request.user.profile.library_id)
-        listOfIssueBooks = (profil_obj[0].issuedBooks).split()
-        issued_book_obj = Issued_Books.objects.filter(ISBN__in = listOfIssueBooks)
+        print("user is not super user")
+        profil_obj = request.user.profile.library_id
+        print(profil_obj)
+        books = Issued_Books.objects.filter(library_id = profil_obj)
+
+        print(books)
+        return render(request,'student-issued.html',{"title":title,"issued_books":books})
+
 
     
     return render(request,'issued-books.html',{"title":title,"issued_books":issued_book_obj})
@@ -761,9 +765,9 @@ def returnedBooks(request):
         returned_books_obj = Returned_Books.objects.all()
 
     else:
-        profil_obj = Profile.objects.filter(library_id = request.user.profile.library_id)
-        listOfReturnBooks = (profil_obj[0].returnedBooks).split()
-        returned_books_obj = Returned_Books.objects.filter(ISBN__in = listOfReturnBooks)
+        profil_obj = request.user.profile.library_id
+        books = Returned_Books.objects.filter(library_id = profil_obj)
+        return render(request,'student-returned.html',{"title":title,"returned_books":books})
 
     return render(request,'returned-books.html',{"title":title,"returned_books":returned_books_obj})
 
