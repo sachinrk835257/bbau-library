@@ -534,12 +534,14 @@ def issueBook(request):
             try:
                 book_obj = Registered_Books.objects.get(ISBN = ISBN)
             except Exception:
+                found = False
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
                 return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
 
             try:
                 profile_obj = Profile.objects.get(library_id = library_id)
-            except Exception:        
+            except Exception:   
+                found = False     
                 messages.add_message(request, messages.WARNING, "Student Not Found !!!")
                 return render(request,'issue-book.html',{"title":title,"book":book_obj,"found":found})
 
@@ -577,7 +579,7 @@ def issueBook(request):
 
     except Exception as e:
         print(e)
-        return redirect('/')
+        return render(request,'issue-book.html',{"title":title,"found":False})
 
     
 
@@ -644,12 +646,14 @@ def returnBook(request):
             try:
                 book_obj = Registered_Books.objects.get(ISBN = ISBN)
             except Exception:
+                found = False
                 messages.add_message(request, messages.WARNING, "Book Not Found !!!")
                 return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
 
             try:
                 profile_obj = Profile.objects.get(library_id = library_id)
-            except Exception:        
+            except Exception:  
+                found = False      
                 messages.add_message(request, messages.WARNING, "Student Not Found !!!")
                 return render(request,'return-book.html',{"title":title,"book":book_obj,"found":found})
             
@@ -713,7 +717,7 @@ def returningBook(request):
 
             try:
 
-                returned_books_obj = Returned_Books.objects.create(returned_by = profile_obj.name,issue_date = issued_books_obj.issue_date, email = profile_obj.user.email, mobile = profile_obj.mobile, return_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, department = book_obj.department, ISBN = book_obj.ISBN)
+                returned_books_obj = Returned_Books.objects.create(returned_by = profile_obj.library_id,issue_date = issued_books_obj.issue_date, email = profile_obj.user.email, mobile = profile_obj.mobile, return_date = timezone.now().strftime('%Y-%m-%d'),library_id = profile_obj.library_id,bookName = book_obj.bookName, authorName = book_obj.authorName, std_department = profile_obj.department, ISBN = book_obj.ISBN)
             except Exception as e:
                 print(e)
                 messages.add_message(request, messages.WARNING, "Technical Error !!!")
@@ -727,8 +731,7 @@ def returningBook(request):
 
     except Exception as e:
         print(e)
-        messages.add_message(request, messages.SUCCESS, "{}".format(e))
-        return redirect('http://127.0.0.1:8000/')
+        return HttpResponse(e)
     
 def issuedBooks(request):
     print(" in issued book funtion")
@@ -744,7 +747,6 @@ def issuedBooks(request):
     else:
         print("user is not super user")
         profil_obj = request.user.profile.library_id
-        print(profil_obj)
         books = Issued_Books.objects.filter(library_id = profil_obj)
 
         print(books)

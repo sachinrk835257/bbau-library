@@ -28,7 +28,7 @@
             <tbody>
               {% for issued_book in issued_books reversed %}
               <tr>
-                <th scope="row">{{forloop.counter}}</th>
+                <th scope="row" {% if issued_book.return_date|upper == 'NULL' %}style="background-color:red;"{% endif %}>{{forloop.counter}}</th>
                 
                 <td>{{issued_book.ISBN}}</td>
                 <td>{{issued_book.bookName}}</td>

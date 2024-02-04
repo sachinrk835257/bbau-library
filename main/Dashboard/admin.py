@@ -13,16 +13,16 @@ class ProfileAdmin(ImportExportModelAdmin):
 
 @admin.register(Registered_Books)
 class Registered_BooksAdmin(ImportExportModelAdmin):
-    list_display = ('register_by','bookName', 'ISBN', 'department','status','authorName','coverImage')
+    list_display = ('ISBN','bookName', 'register_by', 'department','status','authorName','coverImage')
     list_filter = ('bookName','authorName','ISBN','department')
     search_fields = ('bookName', 'department','ISBN','authorName')
 
 
 @admin.register(Returned_Books)
 class Returned_BooksAdmin(ImportExportModelAdmin):
-    list_display = ('library_id','returned_by','bookName','ISBN', 'department','authorName')
-    list_filter = ('library_id','returned_by','bookName','ISBN', 'department','authorName')
-    search_fields = ('library_id','returned_by','bookName','ISBN', 'department','authorName')
+    list_display = ('library_id','returned_by','bookName','ISBN', 'std_department','authorName')
+    list_filter = ('library_id','returned_by','bookName','ISBN', 'std_department','authorName')
+    search_fields = ('library_id','returned_by','bookName','ISBN', 'std_department','authorName')
 
 @admin.register(Issued_Books)
 class Issued_BooksAdmin(ImportExportModelAdmin):
